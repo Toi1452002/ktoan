@@ -1,3 +1,5 @@
+import 'package:trina_grid/trina_grid.dart';
+
 enum ColumnType { text, num }
 
 enum ColumnAlign { left, center, right }
@@ -14,7 +16,7 @@ class DataGridColumn {
   final bool isEdit;
   final TypeRender? render;
   final CellColor? cellColor;
-  final void Function(dynamic value)? onTapDelete;
+  final void Function(dynamic value, TrinaColumnRendererContext? re)? onTapDelete;
 
   const DataGridColumn({
     required this.title,

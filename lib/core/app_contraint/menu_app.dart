@@ -58,6 +58,8 @@ Map<String, Map<String, MenuModel>> mMenu1 = {
   'TDM': {
     'FDM_BkeHangHoa': MenuModel(title: 'Hàng hóa'),
     'FDM_BkeKhachHang': MenuModel(title: 'Khách hàng'),
+    'FDM_MaNghiepVu': MenuModel(title: 'Mã nghiệp vụ'),
+    'FDM_BangTaiKhoan': MenuModel(title: 'Bảng tài khoản'),
     'TDM1': MenuModel(title: 'Đầu kỳ', hasChild: true),
   },
 };

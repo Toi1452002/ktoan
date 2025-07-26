@@ -95,12 +95,18 @@ class ThongTinHangHoaViewState extends ConsumerState<ThongTinHangHoaView> {
   }
 
   void onGetDonViTinh() async {
-    lstNhomHang = await fc.getNhomHang();
+    lstDonViTinh = await fc.getDonViTinh();
+    if(lstDonViTinh.indexWhere((e)=>e['ID']==donViTinh) ==-1){
+      donViTinh = null;
+    }
     setState(() {});
   }
 
   void onGetNhomHang() async {
-    lstDonViTinh = await fc.getDonViTinh();
+    lstNhomHang = await fc.getNhomHang();
+    if(lstNhomHang.indexWhere((e)=>e['ID']==nhomHang) ==-1){
+      nhomHang = null;
+    }
     setState(() {});
   }
 
@@ -179,7 +185,7 @@ class ThongTinHangHoaViewState extends ConsumerState<ThongTinHangHoaView> {
                   },
                   items: lstDonViTinh.map((e) => ComboboxItem(value: e['ID'], text: [e['DVT']])).toList(),
                 ),
-                WidgetIconButton(type: IconType.play,onPressed: ()=>fc.showDonViTinh(context),),
+                WidgetIconButton(type: IconType.play,onPressed: ()=>fc.showDonViTinh(context,onGetDonViTinh),),
 
                 Row(children: [Gap(10), Text('Nhóm hàng').medium]),
                 Combobox(
@@ -191,7 +197,7 @@ class ThongTinHangHoaViewState extends ConsumerState<ThongTinHangHoaView> {
                   },
                   items: lstNhomHang.map((e) => ComboboxItem(value: e['ID'], text: [e['NhomHang']])).toList(),
                 ),
-                WidgetIconButton(type: IconType.play),
+                WidgetIconButton(type: IconType.play, onPressed: ()=>fc.showNhomHang(context, onGetNhomHang),),
               ],
             ),
 

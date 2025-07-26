@@ -1,3 +1,4 @@
+import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/application/provider/hanghoa_provider.dart';
 import 'package:pm_ketoan/core/core.dart';
@@ -38,6 +39,15 @@ class HangHoaFunction extends ViewFunction{
     }
   }
 
+
+  void delete(int id, TrinaColumnRendererContext re, WidgetRef ref) async{
+    final btn =await CustomAlert.question('Có chắc muốn xóa?',title: 'Hàng hóa');
+    if(btn == AlertButton.okButton){
+      final result = await ref.read(hangHoaProvider.notifier).delete(id);
+      if(result) re.stateManager.removeCurrentRow();
+    }
+
+  }
 
 
 }

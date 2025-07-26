@@ -2,6 +2,8 @@ import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/data/models/user_model.dart';
 import 'package:pm_ketoan/data/repository/repository.dart';
 
+import 'base_repository.dart';
+
 class UserRepository {
   static const name = 'T00_User';
 

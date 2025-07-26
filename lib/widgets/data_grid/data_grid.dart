@@ -14,7 +14,8 @@ export 'data_column.dart';
 class DataGrid extends StatefulWidget {
   final List<DataGridColumn> columns;
   final void Function(TrinaGridOnLoadedEvent)? onLoaded;
-  final List<TrinaRow<dynamic>> rows;
+  // final List<TrinaRow<dynamic>> rows;
+  // final TrinaGridStateManager stateManager;
   final bool hideFilter;
   final void Function(TrinaGridOnRowDoubleTapEvent)? onRowDoubleTap;
   final void Function(TrinaGridOnChangedEvent)? onChange;
@@ -23,10 +24,11 @@ class DataGrid extends StatefulWidget {
     super.key,
     required this.columns,
     this.onLoaded,
-    required this.rows,
+    // required this.rows,
     this.hideFilter = true,
     this.onRowDoubleTap,
     this.onChange,
+    // required this.stateManager
   });
 
   @override
@@ -34,17 +36,18 @@ class DataGrid extends StatefulWidget {
 }
 
 class _DataGridState extends State<DataGrid> {
+  late TrinaGridStateManager _stateManager;
   Map<String, List<dynamic>> filters = {};
 
   @override
   void initState() {
-    onSetFilterNull();
+    // onSetFilterNull();
     super.initState();
   }
 
-  void onSetFilterNull() {
-    if (widget.rows.isNotEmpty) {
-      Map<String, dynamic> a = widget.rows.first.toJson();
+  void onSetFilterNull(TrinaGridStateManager state) {
+    if (state.rows.isNotEmpty) {
+      Map<String, dynamic> a = state.rows.first.toJson();
       for (var x in a.keys) {
         if (!['null', 'dl'].contains(x)) {
           filters.addEntries({x.toString(): []}.entries);
@@ -92,7 +95,10 @@ class _DataGridState extends State<DataGrid> {
         if (e.render == TypeRender.delete) {
           renderer = (re) => mt.InkWell(
             onTap: () {
-              e.onTapDelete?.call(re.cell.value);
+              if(re.cell.value!=''){
+                e.onTapDelete?.call(re.cell.value, re);
+              }
+
               re.stateManager.setKeepFocus(true);
               re.stateManager.setCurrentCell(re.cell, re.rowIdx);
 
@@ -124,8 +130,12 @@ class _DataGridState extends State<DataGrid> {
             };
 
             if (widget.hideFilter) {
-              onSetFilterNull();
+              onSetFilterNull(re.stateManager);
               re.stateManager.setFilter((re) => true);
+            }
+
+            if(!widget.hideFilter && filters.isEmpty){
+              onSetFilterNull(re.stateManager);
             }
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 4),
@@ -187,7 +197,7 @@ class _DataGridState extends State<DataGrid> {
           titleRenderer: titleRenderer,
         );
       }).toList(),
-      rows: widget.rows,
+      rows: [],
       configuration: TrinaGridConfiguration(
         tabKeyAction: TrinaGridTabKeyAction.moveToNextOnEdge,
         enterKeyAction: TrinaGridEnterKeyAction.editingAndMoveRight,

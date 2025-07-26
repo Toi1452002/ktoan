@@ -5,6 +5,7 @@ import 'package:pm_ketoan/application/provider/hanghoa_provider.dart';
 import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/data/data.dart';
 import 'package:pm_ketoan/views/hanghoa/donvitinh_view.dart';
+import 'package:pm_ketoan/views/hanghoa/nhomhang_view.dart';
 
 class ThongTinHangHoaFunction {
   Future<void> submitHangHoa(
@@ -46,7 +47,7 @@ class ThongTinHangHoaFunction {
     if (!isUpdate) {
       result = await ref.read(hangHoaProvider.notifier).addHangHoa(hangHoa);
     } else {
-      hangHoa = hangHoa.copyWith(ID: id, UpdatedAt: user, UpdatedBy: Helper.sqlDateTimeNow(hasTime: true));
+      hangHoa = hangHoa.copyWith(ID: id, UpdatedAt: Helper.sqlDateTimeNow(hasTime: true), UpdatedBy: user);
       result = await ref.read(hangHoaProvider.notifier).updateHangHoa(hangHoa);
     }
 
@@ -87,7 +88,11 @@ class ThongTinHangHoaFunction {
     return await HangHoaRepository().getNhomHang();
   }
 
-  void showDonViTinh(BuildContext context){
-    DonViTinhView.show(context);
+  void showDonViTinh(BuildContext context,void Function() onClose){
+    DonViTinhView.show(context, onClose);
+  }
+
+  void showNhomHang(BuildContext context, void Function() onClose){
+    NhomHangView.show(context, onClose);
   }
 }

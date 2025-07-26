@@ -1,23 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/data/data.dart';
 
-class DonViTinhNotifier extends StateNotifier<List<Map<String, dynamic>>> {
-  DonViTinhNotifier() : super([]) {
-    getDonViTinh();
+class NhomHangNotifier extends StateNotifier<List<Map<String, dynamic>>> {
+  NhomHangNotifier() : super([]) {
+    getNhomHang();
   }
 
-  final _rp = DonViTinhRepository();
+  final _rp = NhomhangRepository();
 
-  Future<void> getDonViTinh() async {
+  Future<void> getNhomHang() async {
     state = await _rp.getList();
   }
 
   Future<int> add(String value) async {
-    return await _rp.add({'DVT': value});
+    return await _rp.add({'NhomHang': value});
   }
 
   Future<void> update(String value, int id) async {
-    await _rp.update({'ID': id, 'DVT': value});
+    await _rp.update({'ID': id, 'NhomHang': value});
   }
 
   Future<bool> delete(int id) async {
