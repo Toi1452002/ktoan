@@ -6,9 +6,8 @@ import 'package:trina_grid/trina_grid.dart';
 
 import '../../widgets/widgets.dart';
 
-class KhachHangView extends ConsumerWidget {
-  KhachHangView({super.key});
-
+class KhachHangView extends ConsumerStatefulWidget {
+  const KhachHangView({super.key});
   static const name = "Khách hàng";
 
   static void show(BuildContext context) {
@@ -21,19 +20,32 @@ class KhachHangView extends ConsumerWidget {
       onClose: () {},
     );
   }
+  @override
+  KhachHangViewState createState() => KhachHangViewState();
+}
+
+class KhachHangViewState extends ConsumerState<KhachHangView> {
 
   late TrinaGridStateManager _stateManager;
   final fc = KhachHangFunction();
 
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    ref.read(khachHangProvider.notifier).getListKhach();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     ref.listen(khachHangProvider, (context, state) {
       _stateManager.removeAllRows();
       if (state.isNotEmpty) {
         _stateManager.appendRows(
           state
               .map(
-                (e) => TrinaRow(
+                (e) =>
+                TrinaRow(
                   cells: {
                     'null': TrinaCell(value: ''),
                     'dl': TrinaCell(value: e.MaKhach),
@@ -45,7 +57,7 @@ class KhachHangView extends ConsumerWidget {
                     'LoaiKH': TrinaCell(value: e.LoaiKH),
                   },
                 ),
-              )
+          )
               .toList(),
         );
       }
@@ -103,3 +115,4 @@ class KhachHangView extends ConsumerWidget {
     );
   }
 }
+

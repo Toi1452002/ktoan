@@ -1,2 +1,9 @@
-export 'notifier/znotifier.dart';
-export 'provider/zprovider.dart';
+export 'bangtaikhoan/bangtaikhoan_provider.dart';
+export 'donvitinh/donvitinh_provider.dart';
+export 'hanghoa/hanghoa_provider.dart';
+export 'khachhang/khachhang_provider.dart';
+export 'manghiepvu/manghiepvu_provider.dart';
+export 'nhomhang/nhomhang_provider.dart';
+export 'phieunhap/phieunhap_provider.dart';
+export 'user/user_provider.dart';
+export 'phieuxuat/phieuxuat_provider.dart';

@@ -1,3 +1,4 @@
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart' as mt;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -14,6 +15,9 @@ class Combobox extends mt.StatefulWidget {
   final double? menuWidth;
   final double? width;
   final bool enabled;
+  final bool noBorder;
+  final void Function()? onTap;
+  final void Function()? onDoubleTap;
 
   const Combobox({
     super.key,
@@ -25,6 +29,9 @@ class Combobox extends mt.StatefulWidget {
     this.menuWidth,
     this.width,
     this.enabled = true,
+    this.noBorder = false,
+    this.onTap,
+    this.onDoubleTap,
   });
 
   @override
@@ -33,11 +40,9 @@ class Combobox extends mt.StatefulWidget {
 
 class _ComboboxState extends mt.State<Combobox> {
   final TextEditingController textEditingController = TextEditingController();
-  final FocusNode focus = FocusNode();
   final FocusNode focusDropDown = FocusNode();
   final FocusNode focusSearch = FocusNode();
   bool isOpen = false;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -49,8 +54,9 @@ class _ComboboxState extends mt.State<Combobox> {
     if (focusDropDown.hasFocus) {
       isOpen = true;
       if (!widget.noSearch) focusSearch.requestFocus();
-    } else
+    } else {
       isOpen = false;
+    }
     setState(() {});
   }
 
@@ -69,16 +75,26 @@ class _ComboboxState extends mt.State<Combobox> {
         focusNode: focusDropDown,
         onChanged: widget.enabled ? widget.onChanged : null,
         customButton: OutlinedContainer(
-          // backgroundColor: Colors.gray.shade100,
-          borderColor: isOpen ? context.theme.colorScheme.primary : context.theme.colorScheme.border,
+          borderWidth: widget.noBorder ? 0 : 1,
+          backgroundColor: Colors.transparent,
+          // borderColor: Colors.transparent,
+          borderColor: widget.noBorder
+              ? Colors.transparent
+              : isOpen
+              ? context.theme.colorScheme.primary
+              : context.theme.colorScheme.border,
           padding: EdgeInsets.symmetric(horizontal: 5),
           // width: 300,
           height: 30,
           child: Row(
             children: [
-              Text(selectString),
-              // mt.InkWell(child: mt.Text(selectString),onDoubleTap: (){
-              // },),
+              mt.InkWell(
+                onDoubleTap: widget.onDoubleTap,
+                child: Text(
+                  selectString,
+                  style: TextStyle(color: !widget.enabled ? Colors.gray.shade400:widget.onDoubleTap == null ? Colors.black : Colors.red),
+                ),
+              ),
               Spacer(),
               Icon(PhosphorIcons.caretUpDown(), size: 15, color: Colors.gray.shade400),
             ],
@@ -98,13 +114,13 @@ class _ComboboxState extends mt.State<Combobox> {
                           for (int i = 0; i < widget.columnWidth!.length; i++)
                             MapEntry(i, mt.FixedColumnWidth(widget.columnWidth![i])),
                         ]),
-                  children: [mt.TableRow(children: e.text.map((e) => Text(e,softWrap: false,)).toList())],
+                  children: [mt.TableRow(children: e.text.map((e) => Text(e, softWrap: false)).toList())],
                 ),
               ),
             )
             .toList(),
         dropdownStyleData: DropdownStyleData(
-          isOverButton:  !widget.noSearch,
+          isOverButton: !widget.noSearch,
           width: widget.menuWidth,
           maxHeight: 225,
           padding: EdgeInsets.zero,
@@ -135,11 +151,12 @@ class _ComboboxState extends mt.State<Combobox> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  return item.value.toString().contains(searchValue);
+                  return item.value.toString().toLowerCase().contains(searchValue.toLowerCase());
                 },
               ),
 
         onMenuStateChange: (val) {
+          if (val) widget.onTap?.call();
           setState(() {
             isOpen = val;
           });

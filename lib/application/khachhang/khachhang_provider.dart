@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pm_ketoan/application/application.dart';
 import 'package:pm_ketoan/data/data.dart';
+
+import 'khachhang_notifier.dart';
 
 final khachHangProvider = StateNotifierProvider.autoDispose<KhachHangNotifier,List<KhachHangModel> >((ref) {
   return KhachHangNotifier();

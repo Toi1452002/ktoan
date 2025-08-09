@@ -14,7 +14,7 @@ Future<void> showCustomDialog(BuildContext context,
     required double height,
     required Widget child,
     bool barrierDismissible = false,
-    required void Function() onClose}) async {
+     void Function()? onClose}) async {
   await showDialog(
       context: context,
       barrierColor: Colors.black.withValues(alpha: .1),

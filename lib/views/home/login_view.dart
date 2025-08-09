@@ -30,7 +30,7 @@ class LoginViewState extends ConsumerState<LoginView> {
       backgroundColor: Colors.slate[600],
       child: Center(
         child: OutlinedContainer(
-          width: 400,
+          width: 350,
           padding: const EdgeInsets.all(10),
           backgroundColor: context.theme.colorScheme.border,
           boxShadow: [BoxShadow(color: Colors.gray[700], blurRadius: 10, spreadRadius: 2, offset: const Offset(-5, 5))],
@@ -68,10 +68,10 @@ class LoginViewState extends ConsumerState<LoginView> {
                   spacing: 15,
 
                   children: [
-                    WidgetTextField(label: 'Tên người dùng', controller: txtTaiKhoan, autofocus: true),
+                    WidgetTextField( controller: txtTaiKhoan, autofocus: true, hintText: 'Username',),
                     WidgetTextField(
-                      label: 'Mật khẩu',
                       obscureText: true,
+                      hintText: 'Password',
                       spacing: 48,
                       controller: txtMatKhau,
                       onSubmitted: (val) => fc.login(txtTaiKhoan.text, txtMatKhau.text, ref),

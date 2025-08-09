@@ -40,4 +40,22 @@ class Helper{
 
     }
   }
+
+  static String dMy(dynamic date){
+    if(date.runtimeType == DateTime){
+      return DateFormat('dd/MM/yyyy').format(date);
+    }
+    return date.toString();
+  }
+  static String yMd(dynamic date){
+    if(date.runtimeType == DateTime){
+      return DateFormat('yyyy-MM-dd').format(date);
+    }
+    if(date.runtimeType == String){
+      final tmp = date.toString().split('/');
+      return "${tmp.last}-${tmp[1]}-${tmp.first}";
+    }
+    return date.toString();
+  }
+
 }

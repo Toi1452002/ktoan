@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/application/application.dart';
-import 'package:pm_ketoan/application/provider/hanghoa_provider.dart';
 import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/data/data.dart';
 import 'package:pm_ketoan/views/hanghoa/donvitinh_view.dart';
@@ -73,19 +72,19 @@ class ThongTinHangHoaFunction {
   }
 
   Future<List<Map<String, dynamic>>> getKho() async {
-    return await HangHoaRepository().getKho();
+    return await BangTaiKhoanRepository().getKho15();
   }
 
   Future<List<Map<String, dynamic>>> getNhaCung() async {
-    return await HangHoaRepository().getNhaCung();
+    return await KhachHangRepository().getNhaCung();
   }
 
   Future<List<Map<String, dynamic>>> getDonViTinh() async {
-    return await HangHoaRepository().getDonViTinh();
+    return await DonViTinhRepository().getDonViTinh();
   }
 
   Future<List<Map<String, dynamic>>> getNhomHang() async {
-    return await HangHoaRepository().getNhomHang();
+    return await NhomhangRepository().getNhomHang();
   }
 
   void showDonViTinh(BuildContext context,void Function() onClose){

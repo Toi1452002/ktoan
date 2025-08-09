@@ -1,8 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
-class WidgetTextField extends StatelessWidget {
-  final String? label;
+class WidgetTextField extends StatefulWidget {
   final double spacing;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
@@ -19,6 +18,7 @@ class WidgetTextField extends StatelessWidget {
   final void Function()? onTap;
   final Widget? trailing;
   final FocusNode? focusNode;
+  final void Function(bool)? hasFocus;
   final bool isDouble;
   final int? maxLength;
   final TextStyle? style;
@@ -27,7 +27,6 @@ class WidgetTextField extends StatelessWidget {
 
   const WidgetTextField({
     super.key,
-    this.label,
     this.spacing = 10,
     this.isNumber = false,
     this.isDouble = false,
@@ -48,49 +47,61 @@ class WidgetTextField extends StatelessWidget {
     this.maxLength,
     this.style,
     this.color,
-    this.onEditingComplete
+    this.onEditingComplete,
+    this.hasFocus
   });
 
   @override
+  State<WidgetTextField> createState() => _WidgetTextFieldState();
+}
+
+class _WidgetTextFieldState extends State<WidgetTextField> {
+  late FocusNode focus;
+  @override
+  void initState() {
+    // TODO: implement initState
+    focus = widget.focusNode?? FocusNode();
+    focus.addListener((){
+      widget.hasFocus?.call(focus.hasFocus);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: spacing,
-      children: [
-        if (label != null)
-          Text(label ?? '', style: TextStyle(fontSize: 13, color: !enabled ? Colors.gray.shade400 : null)).medium(),
-        Expanded(
-          child: TextField(
-            maxLength: maxLength,
-            readOnly: readOnly,
-            decoration: color != null
-                ? BoxDecoration(
-                    color: color,
-                    border: Border.all(color: Colors.blue.shade900, width: .5),
-                    borderRadius: BorderRadius.circular(3),
-                  )
-                : null,
-            placeholder: Text(hintText ?? ''),
-            enabled: enabled,
-            maxLines: maxLines,
-            onChanged: onChanged,
-            controller: controller,
-            obscureText: obscureText,
-            onSubmitted: onSubmitted,
-            onEditingComplete: onEditingComplete,
-            focusNode: focusNode,
-            onTap: onTap,
-            trailing: trailing,
-            textAlign: textAlign,
-            autofocus: autofocus,
-            style: style,
-            padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-            inputFormatters: [
-              if (isUpperCase) TextInputFormatters.toUpperCase,
-              if (isNumber) FilteringTextInputFormatter.allow(RegExp(r'[\d\,]')),
-              if (isDouble) FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-            ],
-          ),
-        ),
+    return TextField(
+
+      maxLength: widget.maxLength,
+      readOnly: widget.readOnly,
+      decoration: widget.color != null
+          ? BoxDecoration(
+              color: widget.color,
+              border: Border.all(color: Colors.blue.shade900, width: .5),
+              borderRadius: BorderRadius.circular(3),
+            )
+          : null,
+      placeholder: Text( widget.hintText ?? ''),
+      enabled: widget.enabled,
+      maxLines: widget.maxLines,
+      onChanged: widget.onChanged,
+      controller: widget.controller,
+      obscureText: widget.obscureText,
+      onSubmitted: widget.onSubmitted,
+      onEditingComplete: widget.onEditingComplete,
+      // focusNode: focusNode,
+      focusNode: focus,
+      onTap: widget.onTap,
+      trailing: widget.trailing,
+      textAlign: widget.textAlign,
+      autofocus: widget.autofocus,
+      style: TextStyle(
+        color: widget.enabled ? Colors.black : Colors.gray.shade400
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      inputFormatters: [
+        if (widget.isUpperCase) TextInputFormatters.toUpperCase,
+        if (widget.isNumber) FilteringTextInputFormatter.allow(RegExp(r'[\d\,]')),
+        if (widget.isDouble) FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
       ],
     );
   }

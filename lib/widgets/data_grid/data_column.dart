@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 enum ColumnType { text, num }
@@ -6,7 +7,7 @@ enum ColumnAlign { left, center, right }
 
 enum TypeRender { numIndex, delete }
 
-enum CellColor {red, blue}
+enum CellColor { red, blue }
 
 class DataGridColumn {
   final List<String> title;
@@ -16,7 +17,9 @@ class DataGridColumn {
   final bool isEdit;
   final TypeRender? render;
   final CellColor? cellColor;
-  final void Function(dynamic value, TrinaColumnRendererContext? re)? onTapDelete;
+  final void Function(dynamic value, TrinaColumnRendererContext? event)? onTapDelete;
+  final Widget Function(TrinaColumnRendererContext)? renderer;
+  final double? padding;
 
   const DataGridColumn({
     required this.title,
@@ -26,6 +29,8 @@ class DataGridColumn {
     this.isEdit = false,
     this.render,
     this.cellColor,
-    this.onTapDelete
+    this.onTapDelete,
+    this.renderer,
+    this.padding,
   });
 }

@@ -2,9 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/data/data.dart';
 
 class KhachHangNotifier extends StateNotifier<List<KhachHangModel>> {
-  KhachHangNotifier() : super([]) {
-    getListKhach();
-  }
+  KhachHangNotifier() : super([]);
 
   final _rp = KhachHangRepository();
 

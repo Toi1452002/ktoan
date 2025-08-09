@@ -62,6 +62,16 @@ Map<String, Map<String, MenuModel>> mMenu1 = {
     'FDM_BangTaiKhoan': MenuModel(title: 'Bảng tài khoản'),
     'TDM1': MenuModel(title: 'Đầu kỳ', hasChild: true),
   },
+  'TNX': {
+    'FNX_PhieuNhap': MenuModel(title: 'Mua hàng'),
+    'FNX_PhieuXuat': MenuModel(title: 'Bán hàng'),
+  },
+
+  'TTC':{
+    'FTC_PhieuThu': MenuModel(title: 'Phiếu thu'),
+    'FTC_PhieuChi': MenuModel(title: 'Phiếu chi'),
+  }
+
 };
 
 Map<String, Map<String, MenuModel>> mMenu2 = {

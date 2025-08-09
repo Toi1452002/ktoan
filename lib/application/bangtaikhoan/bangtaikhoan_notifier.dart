@@ -11,4 +11,10 @@ class BangTaiKhoanNotifier extends StateNotifier<List<Map<String,dynamic>>> {
 
   Future<void> get() async => state = await _rp.getList();
 
+  Future<bool> delete(int id) async => await _rp.delete(id);
+
+  Future<int> add(Map<String, dynamic> map) async => await _rp.add(map);
+
+  Future<bool> update(Map<String, dynamic> map) async => await _rp.update(map);
+
 }

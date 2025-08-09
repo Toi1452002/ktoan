@@ -9,7 +9,7 @@ class DialogWindows extends StatefulWidget {
   double height;
   String title;
   Widget child;
-  void Function() onClose;
+  void Function()? onClose;
 
   DialogWindows({
     super.key,
@@ -17,7 +17,7 @@ class DialogWindows extends StatefulWidget {
     required this.width,
     required this.height,
     required this.child,
-    required this.onClose,
+    this.onClose,
     required this.title,
   });
 
@@ -29,7 +29,9 @@ class _DialogWindowsState extends State<DialogWindows> {
   Offset _offset = const Offset(100, 100); // Vị trí ban đầu của dialog
 
   void _close() {
-    widget.onClose();
+    if(widget.onClose!=null){
+      widget.onClose;
+    }
     Navigator.pop(context);
   }
 
@@ -87,14 +89,18 @@ class _DialogWindowsState extends State<DialogWindows> {
                               children: [
                                 Text(widget.title, style: Theme.of(context).textTheme.labelMedium),
                                 const Spacer(),
+
                                 Material(
                                   color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () => _close(),
-                                    child:  Icon(
-                                      PhosphorIcons.x(),
-                                      // color: Colors.grey,
-                                      size: 20,
+                                  child: SizedBox(
+                                    width: 40,
+                                    child: InkWell(
+                                      onTap: () => _close(),
+                                      child:  Icon(
+                                        PhosphorIcons.x(),
+                                        // color: Colors.grey,
+                                        size: 20,
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pm_ketoan/widgets/data_grid/button_filter.dart';
@@ -14,21 +13,20 @@ export 'data_column.dart';
 class DataGrid extends StatefulWidget {
   final List<DataGridColumn> columns;
   final void Function(TrinaGridOnLoadedEvent)? onLoaded;
-  // final List<TrinaRow<dynamic>> rows;
-  // final TrinaGridStateManager stateManager;
   final bool hideFilter;
   final void Function(TrinaGridOnRowDoubleTapEvent)? onRowDoubleTap;
   final void Function(TrinaGridOnChangedEvent)? onChange;
-
+  final Color Function(TrinaRowColorContext)? rowColorCallback;
+  final  TrinaGridMode mode;
   const DataGrid({
     super.key,
     required this.columns,
     this.onLoaded,
-    // required this.rows,
     this.hideFilter = true,
     this.onRowDoubleTap,
     this.onChange,
-    // required this.stateManager
+    this.rowColorCallback,
+    this.mode =  TrinaGridMode.normal
   });
 
   @override
@@ -36,14 +34,7 @@ class DataGrid extends StatefulWidget {
 }
 
 class _DataGridState extends State<DataGrid> {
-  late TrinaGridStateManager _stateManager;
   Map<String, List<dynamic>> filters = {};
-
-  @override
-  void initState() {
-    // onSetFilterNull();
-    super.initState();
-  }
 
   void onSetFilterNull(TrinaGridStateManager state) {
     if (state.rows.isNotEmpty) {
@@ -59,14 +50,16 @@ class _DataGridState extends State<DataGrid> {
   @override
   Widget build(BuildContext context) {
     return TrinaGrid(
+      mode: widget.mode,
       onLoaded: widget.onLoaded,
       onRowDoubleTap: widget.onRowDoubleTap,
       onChanged: widget.onChange,
+      rowColorCallback: widget.rowColorCallback,
       columns: widget.columns.map((e) {
         TrinaColumnType type = TrinaColumnType.text();
         TrinaColumnTextAlign textAlign = TrinaColumnTextAlign.start;
-        Widget Function(TrinaColumnRendererContext)? renderer;
-        EdgeInsets? cellPadding;
+        Widget Function(TrinaColumnRendererContext)? renderer = e.renderer;
+        EdgeInsets? cellPadding = e.padding == null ? null : EdgeInsets.all(e.padding!);
         Widget Function(TrinaColumnTitleRendererContext)? titleRenderer;
         if (e.columnType == ColumnType.num) type = TrinaColumnType.number();
         if (e.columnAlign == ColumnAlign.center) textAlign = TrinaColumnTextAlign.center;
@@ -95,13 +88,12 @@ class _DataGridState extends State<DataGrid> {
         if (e.render == TypeRender.delete) {
           renderer = (re) => mt.InkWell(
             onTap: () {
-              if(re.cell.value!=''){
+              if (re.cell.value != '') {
                 e.onTapDelete?.call(re.cell.value, re);
               }
 
               re.stateManager.setKeepFocus(true);
               re.stateManager.setCurrentCell(re.cell, re.rowIdx);
-
             },
             child: Icon(PhosphorIcons.trash(), color: Colors.red.shade600),
           );
@@ -134,7 +126,7 @@ class _DataGridState extends State<DataGrid> {
               re.stateManager.setFilter((re) => true);
             }
 
-            if(!widget.hideFilter && filters.isEmpty){
+            if (!widget.hideFilter && filters.isEmpty) {
               onSetFilterNull(re.stateManager);
             }
             return Container(
@@ -184,6 +176,7 @@ class _DataGridState extends State<DataGrid> {
           field: e.title.last,
           type: type,
           width: e.width,
+
           enableColumnDrag: false,
           enableContextMenu: false,
           enableDropToResize: false,

@@ -21,7 +21,9 @@ class ThongTinKhachHangFunction{
     }
 
     if(result){
-      ref.read(khachHangProvider.notifier).getListKhach(td: tDoi);
+      if(ref.read(khachHangProvider.notifier).mounted){
+        ref.read(khachHangProvider.notifier).getListKhach(td: tDoi);
+      }
       if (context.mounted) Navigator.pop(context);
     }
 

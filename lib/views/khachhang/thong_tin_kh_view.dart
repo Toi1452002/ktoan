@@ -10,19 +10,18 @@ import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 
 class ThongTinKHView extends ConsumerStatefulWidget {
   final KhachHangModel? khachHangModel;
-
-  const ThongTinKHView({super.key, this.khachHangModel});
+  final bool isUpdate;
+  const ThongTinKHView({super.key, this.khachHangModel, this.isUpdate = true});
 
   static const name = "Thông tin khách hàng";
 
-  static void show(BuildContext context, {KhachHangModel? khach}) {
+  static void show(BuildContext context, {KhachHangModel? khach, bool isUpdate = true}) {
     showCustomDialog(
       context,
       title: name.toUpperCase(),
       width: 700,
       height: 455,
-      child: ThongTinKHView(khachHangModel: khach,),
-      onClose: () {},
+      child: ThongTinKHView(khachHangModel: khach,isUpdate: isUpdate,),
     );
   }
 
@@ -192,7 +191,7 @@ class _ThongTinKHViewState extends ConsumerState<ThongTinKHView> {
             ).gap(10),
           ),
           Gap(10),
-          Button.primary(onPressed: onSubmit, child: Text(widget.khachHangModel == null ? 'Thêm mới' : 'Cập nhật')),
+          Button.primary(onPressed: onSubmit,enabled: widget.isUpdate, child: Text(widget.khachHangModel == null ? 'Thêm mới' : 'Cập nhật')),
         ],
       ).withPadding(all: 10),
     );

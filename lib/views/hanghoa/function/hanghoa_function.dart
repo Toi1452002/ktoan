@@ -1,6 +1,6 @@
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pm_ketoan/application/provider/hanghoa_provider.dart';
+import 'package:pm_ketoan/application/hanghoa/hanghoa_provider.dart';
 import 'package:pm_ketoan/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:pm_ketoan/views/hanghoa/thong_tin_hang_hoa_view.dart';
