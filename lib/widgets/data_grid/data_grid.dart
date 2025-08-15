@@ -17,7 +17,8 @@ class DataGrid extends StatefulWidget {
   final void Function(TrinaGridOnRowDoubleTapEvent)? onRowDoubleTap;
   final void Function(TrinaGridOnChangedEvent)? onChange;
   final Color Function(TrinaRowColorContext)? rowColorCallback;
-  final  TrinaGridMode mode;
+  final TrinaGridMode mode;
+
   const DataGrid({
     super.key,
     required this.columns,
@@ -26,7 +27,7 @@ class DataGrid extends StatefulWidget {
     this.onRowDoubleTap,
     this.onChange,
     this.rowColorCallback,
-    this.mode =  TrinaGridMode.normal
+    this.mode = TrinaGridMode.normal,
   });
 
   @override
@@ -62,6 +63,7 @@ class _DataGridState extends State<DataGrid> {
         EdgeInsets? cellPadding = e.padding == null ? null : EdgeInsets.all(e.padding!);
         Widget Function(TrinaColumnTitleRendererContext)? titleRenderer;
         if (e.columnType == ColumnType.num) type = TrinaColumnType.number();
+        if (e.columnType == ColumnType.date) type = TrinaColumnType.date(format: 'dd/MM/yyyy');
         if (e.columnAlign == ColumnAlign.center) textAlign = TrinaColumnTextAlign.center;
         if (e.columnAlign == ColumnAlign.right || e.columnType == ColumnType.num) {
           textAlign = TrinaColumnTextAlign.right;
@@ -109,7 +111,12 @@ class _DataGridState extends State<DataGrid> {
         if (e.cellColor == CellColor.red) {
           renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.red.shade600)).medium;
         }
-
+        if (e.cellColor == CellColor.blue) {
+          renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.blue.shade900)).medium;
+        }
+        if (e.cellColor == CellColor.black) {
+          renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.black)).medium;
+        }
         if (e.render != TypeRender.delete && e.render != TypeRender.numIndex) {
           titleRenderer = (re) {
             final List<TrinaRow> filteredRows = re.stateManager.filterRows.isNotEmpty
@@ -229,7 +236,7 @@ class _DataGridState extends State<DataGrid> {
       List<double> x = data.map((e) => double.parse(e)).toList();
       x.sort();
       return x.map((e) {
-        if (e == 0.0) return '0';
+        // if (e == 0.0) return '0';
         if (isInt(e.toString())) {
           return e.toInt().toString();
         } else {

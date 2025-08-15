@@ -3,3 +3,5 @@ export 'user_model.dart';
 export 'khachhang_model.dart';
 export 'phieunhap_model.dart';
 export 'phieuxuat_model.dart';
+export 'phieuthu_model.dart';
+export 'phieuchi_model.dart';

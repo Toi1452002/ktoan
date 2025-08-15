@@ -14,7 +14,11 @@ class PhieuXuatFunction {
   Future<void> onAdd(WidgetRef ref) async {
     final userName = ref.read(userInfoProvider)!.Username;
     final result = await ref.read(phieuXuatProvider.notifier).addPhieuXuat(userName);
-    if (result != 0) ref.read(phieuXuatProvider.notifier).getPhieuXuat();
+    if (result != 0) {
+      ref.read(phieuXuatProvider.notifier).getPhieuXuat();
+      ref.refresh(phieuXuatCTProvider);
+    }
+
   }
 
   Future<List<Map<String, dynamic>>> getKH() async {
@@ -93,7 +97,7 @@ class PhieuXuatFunction {
     ref.read(phieuXuatProvider.notifier).changedTienThue(val, notifier: notifier);
   }
 
-  void onMovePage(int stt, int type, WidgetRef ref, int id) async {
+  void onMovePage(int stt, int type, WidgetRef ref) async {
     final result = await ref.read(phieuXuatProvider.notifier).movePage(stt, type);
     ref.read(phieuXuatCTProvider.notifier).getPXCT(result);
   }
@@ -103,7 +107,8 @@ class PhieuXuatFunction {
     if (btn == AlertButton.okButton) {
       final result = await ref.read(phieuXuatProvider.notifier).deletePhieu(id);
       if (result) {
-        ref.read(phieuXuatProvider.notifier).getPhieuXuat();
+        final maID = await ref.read(phieuXuatProvider.notifier).getPhieuXuat();
+        ref.read(phieuXuatCTProvider.notifier).getPXCT(maID);
       }
     }
   }

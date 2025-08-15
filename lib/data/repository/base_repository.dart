@@ -30,7 +30,7 @@ class BaseRepository {
       final result = await cnn!.insert(name, map);
       return ResponseState(status: ResponseType.success, data: result);
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e.toString());
+      return ResponseState(status: ResponseType.error, message: e);
     }
   }
 
@@ -70,6 +70,19 @@ class BaseRepository {
       return null;
     }
   }
+
+  Future<void> addRows(String name, List<Map<String, dynamic>> data) async {
+    try {
+      final cnn = await connectData();
+      final batch = cnn!.batch();
+      for (var x in data) {
+        batch.insert(name, x);
+      }
+      await batch.commit(noResult: true);
+    } catch (e) {
+      errorSql(e);
+    }
+  }
 }
 
 Future<Database?> connectData() async {
@@ -89,7 +102,7 @@ errorSql(Object e) {
       int b = e.toString().indexOf('Causing ');
       String title = e.toString().substring(a, b);
 
-      if (title.contains('FOREIGN KEY')) title = "Không thể xóa do đang có phát sinh";
+      // if (title.contains('FOREIGN KEY')) title = "Không thể xóa do đang có phát sinh";
 
       CustomAlert.error(title);
     } catch (err) {
@@ -105,7 +118,7 @@ enum ResponseType { success, error }
 class ResponseState {
   final ResponseType status;
   final dynamic data;
-  final String? message;
+  final dynamic message;
 
   const ResponseState({required this.status, this.message, this.data});
 }

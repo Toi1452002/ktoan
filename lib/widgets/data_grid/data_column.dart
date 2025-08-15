@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:trina_grid/trina_grid.dart';
 
-enum ColumnType { text, num }
+enum ColumnType { text, num, date }
 
 enum ColumnAlign { left, center, right }
 
 enum TypeRender { numIndex, delete }
 
-enum CellColor { red, blue }
+enum CellColor { red, blue ,black}
 
 class DataGridColumn {
   final List<String> title;

@@ -10,26 +10,28 @@ import 'package:string_validator/string_validator.dart';
 
 import '../../core/core.dart';
 
-class BanHangView extends ConsumerStatefulWidget {
-  const BanHangView({super.key});
+class PhieuXuatView extends ConsumerStatefulWidget {
+  final int? stt;
+
+  const PhieuXuatView({super.key, this.stt});
 
   static const name = "Bán hàng";
   static const title = "Xuất bán hàng hóa";
 
-  static void show(BuildContext context) => showCustomDialog(
+  static void show(BuildContext context, {int? stt}) => showCustomDialog(
     context,
     title: title.toUpperCase(),
     width: 1150,
     height: 700,
-    child: BanHangView(),
+    child: PhieuXuatView(stt: stt),
     onClose: () {},
   );
 
   @override
-  BanHangViewState createState() => BanHangViewState();
+  PhieuXuatViewState createState() => PhieuXuatViewState();
 }
 
-class BanHangViewState extends ConsumerState<BanHangView> {
+class PhieuXuatViewState extends ConsumerState<PhieuXuatView> {
   List<Map<String, dynamic>> lstKieuXuat = [];
   List<Map<String, dynamic>> lstKH = [];
   List<Map<String, dynamic>> lstBTK = [];
@@ -39,6 +41,8 @@ class BanHangViewState extends ConsumerState<BanHangView> {
   @override
   void initState() {
     // TODO: implement initState
+    ref.read(phieuXuatProvider.notifier).getPhieuXuat(stt: widget.stt);
+
     loadCBB();
     super.initState();
   }
@@ -49,7 +53,6 @@ class BanHangViewState extends ConsumerState<BanHangView> {
     lstBTK = await fc.getBTK0();
     setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +188,7 @@ class BanHangViewState extends ConsumerState<BanHangView> {
                           SizedBox(),
                         ],
                       ),
-                      PhieuXuatTable(khoa: state.Khoa!,maID: state.ID!,),
+                      PhieuXuatTable(khoa: state.Khoa!, maID: state.ID!),
 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,10 +302,10 @@ class BanHangViewState extends ConsumerState<BanHangView> {
                 ).withPadding(all: 10),
                 GroupButtonNumberPage(
                   text: '${state.STT}/${state.countRow}',
-                  first: () => fc.onMovePage(state.STT!, 0, ref, state.ID!),
-                  last: () => fc.onMovePage(state.STT!, 3, ref, state.ID!),
-                  back: () => fc.onMovePage(state.STT!, 1, ref, state.ID!),
-                  next: () => fc.onMovePage(state.STT!, 2, ref, state.ID!),
+                  first: () => fc.onMovePage(state.STT!, 0, ref),
+                  last: () => fc.onMovePage(state.STT!, 3, ref),
+                  back: () => fc.onMovePage(state.STT!, 1, ref),
+                  next: () => fc.onMovePage(state.STT!, 2, ref),
                 ).withPadding(left: 10),
               ],
             ),

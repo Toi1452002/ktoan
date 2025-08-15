@@ -3,7 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class CustomAlert{
-  static Future<AlertButton> error(String text, {String title = 'Error'}) async {
+  static Future<AlertButton> error(String text, {String title = ''}) async {
     return await FlutterPlatformAlert.showAlert(
       options: PlatformAlertOptions(
           windows: WindowsAlertOptions(
@@ -31,7 +31,7 @@ class CustomAlert{
     );
   }
 
-  static Future<AlertButton> warning(String text, {String title = 'Warning'}) async {
+  static Future<AlertButton> warning(String text, {String title = ''}) async {
     return await FlutterPlatformAlert.showAlert(
       options: PlatformAlertOptions(
           windows: WindowsAlertOptions(

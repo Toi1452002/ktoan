@@ -7,15 +7,21 @@ import 'package:string_validator/string_validator.dart';
 
 class PhieuNhapNotifier extends StateNotifier<PhieuNhapModel?> {
   PhieuNhapNotifier() : super(null) {
-    getPhieuNhap();
+    // getPhieuNhap();
   }
 
   final _rp = PhieuNhapRepository();
 
-  Future<void> getPhieuNhap() async {
-    final data = await _rp.get();
+  Future<int> getPhieuNhap({int?  stt}) async {
+    final data = await _rp.get(stt: stt);
     final num = await _rp.getNumRow();
-    if (data.isNotEmpty) state = PhieuNhapModel.fromMap(data).copyWith(countRow: num.toString());
+    if (data.isNotEmpty) {
+      state = PhieuNhapModel.fromMap(data).copyWith(countRow: num.toString());
+      return state!.ID!;
+    }else{
+      state =  null;
+    }
+    return 0;
   }
 
   Future<int> movePage(int stt, int type) async {

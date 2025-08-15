@@ -64,5 +64,22 @@ class MaNghiepVuRepository {
       CustomAlert.error(rp.message.toString());
       return [];
     }
+  }Future<List<Map<String, dynamic>>> getKThu() async {
+    final rp = await _baseData.getListMap(name, where: "MaNV LIKE 'T%'");
+    if(rp.status == ResponseType.success){
+      return rp.data;
+    }else{
+      CustomAlert.error(rp.message.toString());
+      return [];
+    }
+  }
+  Future<List<Map<String, dynamic>>> getKChi() async {
+    final rp = await _baseData.getListMap(name, where: "MaNV LIKE 'C%'");
+    if(rp.status == ResponseType.success){
+      return rp.data;
+    }else{
+      CustomAlert.error(rp.message.toString());
+      return [];
+    }
   }
 }

@@ -4,11 +4,13 @@ import 'base_repository.dart';
 class PhieuXuatRepository {
   static const String name = "TNX_PhieuXuat";
   static const String view = "V_PhieuXuat";
+  static const String bKePhieuXuat = "VBC_PhieuXuat";
+  static const String bKeHangBan = "VNX_BangKeHangBan";
 
   final _baseData = BaseRepository();
 
-  Future<Map<String, dynamic>> get() async {
-    return await _baseData.getMap(view, orderBy: "STT DESC");
+  Future<Map<String, dynamic>> get({int? stt}) async {
+    return await _baseData.getMap(view, where: stt == null ? null : "STT = $stt", orderBy: "STT DESC");
   }
 
   Future<dynamic> getNumRow() async {
@@ -53,7 +55,7 @@ class PhieuXuatRepository {
       await _baseData.updateMap(name, {'KyHieu': val}, where: "ID = $id");
 
   Future<void> updateSoCT(String val, int id) async =>
-      await _baseData.updateMap(name, {'SoCT': val}, where: "ID = $id");
+      await _baseData.updateMap(name, {'SoHD': val}, where: "ID = $id");
 
   Future<void> updatePTTT(String val, int id) async =>
       await _baseData.updateMap(name, {'PTTT': val}, where: "ID = $id");
@@ -95,6 +97,53 @@ class PhieuXuatRepository {
     } else {
       CustomAlert.error(rp.message.toString());
       return false;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getBKePhieuXuat({String? thang, int? quy, int nam = 2000}) async {
+    String? where;
+    if (thang == null && quy == null) {
+      where = "strftime('%Y', Ngay) = '$nam'";
+    }
+    if (thang != null) {
+      if (thang.length == 1) thang = "0$thang";
+      where = "strftime('%Y', Ngay) = '$nam' AND strftime('%m', Ngay) = '$thang'";
+    }
+    if (quy != null) {
+      where =
+          '''strftime('%Y', Ngay) = '$nam' AND strftime('%m', Ngay) 
+        BETWEEN '${mQuy[quy]?.first}' AND '${mQuy[quy]?.last}'
+        ''';
+    }
+    final rp = await _baseData.getListMap(bKePhieuXuat, where: where);
+    if (rp.status == ResponseType.success) {
+      return rp.data;
+    } else {
+      errorSql(rp.message);
+      return [];
+    }
+  }
+  Future<List<Map<String, dynamic>>> getBKeHangBan({String? thang, int? quy, int nam = 2000}) async {
+    String? where;
+    if (thang == null && quy == null) {
+      where = "strftime('%Y', Ngay) = '$nam'";
+    }
+    if (thang != null) {
+      if (thang.length == 1) thang = "0$thang";
+      where = "strftime('%Y', Ngay) = '$nam' AND strftime('%m', Ngay) = '$thang'";
+    }
+    if (quy != null) {
+      where =
+      '''strftime('%Y', Ngay) = '$nam' AND strftime('%m', Ngay) 
+        BETWEEN '${mQuy[quy]?.first}' AND '${mQuy[quy]?.last}'
+        ''';
+    }
+    final rp = await _baseData.getListMap(bKeHangBan, where: where);
+    if (rp.status == ResponseType.success) {
+      return rp.data;
+    } else {
+      errorSql(rp.message);
+      return [];
     }
   }
 }

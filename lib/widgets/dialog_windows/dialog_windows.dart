@@ -56,7 +56,7 @@ class _DialogWindowsState extends State<DialogWindows> {
               elevation: 15,
               insetPadding: EdgeInsets.zero,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(3),
+                borderRadius: BorderRadius.circular(5),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey,
@@ -80,13 +80,14 @@ class _DialogWindowsState extends State<DialogWindows> {
                           _onDragUpdate(details, widget.width, widget.height);
                         },
                         child: Container(
-                          height: 25,
-                          // width: double.infinity,
+                          height: 28,
                           color: context.theme.colorScheme.muted,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Row(
                               children: [
+                                Icon(PhosphorIcons.appWindow(),color: Colors.blue.shade700,),
+                                SizedBox(width: 5,),
                                 Text(widget.title, style: Theme.of(context).textTheme.labelMedium),
                                 const Spacer(),
 
@@ -98,7 +99,7 @@ class _DialogWindowsState extends State<DialogWindows> {
                                       onTap: () => _close(),
                                       child:  Icon(
                                         PhosphorIcons.x(),
-                                        // color: Colors.grey,
+                                        color: Colors.red.shade700,
                                         size: 20,
                                       ),
                                     ),

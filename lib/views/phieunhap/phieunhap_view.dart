@@ -10,26 +10,27 @@ import 'component/phieunhap_component.dart';
 import 'component/phieunhap_table.dart';
 import 'function/phieunhap_function.dart';
 
-class MuaHangView extends ConsumerStatefulWidget {
-  const MuaHangView({super.key});
+class PhieuNhapView extends ConsumerStatefulWidget {
+  final int? stt;
+  const PhieuNhapView({super.key,this.stt});
 
   static const name = "Mua hàng";
   static const title = "Nhập mua hàng hóa";
 
-  static void show(BuildContext context) => showCustomDialog(
+  static void show(BuildContext context, {int? stt}) => showCustomDialog(
     context,
     title: title.toUpperCase(),
     width: 1150,
     height: 700,
-    child: MuaHangView(),
+    child: PhieuNhapView(stt: stt,),
     onClose: () {},
   );
 
   @override
-  MuaHangViewState createState() => MuaHangViewState();
+  PhieuNhapViewState createState() => PhieuNhapViewState();
 }
 
-class MuaHangViewState extends ConsumerState<MuaHangView> {
+class PhieuNhapViewState extends ConsumerState<PhieuNhapView> {
   final cpn = PhieuNhapComponent();
   final fc = PhieuNhapFunction();
 
@@ -40,6 +41,7 @@ class MuaHangViewState extends ConsumerState<MuaHangView> {
   @override
   void initState() {
     loadCBB();
+    ref.read(phieuNhapProvider.notifier).getPhieuNhap(stt: widget.stt);
     super.initState();
   }
 
@@ -289,10 +291,10 @@ class MuaHangViewState extends ConsumerState<MuaHangView> {
                 ).withPadding(all: 10),
                 GroupButtonNumberPage(
                   text: '${state.STT}/${state.countRow}',
-                  first: () => fc.onMovePage(state.STT!, 0, ref, state.ID!),
-                  last: () => fc.onMovePage(state.STT!, 3, ref, state.ID!),
-                  back: () => fc.onMovePage(state.STT!, 1, ref, state.ID!),
-                  next: () => fc.onMovePage(state.STT!, 2, ref, state.ID!),
+                  first: () => fc.onMovePage(state.STT!, 0, ref),
+                  last: () => fc.onMovePage(state.STT!, 3, ref),
+                  back: () => fc.onMovePage(state.STT!, 1, ref),
+                  next: () => fc.onMovePage(state.STT!, 2, ref),
                 ).withPadding(left: 10),
               ],
             ),

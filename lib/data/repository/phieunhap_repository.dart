@@ -4,11 +4,12 @@ import 'package:pm_ketoan/data/repository/base_repository.dart';
 class PhieuNhapRepository {
   static const String name = "TNX_PhieuNhap";
   static const String view = "V_PhieuNhap";
+  static const String bKePhieuNhap = "VBC_PhieuNhap";
 
   final _baseData = BaseRepository();
 
-  Future<Map<String, dynamic>> get() async {
-    return await _baseData.getMap(view, orderBy: "STT DESC");
+  Future<Map<String, dynamic>> get({int? stt}) async {
+    return await _baseData.getMap(view, orderBy: "STT DESC",where: stt==null?null:"STT = $stt");
   }
 
   Future<Map<String, dynamic>> getTheoSTT(int stt) async {
@@ -92,6 +93,30 @@ class PhieuNhapRepository {
     } else {
       CustomAlert.error(rp.message.toString());
       return false;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getBKeHangNhap({String? thang, int? quy, int nam = 2000}) async {
+    String? where;
+    if (thang == null && quy == null) {
+      where = "strftime('%Y', Ngay) = '$nam'";
+    }
+    if (thang != null) {
+      if (thang.length == 1) thang = "0$thang";
+      where = "strftime('%Y', Ngay) = '$nam' AND strftime('%m', Ngay) = '$thang'";
+    }
+    if (quy != null) {
+      where =
+          '''strftime('%Y', Ngay) = '$nam' AND strftime('%m', Ngay) 
+        BETWEEN '${mQuy[quy]?.first}' AND '${mQuy[quy]?.last}'
+        ''';
+    }
+    final rp = await _baseData.getListMap(bKePhieuNhap, where: where);
+    if (rp.status == ResponseType.success) {
+      return rp.data;
+    } else {
+      errorSql(rp.message);
+      return [];
     }
   }
 }

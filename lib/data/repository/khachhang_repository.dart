@@ -25,7 +25,7 @@ class KhachHangRepository {
     if (rp.status == ResponseType.success) {
       return rp.data;
     } else {
-      print(rp.message);
+     errorSql(rp.message);
       return 0;
     }
   }

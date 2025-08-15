@@ -13,5 +13,13 @@ class TuyChonRepository {
 
   Future<dynamic> getTnC() async => await _baseData.getCell(name, field: 'GiaTri', condition: "Nhom = 'TNc'");
 
+  Future<dynamic> getPtN() async => await _baseData.getCell(name, field: 'GiaTri', condition: "Nhom = 'PTn'");
+
+  Future<dynamic> getPtC() async => await _baseData.getCell(name, field: 'GiaTri', condition: "Nhom = 'PTc'");
+
+  Future<dynamic> getPcN() async => await _baseData.getCell(name, field: 'GiaTri', condition: "Nhom = 'PCn'");
+
+  Future<dynamic> getPcC() async => await _baseData.getCell(name, field: 'GiaTri', condition: "Nhom = 'PCc'");
+
   Future<dynamic> getTS() async => await _baseData.getCell(name, field: 'GiaTri', condition: "Nhom = 'TS'");
 }

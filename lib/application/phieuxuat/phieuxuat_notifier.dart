@@ -11,10 +11,16 @@ class PhieuXuatNotifier extends StateNotifier<PhieuXuatModel?> {
 
   final _rp = PhieuXuatRepository();
 
-  Future<void> getPhieuXuat() async {
+  Future<int> getPhieuXuat({int? stt}) async {
     final data = await _rp.get();
     final num = await _rp.getNumRow();
-    if (data.isNotEmpty) state = PhieuXuatModel.fromMap(data).copyWith(countRow: num.toString());
+    if (data.isNotEmpty) {
+      state = PhieuXuatModel.fromMap(data).copyWith(countRow: num.toString());
+      return state!.ID!;
+    }else{
+      state =  null;
+    }
+   return 0;
   }
 
   Future<int> movePage(int stt, int type) async {
@@ -41,7 +47,7 @@ class PhieuXuatNotifier extends StateNotifier<PhieuXuatModel?> {
 
     if (lastP.isNotEmpty) {
       final num = int.parse(lastP.substring(1)) + 1;
-      phieu = 'N${'0' * (6 - num.toString().length)}$num';
+      phieu = 'X${'0' * (6 - num.toString().length)}$num';
     }
 
     return _rp.add(

@@ -8,7 +8,10 @@ class PhieuNhapFunction {
   Future<void> onAdd(WidgetRef ref) async {
     final userName = ref.read(userInfoProvider)!.Username;
     final result = await ref.read(phieuNhapProvider.notifier).addPhieuNhap(userName);
-    if (result != 0) ref.read(phieuNhapProvider.notifier).getPhieuNhap();
+    if (result != 0) {
+      ref.read(phieuNhapProvider.notifier).getPhieuNhap();
+      ref.refresh(phieuNhapCTProvider);
+    }
   }
 
   Future<void> onChangedKhoa(bool value, WidgetRef ref) async {
@@ -88,7 +91,7 @@ class PhieuNhapFunction {
     return await BangTaiKhoanRepository().get0();
   }
 
-  void onMovePage(int stt, int type, WidgetRef ref, int id)  async{
+  void onMovePage(int stt, int type, WidgetRef ref)  async{
     final result = await ref.read(phieuNhapProvider.notifier).movePage(stt, type);
     ref.read(phieuNhapCTProvider.notifier).getPNCT(result);
   }
@@ -98,7 +101,9 @@ class PhieuNhapFunction {
     if(btn == AlertButton.okButton){
       final  result  =  await ref.read(phieuNhapProvider.notifier).deletePhieu(id);
       if(result){
-        ref.read(phieuNhapProvider.notifier).getPhieuNhap();
+        final  maID = await ref.read(phieuNhapProvider.notifier).getPhieuNhap();
+        ref.read(phieuNhapCTProvider.notifier).getPNCT(maID);
+
       }
     }
   }
