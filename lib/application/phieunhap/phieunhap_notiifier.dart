@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/data/models/phieunhap_model.dart';
-import 'package:pm_ketoan/data/repository/phieunhap_repository.dart';
-import 'package:pm_ketoan/data/repository/tuychon_repository.dart';
+import 'package:pm_ketoan/data/repository/nx_phieunhap_repository.dart';
+import 'package:pm_ketoan/data/repository/ht_tuychon_repository.dart';
 import 'package:string_validator/string_validator.dart';
 
 class PhieuNhapNotifier extends StateNotifier<PhieuNhapModel?> {
@@ -45,10 +45,13 @@ class PhieuNhapNotifier extends StateNotifier<PhieuNhapModel?> {
     final pTN = await rpTuyChon.getTnN();
     final pTC = await rpTuyChon.getTnC();
     final ts = await rpTuyChon.getTS();
-
+    final k = await  rpTuyChon.getQlKPC();
     if (lastP.isNotEmpty) {
       final num = int.parse(lastP.substring(1)) + 1;
       phieu = 'N${'0' * (6 - num.toString().length)}$num';
+    }
+    if(k==1){
+      changedKhoa(true);
     }
 
     return _rp.add(

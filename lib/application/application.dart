@@ -9,3 +9,4 @@ export 'user/user_provider.dart';
 export 'phieuxuat/phieuxuat_provider.dart';
 export 'phieuthu/phieuthu_provider.dart';
 export 'phieuchi/phieuchi_notifier.dart';
+export 'nhanvien/nhanvien_provider.dart';

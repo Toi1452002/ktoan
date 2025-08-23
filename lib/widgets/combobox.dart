@@ -1,4 +1,3 @@
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart' as mt;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -43,6 +42,7 @@ class _ComboboxState extends mt.State<Combobox> {
   final FocusNode focusDropDown = FocusNode();
   final FocusNode focusSearch = FocusNode();
   bool isOpen = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -76,7 +76,7 @@ class _ComboboxState extends mt.State<Combobox> {
         onChanged: widget.enabled ? widget.onChanged : null,
         customButton: OutlinedContainer(
           borderWidth: widget.noBorder ? 0 : 1,
-          backgroundColor: Colors.transparent,
+          backgroundColor: widget.noBorder ? Colors.transparent : context.theme.colorScheme.muted,
           // borderColor: Colors.transparent,
           borderColor: widget.noBorder
               ? Colors.transparent
@@ -92,7 +92,13 @@ class _ComboboxState extends mt.State<Combobox> {
                 onDoubleTap: widget.onDoubleTap,
                 child: Text(
                   selectString,
-                  style: TextStyle(color: !widget.enabled ? Colors.gray.shade400:widget.onDoubleTap == null ? Colors.black : Colors.red),
+                  style: TextStyle(
+                    color: !widget.enabled
+                        ? Colors.gray.shade400
+                        : widget.onDoubleTap == null
+                        ? Colors.black
+                        : Colors.red,
+                  ),
                 ),
               ),
               Spacer(),

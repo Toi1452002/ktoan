@@ -113,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  data_table_2:
+    dependency: "direct main"
+    description:
+      name: data_table_2
+      sha256: b8dd157e4efe5f2beef092c9952a254b2192cf76a26ad1c6aa8b06c8b9d665da
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.6.0"
   data_widget:
     dependency: transitive
     description:
@@ -673,10 +681,10 @@ packages:
     dependency: "direct main"
     description:
       name: shadcn_flutter
-      sha256: "979a86e203eb1fb139e8b5c84b49b17b28808804cbff189b43052d56ba6854b5"
+      sha256: "4a4dff36252101f344c77fd659d791c52c808cfe3ab68deea4ea949d942d9e5b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.37"
+    version: "0.0.39"
   shared_preferences:
     dependency: transitive
     description:

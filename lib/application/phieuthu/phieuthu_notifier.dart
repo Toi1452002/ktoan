@@ -4,22 +4,20 @@ import 'package:pm_ketoan/data/data.dart';
 import '../../core/core.dart';
 
 class PhieuThuNotifier extends StateNotifier<PhieuThuModel?> {
-  PhieuThuNotifier() : super(null) {
-    get();
-  }
+  PhieuThuNotifier() : super(null);
 
   final _rp = PhieuThuRepository();
 
-  Future<int> get() async {
-    final data = await _rp.get();
+  Future<int> get({int? stt}) async {
+    final data = await _rp.get(stt: stt);
     final num = await _rp.getNumRow();
     if (data.isNotEmpty) {
       state = PhieuThuModel.fromMap(data).copyWith(Count: num);
       return state!.ID!;
-    }else{
-      state =  null;
+    } else {
+      state = null;
     }
-    return  0;
+    return 0;
   }
 
   Future<int> movePage(int stt, int type) async {
@@ -40,11 +38,15 @@ class PhieuThuNotifier extends StateNotifier<PhieuThuModel?> {
     final lastP = await _rp.getMaPhieuCuoi();
     final pTN = await rpTuyChon.getPtN();
     final pTC = await rpTuyChon.getPtC();
+    final k = await  rpTuyChon.getQlKPC();
+
     if (lastP.isNotEmpty) {
       final num = int.parse(lastP.substring(1)) + 1;
       phieu = 'T${'0' * (6 - num.toString().length)}$num';
     }
-
+    if(k==1){
+      updatedKhoa(true);
+    }
     return _rp.add(
       PhieuThuModel(
         Ngay: Helper.sqlDateTimeNow(),
@@ -103,9 +105,9 @@ class PhieuThuNotifier extends StateNotifier<PhieuThuModel?> {
 
   Future<void> updatedSoTien(double val, {bool notifier = false}) async {
     await _rp.updateSoTien(val, state!.ID!);
-    if(notifier){
+    if (notifier) {
       state = state?.copyWith(SoTien: val);
-    }else{
+    } else {
       state?.SoTien = val;
     }
   }

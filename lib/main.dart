@@ -41,7 +41,7 @@ class MyApp extends ConsumerWidget {
     return ShadcnApp(
       home: isLogin ==null ? LoginView() : HomeView(),
       theme: ThemeData(
-        colorScheme: ColorSchemes.lightBlue(),
+        colorScheme: ColorSchemes.lightBlue,
         typography: Typography.geist(
           base: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Arial'),
           medium: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),

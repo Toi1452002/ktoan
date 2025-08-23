@@ -12,7 +12,7 @@ class PhieuXuatNotifier extends StateNotifier<PhieuXuatModel?> {
   final _rp = PhieuXuatRepository();
 
   Future<int> getPhieuXuat({int? stt}) async {
-    final data = await _rp.get();
+    final data = await _rp.get(stt: stt);
     final num = await _rp.getNumRow();
     if (data.isNotEmpty) {
       state = PhieuXuatModel.fromMap(data).copyWith(countRow: num.toString());
@@ -44,12 +44,15 @@ class PhieuXuatNotifier extends StateNotifier<PhieuXuatModel?> {
     final pTN = await rpTuyChon.getTnN();
     final pTC = await rpTuyChon.getTnC();
     final ts = await rpTuyChon.getTS();
+    final k = await  rpTuyChon.getQlKPC();
 
     if (lastP.isNotEmpty) {
       final num = int.parse(lastP.substring(1)) + 1;
       phieu = 'X${'0' * (6 - num.toString().length)}$num';
     }
-
+    if(k==1){
+      changedKhoa(true);
+    }
     return _rp.add(
       PhieuXuatModel(
         Ngay: Helper.sqlDateTimeNow(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as sh;
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 export 'dialog_funtion.dart';
 
@@ -29,7 +30,7 @@ class _DialogWindowsState extends State<DialogWindows> {
   Offset _offset = const Offset(100, 100); // Vị trí ban đầu của dialog
 
   void _close() {
-    if(widget.onClose!=null){
+    if (widget.onClose != null) {
       widget.onClose;
     }
     Navigator.pop(context);
@@ -86,11 +87,10 @@ class _DialogWindowsState extends State<DialogWindows> {
                             padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Row(
                               children: [
-                                Icon(PhosphorIcons.appWindow(),color: Colors.blue.shade700,),
-                                SizedBox(width: 5,),
+                                Icon(PhosphorIcons.appWindow(), color: Colors.blue.shade700),
+                                SizedBox(width: 5),
                                 Text(widget.title, style: Theme.of(context).textTheme.labelMedium),
                                 const Spacer(),
-
                                 Material(
                                   color: Colors.transparent,
                                   child: SizedBox(

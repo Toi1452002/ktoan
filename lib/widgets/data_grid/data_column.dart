@@ -7,7 +7,7 @@ enum ColumnAlign { left, center, right }
 
 enum TypeRender { numIndex, delete }
 
-enum CellColor { red, blue ,black}
+enum TextColor { red, blue, black }
 
 class DataGridColumn {
   final List<String> title;
@@ -16,10 +16,12 @@ class DataGridColumn {
   final double width;
   final bool isEdit;
   final TypeRender? render;
-  final CellColor? cellColor;
+  final TextColor? textColor;
   final void Function(dynamic value, TrinaColumnRendererContext? event)? onTapDelete;
   final Widget Function(TrinaColumnRendererContext)? renderer;
   final double? padding;
+  final Color? headerColor;
+  final bool showFooter;
 
   const DataGridColumn({
     required this.title,
@@ -28,9 +30,11 @@ class DataGridColumn {
     this.columnAlign = ColumnAlign.left,
     this.isEdit = false,
     this.render,
-    this.cellColor,
+    this.textColor,
     this.onTapDelete,
     this.renderer,
     this.padding,
+    this.headerColor,
+    this.showFooter = false,
   });
 }

@@ -46,6 +46,7 @@ class Helper {
 
   static String yMd(dynamic date) {
     if (date.runtimeType == DateTime) {
+
       return DateFormat('yyyy-MM-dd').format(date);
     }
     if (date.runtimeType == String) {

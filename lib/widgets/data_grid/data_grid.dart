@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/widgets/data_grid/button_filter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
 import 'package:string_validator/string_validator.dart';
@@ -18,6 +19,8 @@ class DataGrid extends StatefulWidget {
   final void Function(TrinaGridOnChangedEvent)? onChange;
   final Color Function(TrinaRowColorContext)? rowColorCallback;
   final TrinaGridMode mode;
+  final List<TrinaColumnGroup>? columnGroups;
+  final double? columnHeight;
 
   const DataGrid({
     super.key,
@@ -28,6 +31,8 @@ class DataGrid extends StatefulWidget {
     this.onChange,
     this.rowColorCallback,
     this.mode = TrinaGridMode.normal,
+    this.columnGroups,
+    this.columnHeight,
   });
 
   @override
@@ -108,13 +113,13 @@ class _DataGridState extends State<DataGrid> {
           cellPadding = EdgeInsets.zero;
         }
 
-        if (e.cellColor == CellColor.red) {
+        if (e.textColor == TextColor.red) {
           renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.red.shade600)).medium;
         }
-        if (e.cellColor == CellColor.blue) {
+        if (e.textColor == TextColor.blue) {
           renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.blue.shade900)).medium;
         }
-        if (e.cellColor == CellColor.black) {
+        if (e.textColor == TextColor.black) {
           renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.black)).medium;
         }
         if (e.render != TypeRender.delete && e.render != TypeRender.numIndex) {
@@ -138,16 +143,21 @@ class _DataGridState extends State<DataGrid> {
             }
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 4),
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: filters.isEmpty
-                    ? Colors.blue.shade200
-                    : (filters[re.column.field]!.isEmpty ? Colors.blue.shade200 : Colors.green.shade200),
+                    ? e.headerColor ?? Colors.blue.shade200
+                    : (filters[re.column.field]!.isEmpty
+                          ? e.headerColor ?? Colors.blue.shade200
+                          : Colors.green.shade200),
                 border: Border(right: BorderSide(width: .5)),
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(re.column.title).medium,
-                  Spacer(),
+                  if (!widget.hideFilter) Spacer(),
                   if (!widget.hideFilter)
                     ButtonFilter(
                       items: map,
@@ -183,14 +193,32 @@ class _DataGridState extends State<DataGrid> {
           field: e.title.last,
           type: type,
           width: e.width,
-
+          footerRenderer: !e.showFooter
+              ? null
+              : (rendererContext) {
+                  return TrinaAggregateColumnFooter(
+                    rendererContext: rendererContext,
+                    type: TrinaAggregateColumnType.sum,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    // numberFormat: NumberFormat('#,###.##'),
+                    titleSpanBuilder: (text) {
+                      return [
+                        TextSpan(
+                          text: text,
+                          style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.w600),
+                        ),
+                      ];
+                    },
+                  );
+                },
           enableColumnDrag: false,
           enableContextMenu: false,
           enableDropToResize: false,
           enableFilterMenuItem: false,
           enableSorting: false,
           enableAutoEditing: true,
-          backgroundColor: Colors.blue.shade300,
+          backgroundColor: e.headerColor,
           textAlign: textAlign,
           enableEditingMode: e.isEdit,
           cellPadding: cellPadding,
@@ -198,6 +226,7 @@ class _DataGridState extends State<DataGrid> {
         );
       }).toList(),
       rows: [],
+      columnGroups: widget.columnGroups,
       configuration: TrinaGridConfiguration(
         tabKeyAction: TrinaGridTabKeyAction.moveToNextOnEdge,
         enterKeyAction: TrinaGridEnterKeyAction.editingAndMoveRight,
@@ -216,7 +245,7 @@ class _DataGridState extends State<DataGrid> {
           borderColor: context.theme.colorScheme.mutedForeground,
           gridBorderRadius: BorderRadius.circular(2),
           activatedBorderColor: context.theme.colorScheme.primary,
-          columnHeight: 25,
+          columnHeight: widget.columnHeight ?? 25,
           activatedColor: context.theme.colorScheme.primary.withValues(alpha: .1),
           rowHeight: 25,
           columnTextStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.black),
@@ -242,6 +271,14 @@ class _DataGridState extends State<DataGrid> {
         } else {
           return e.toString();
         }
+      }).toList();
+    }
+
+    if (data.every((e) => e.contains('/') && e.length == 10)) {
+      List<DateTime?> x = data.map((e) => Helper.strToDate(e)).toList();
+      x.sort();
+      return x.map((e) {
+        return Helper.dMy(e);
       }).toList();
     }
     // if (isNgay) {

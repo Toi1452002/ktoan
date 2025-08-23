@@ -4,22 +4,20 @@ import 'package:pm_ketoan/data/data.dart';
 import '../../core/utils/helper.dart';
 
 class PhieuChiNotifier extends StateNotifier<PhieuChiModel?> {
-  PhieuChiNotifier() : super(null){
-    get();
-  }
+  PhieuChiNotifier() : super(null);
 
   final _rp = PhieuChiRepository();
 
-  Future<int> get() async {
-    final data = await _rp.get();
+  Future<int> get({int? stt}) async {
+    final data = await _rp.get(stt: stt);
     final num = await _rp.getNumRow();
     if (data.isNotEmpty) {
       state = PhieuChiModel.fromMap(data).copyWith(Count: num);
       return state!.ID!;
-    }else{
-      state =  null;
+    } else {
+      state = null;
     }
-    return  0;
+    return 0;
   }
 
   Future<int> movePage(int stt, int type) async {
@@ -40,12 +38,15 @@ class PhieuChiNotifier extends StateNotifier<PhieuChiModel?> {
     final lastP = await _rp.getMaPhieuCuoi();
     final pCN = await rpTuyChon.getPcN();
     final pCC = await rpTuyChon.getPcC();
+    final k = await rpTuyChon.getQlKPC();
 
     if (lastP.isNotEmpty) {
       final num = int.parse(lastP.substring(1)) + 1;
       phieu = 'C${'0' * (6 - num.toString().length)}$num';
     }
-
+    if (k == 1) {
+      updatedKhoa(true);
+    }
     return _rp.add(
       PhieuChiModel(
         Ngay: Helper.sqlDateTimeNow(),
@@ -59,15 +60,19 @@ class PhieuChiNotifier extends StateNotifier<PhieuChiModel?> {
       ).toMap(),
     );
   }
+
   Future<bool> delete(int id) async => await _rp.delete(id);
+
   Future<void> updatedKhoa(bool val) async {
     await _rp.updateKhoa(val ? 1 : 0, state!.ID!);
     state = state?.copyWith(Khoa: val);
   }
+
   Future<void> updatedNgay(String ngay) async {
     await _rp.updateNgay(ngay, state!.ID!);
     state = state?.copyWith(Ngay: ngay);
   }
+
   Future<void> updateMaKhach(String maKhach, String tenKhach, String diaChi) async {
     await _rp.updateMaKhach(maKhach, tenKhach, diaChi, state!.ID!);
     state = state?.copyWith(MaKhach: maKhach, TenKhach: tenKhach, DiaChi: diaChi);
@@ -77,6 +82,7 @@ class PhieuChiNotifier extends StateNotifier<PhieuChiModel?> {
     await _rp.updateMaNV(maNV, tenKhach, diaChi, state!.ID!);
     state = state?.copyWith(MaNV: maNV, TenKhach: tenKhach, DiaChi: diaChi);
   }
+
   Future<void> updatedKChi(String val) async {
     await _rp.updateKChi(val, state!.ID!);
     state = state?.copyWith(MaTC: val);
@@ -91,19 +97,22 @@ class PhieuChiNotifier extends StateNotifier<PhieuChiModel?> {
     await _rp.updateDiaChi(val, state!.ID!);
     state?.DiaChi = val;
   }
+
   Future<void> updatedNguoiNhan(String val) async {
     await _rp.updateNguoiNhan(val, state!.ID!);
-    state?.NguoiNhan= val;
+    state?.NguoiNhan = val;
   }
+
   Future<void> updatedNguoiChi(String val) async {
     await _rp.updateNguoiChi(val, state!.ID!);
     state?.NguoiChi = val;
   }
+
   Future<void> updatedSoTien(double val, {bool notifier = false}) async {
     await _rp.updateSoTien(val, state!.ID!);
-    if(notifier){
+    if (notifier) {
       state = state?.copyWith(SoTien: val);
-    }else{
+    } else {
       state?.SoTien = val;
     }
   }

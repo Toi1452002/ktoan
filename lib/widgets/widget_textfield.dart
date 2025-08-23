@@ -97,7 +97,7 @@ class _WidgetTextFieldState extends State<WidgetTextField> {
       style: TextStyle(
         color: widget.enabled ? Colors.black : Colors.gray.shade400
       ),
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
       inputFormatters: [
         if (widget.isUpperCase) TextInputFormatters.toUpperCase,
         if (widget.isNumber) FilteringTextInputFormatter.allow(RegExp(r'[\d\,]')),
