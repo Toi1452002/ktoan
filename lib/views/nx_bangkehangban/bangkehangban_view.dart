@@ -156,7 +156,7 @@ class _BangKeHangBanViewState extends ConsumerState<BangKeHangBanView> {
         hideFilter: hideFilter,
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['Mã hàng', 'MaHH'], width: 100, textColor: TextColor.blue),
+          DataGridColumn(title: ['Mã hàng', 'MaHH'], width: 100, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 300),
           DataGridColumn(title: ['ĐVT', 'DVT'], width: 80),
           DataGridColumn(title: ['Số lg', 'SoLg'], width: 80, columnType: ColumnType.num),

@@ -11,13 +11,8 @@ class SoTienRepository {
   Future<List<Map<String, dynamic>>> getSoTienMat({String? tN, String? dN}) async {
     if (tN == 'null') tN = Helper.yMd(DateTime.now().copyWith(day: 1));
     if (dN == 'null') dN = Helper.sqlDateTimeNow();
-    final rp = await _cnn.getListMap(soTienMat, where: "Ngay BETWEEN '$tN' AND '$dN'");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.data);
-      return [];
-    }
+    return await _cnn.getListMap(soTienMat, where: "Ngay BETWEEN '$tN' AND '$dN'");
+
   }
 
   Future<Map<String, dynamic>> getTonSoTienMat({String? tN, String? dN}) async {
@@ -39,13 +34,8 @@ class SoTienRepository {
   Future<List<Map<String, dynamic>>> getSoTienGui({String? tN, String? dN}) async {
     if (tN == 'null') tN = Helper.yMd(DateTime.now().copyWith(day: 1));
     if (dN == 'null') dN = Helper.sqlDateTimeNow();
-    final rp = await _cnn.getListMap(soTienGui, where: "Ngay BETWEEN '$tN' AND '$dN'");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.data);
-      return [];
-    }
+    return await _cnn.getListMap(soTienGui, where: "Ngay BETWEEN '$tN' AND '$dN'");
+
   }
 
   Future<Map<String, dynamic>> getTonSoTienGui({String? tN, String? dN}) async {

@@ -144,7 +144,7 @@ class _SoMuaHangViewState extends ConsumerState<SoMuaHangView> {
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
           DataGridColumn(title: ['Ngày', 'Ngay'], width: 90, columnType: ColumnType.date),
-          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 90, textColor: TextColor.red),
+          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 90, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Tên hàng hóa', 'TenHH'], width: 250),
           DataGridColumn(title: ['ĐVT', 'DVT'], width: 80),
           DataGridColumn(title: ['Số lg', 'SoLg'], width: 80,columnType: ColumnType.num),

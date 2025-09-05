@@ -67,13 +67,13 @@ class _DataGridState extends State<DataGrid> {
         Widget Function(TrinaColumnRendererContext)? renderer = e.renderer;
         EdgeInsets? cellPadding = e.padding == null ? null : EdgeInsets.all(e.padding!);
         Widget Function(TrinaColumnTitleRendererContext)? titleRenderer;
-        if (e.columnType == ColumnType.num) type = TrinaColumnType.number();
+        if (e.columnType == ColumnType.num) type = TrinaColumnType.number(format: '#,###.#');
         if (e.columnType == ColumnType.date) type = TrinaColumnType.date(format: 'dd/MM/yyyy');
-        if (e.columnAlign == ColumnAlign.center) textAlign = TrinaColumnTextAlign.center;
+
         if (e.columnAlign == ColumnAlign.right || e.columnType == ColumnType.num) {
           textAlign = TrinaColumnTextAlign.right;
         }
-
+        if (e.columnAlign == ColumnAlign.center) textAlign = TrinaColumnTextAlign.center;
         if (e.render == TypeRender.numIndex) {
           renderer = (re) => Container(
             alignment: Alignment.center,
@@ -112,15 +112,12 @@ class _DataGridState extends State<DataGrid> {
           );
           cellPadding = EdgeInsets.zero;
         }
-
-        if (e.textColor == TextColor.red) {
-          renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.red.shade600)).medium;
-        }
-        if (e.textColor == TextColor.blue) {
-          renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.blue.shade900)).medium;
-        }
-        if (e.textColor == TextColor.black) {
-          renderer = (re) => Text(re.cell.value, style: TextStyle(fontSize: 13, color: Colors.black)).medium;
+        if (e.textStyle != null) {
+          renderer = (re) => Text(
+            e.columnType == ColumnType.text ? re.cell.value : Helper.numFormat(re.cell.value),
+            textAlign: e.columnType == ColumnType.text ? TextAlign.left : TextAlign.end,
+            style: e.textStyle,
+          );
         }
         if (e.render != TypeRender.delete && e.render != TypeRender.numIndex) {
           titleRenderer = (re) {
@@ -156,7 +153,7 @@ class _DataGridState extends State<DataGrid> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(re.column.title).medium,
+                  Text(re.column.title, textAlign: TextAlign.center).medium,
                   if (!widget.hideFilter) Spacer(),
                   if (!widget.hideFilter)
                     ButtonFilter(
@@ -188,11 +185,13 @@ class _DataGridState extends State<DataGrid> {
         }
 
         return TrinaColumn(
+          frozen: e.frozen ? TrinaColumnFrozen.start : TrinaColumnFrozen.none,
           renderer: renderer,
           title: e.title.first,
           field: e.title.last,
           type: type,
           width: e.width,
+
           footerRenderer: !e.showFooter
               ? null
               : (rendererContext) {
@@ -201,15 +200,6 @@ class _DataGridState extends State<DataGrid> {
                     type: TrinaAggregateColumnType.sum,
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.symmetric(horizontal: 5),
-                    // numberFormat: NumberFormat('#,###.##'),
-                    titleSpanBuilder: (text) {
-                      return [
-                        TextSpan(
-                          text: text,
-                          style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.w600),
-                        ),
-                      ];
-                    },
                   );
                 },
           enableColumnDrag: false,
@@ -250,7 +240,7 @@ class _DataGridState extends State<DataGrid> {
           rowHeight: 25,
           columnTextStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.black),
           rowColor: context.theme.colorScheme.popover,
-          cellTextStyle: TextStyle(fontSize: 13, color: context.theme.colorScheme.foreground),
+          cellTextStyle: TextStyle(fontSize: 12, color: context.theme.colorScheme.foreground),
           defaultCellPadding: const EdgeInsets.only(left: 3, right: 4),
         ),
       ),

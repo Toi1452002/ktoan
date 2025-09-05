@@ -7,7 +7,6 @@ enum ColumnAlign { left, center, right }
 
 enum TypeRender { numIndex, delete }
 
-enum TextColor { red, blue, black }
 
 class DataGridColumn {
   final List<String> title;
@@ -16,12 +15,13 @@ class DataGridColumn {
   final double width;
   final bool isEdit;
   final TypeRender? render;
-  final TextColor? textColor;
   final void Function(dynamic value, TrinaColumnRendererContext? event)? onTapDelete;
   final Widget Function(TrinaColumnRendererContext)? renderer;
   final double? padding;
   final Color? headerColor;
   final bool showFooter;
+  final bool frozen;
+  final TextStyle? textStyle;
 
   const DataGridColumn({
     required this.title,
@@ -30,11 +30,19 @@ class DataGridColumn {
     this.columnAlign = ColumnAlign.left,
     this.isEdit = false,
     this.render,
-    this.textColor,
     this.onTapDelete,
     this.renderer,
     this.padding,
     this.headerColor,
     this.showFooter = false,
+    this.frozen = false,
+    this.textStyle,
   });
+}
+
+class ColumnTextStyle {
+  static TextStyle red() => TextStyle(color: Colors.red.shade700, fontSize: 12, fontWeight: FontWeight.w400);
+
+  static TextStyle blue({FontWeight? fontWeight}) =>
+      TextStyle(color: Colors.blue.shade800, fontSize: 12, fontWeight: fontWeight ?? FontWeight.w400);
 }

@@ -98,7 +98,7 @@ class _BangKeHangXuatViewState extends ConsumerState<BangKeHangXuatView> {
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
           DataGridColumn(title: ['Ngày', 'Ngay'], width: 80, columnType: ColumnType.date),
-          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 80, textColor: TextColor.red),
+          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 80, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Kiểu', 'MaNX'], width: 70),
           DataGridColumn(title: ['Mã khách', 'MaKhach'], width: 100),
           DataGridColumn(title: ['Mã hàng', 'MaHH'], width: 120),

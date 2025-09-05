@@ -41,7 +41,7 @@ class _ThongTinDoanhNghiepViewState extends ConsumerState<ThongTinDoanhNghiepVie
         onChange: (event) => fc.onChanged(event),
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['Tiêu đề', 'TieuDe'], width: 300,textColor: TextColor.blue),
+          DataGridColumn(title: ['Tiêu đề', 'TieuDe'], width: 300,textStyle: ColumnTextStyle.blue()),
           DataGridColumn(title: ['Nội dung', 'NoiDung'], width: 690,isEdit: true),
         ],
       ).withPadding(all: 5),

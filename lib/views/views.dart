@@ -32,6 +32,7 @@ export 'kh_bangkehangxuat/bangkehangxuat_view.dart';
 export 'kh_nhapxuattonkho/nhapxuattonkho_view.dart';
 
 export 'tl_bangchamcong/bangchamcong_view.dart';
+export 'tl_bangluong/bangluong_view.dart';
 
 export 'ht_danhsachnguoidung/danhsachnguoidung_view.dart';
 export 'ht_thongtindoanhnghiep/thongtindoanhnghiep_view.dart';

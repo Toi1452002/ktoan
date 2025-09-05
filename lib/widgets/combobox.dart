@@ -17,6 +17,7 @@ class Combobox extends mt.StatefulWidget {
   final bool noBorder;
   final void Function()? onTap;
   final void Function()? onDoubleTap;
+  final double? sizeText;
 
   const Combobox({
     super.key,
@@ -31,6 +32,7 @@ class Combobox extends mt.StatefulWidget {
     this.noBorder = false,
     this.onTap,
     this.onDoubleTap,
+    this.sizeText,
   });
 
   @override
@@ -106,7 +108,7 @@ class _ComboboxState extends mt.State<Combobox> {
             ],
           ),
         ),
-        style: TextStyle(fontSize: 14, color: Colors.black),
+        style: TextStyle(fontSize: widget.sizeText ?? 14, color: Colors.black),
         value: widget.value,
         isExpanded: true,
         items: widget.items
@@ -120,7 +122,13 @@ class _ComboboxState extends mt.State<Combobox> {
                           for (int i = 0; i < widget.columnWidth!.length; i++)
                             MapEntry(i, mt.FixedColumnWidth(widget.columnWidth![i])),
                         ]),
-                  children: [mt.TableRow(children: e.text.map((e) => Text(e, softWrap: false)).toList())],
+                  children: [
+                    mt.TableRow(
+                      children: e.text
+                          .map((e) => Text(e, softWrap: false, style: TextStyle(fontSize: widget.sizeText ?? 13)))
+                          .toList(),
+                    ),
+                  ],
                 ),
               ),
             )
@@ -135,7 +143,7 @@ class _ComboboxState extends mt.State<Combobox> {
         ),
 
         menuItemStyleData: MenuItemStyleData(
-          height: 30,
+          height: 27,
           padding: EdgeInsets.symmetric(horizontal: 5),
           selectedMenuItemBuilder: (context, child) {
             return Container(color: Colors.blue.shade300, child: child);

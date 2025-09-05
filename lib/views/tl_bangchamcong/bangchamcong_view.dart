@@ -3,6 +3,7 @@ import 'package:pm_ketoan/views/tl_bangchamcong/bangchamcon_function.dart';
 import 'package:pm_ketoan/widgets/widgets.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:string_validator/string_validator.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 import '../../application/bangchamcong/bangchamcong_provider.dart';
@@ -29,7 +30,6 @@ class _BangChamCongViewState extends ConsumerState<BangChamCongView> {
   List<NhanVienModel> lstNhanVien = [];
   List<Map<String, dynamic>> lstMaCC = [];
 
-  // List<DataRow2> lstRows = [];
 
   @override
   void initState() {
@@ -54,10 +54,10 @@ class _BangChamCongViewState extends ConsumerState<BangChamCongView> {
       if (state.isNotEmpty) {
         stateManager.appendRows(
           state.map((e) {
-            Map<String, TrinaCell> cells = {'null': TrinaCell(value: ''), 'dl': TrinaCell(value: '')};
+            Map<String, TrinaCell> cells = {'null': TrinaCell(value: ''), 'dl': TrinaCell(value: e['ID'])};
             e.forEach((k, v) {
               if (k != 'Ngay' && k != 'ID') {
-                cells.addAll({k: TrinaCell(value: v??'')});
+                cells.addAll({k: TrinaCell(value: v ?? '')});
               }
             });
             return TrinaRow(cells: cells);
@@ -110,11 +110,29 @@ class _BangChamCongViewState extends ConsumerState<BangChamCongView> {
         columnHeight: 40,
         onLoaded: (e) => stateManager = e.stateManager,
         columns: [
-          DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['', 'dl'], width: 25, render: TypeRender.delete),
-          DataGridColumn(title: ['Mã NV', 'MaNV'], width: 70),
-          DataGridColumn(title: ['Tên nhân viên', 'HoTen'], width: 120),
-          DataGridColumn(title: ['Cộng', 'TongCong'], width: 70, columnType: ColumnType.num),
+          DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex,frozen: true),
+          DataGridColumn(title: ['', 'dl'], width: 25, render: TypeRender.delete,frozen: true,onTapDelete: (val, re)=>fc.delete(ref, val,re!)),
+          DataGridColumn(
+            padding: 0,
+            title: ['Mã NV', 'MaNV'],frozen: true,
+            width: 90,
+            renderer: (re) {
+              return Combobox(
+                value: re.cell.value == '' ? null : re.cell.value,
+                noBorder: true,
+                noSearch: false,
+                menuWidth: 230,
+                columnWidth: [90, 140],
+                items: lstNhanVien.map((e) => ComboboxItem(value: e.MaNV, text: [e.MaNV, e.HoTen!])).toList(),
+                onChanged: (val) {
+                  re.cell.value = val;
+                  fc.onChangedMaNV(ref, re, selectThang, txtNam.text);
+                },
+              );
+            },
+          ),
+          DataGridColumn(title: ['Tên nhân viên', 'HoTen'], width: 140,frozen: true),
+          DataGridColumn(title: ['Cộng', 'TongCong'], width: 70, columnType: ColumnType.num,frozen: true),
           ...[
             for (int i = 1; i <= 31; i++)
               DataGridColumn(
@@ -123,15 +141,20 @@ class _BangChamCongViewState extends ConsumerState<BangChamCongView> {
                   'N$i',
                 ],
                 width: 60,
+                padding: 0,
                 renderer: (re) {
+                  if (re.cell.column.title == '') return SizedBox();
                   return Combobox(
                     value: re.cell.value == '' ? null : re.cell.value,
-                    menuWidth: 50,
+                    // menuWidth: 50,
                     items: lstMaCC.map((e) => ComboboxItem(value: e['Ma'], text: [e['Ma']])).toList(),
                     onChanged: (val) {
                       re.cell.value = val;
+                      final gt = lstMaCC.firstWhere((e)=>e['Ma']==val)['SoCong'];
+                      fc.onChangedN(ref, re, toDouble(gt.toString()), selectThang, txtNam.text);
+                      re.stateManager.notifyListeners();
                     },
-                    noSearch: false,
+                    noSearch: true,
                     noBorder: true,
                   );
                 },

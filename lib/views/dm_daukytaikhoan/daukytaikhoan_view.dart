@@ -1,11 +1,7 @@
-import 'package:pm_ketoan/widgets/data_grid/data_grid.dart';
-import 'package:pm_ketoan/widgets/dialog_windows/dialog_funtion.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trina_grid/trina_grid.dart';
-import 'package:flutter/material.dart' as mt;
-
-import '../../core/utils/helper.dart';
+import '../../widgets/widgets.dart';
 import 'daukytaikhoan_function.dart';
 
 class DauKyBTKView extends ConsumerStatefulWidget {
@@ -15,7 +11,7 @@ class DauKyBTKView extends ConsumerStatefulWidget {
   static const name = "Đầu kỳ tài khoản";
 
   static void show(BuildContext context) {
-    showCustomDialog(context, title: title.toUpperCase(), width: 760, height: 600, child: DauKyBTKView());
+    showCustomDialog(context, title: title.toUpperCase(), width: 700, height: 600, child: DauKyBTKView());
   }
 
   @override
@@ -24,6 +20,8 @@ class DauKyBTKView extends ConsumerStatefulWidget {
 
 class _DauKyBTKViewState extends ConsumerState<DauKyBTKView> {
   late TrinaGridStateManager _stateManager;
+  int thang = DateTime.now().month;
+  final txtNam = TextEditingController(text: DateTime.now().year.toString());
   List<Map<String, dynamic>> data = [];
   final fc = DauKyBTKFunction();
 
@@ -43,7 +41,6 @@ class _DauKyBTKViewState extends ConsumerState<DauKyBTKView> {
           return TrinaRow(
             cells: {
               'null': TrinaCell(value: ''),
-              'Ngay': TrinaCell(value: e['Ngay']),
               'MaTK': TrinaCell(value: e['MaTK']),
               'TenTK': TrinaCell(value: e['TenTK']),
               'DKCo': TrinaCell(value: e['DKCo'] ?? 0),
@@ -63,11 +60,29 @@ class _DauKyBTKViewState extends ConsumerState<DauKyBTKView> {
       headers: [
         AppBar(
           padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+          leading: [
+            Gap(100),
+            Text('Tháng'),
+            Combobox(
+              value: thang,
+              items: [
+                for (int i = 1; i <= 12; i++) ComboboxItem(value: i, text: ['$i']),
+              ],
+              onChanged: (val) {
+                setState(() {
+                  thang = val;
+                });
+              },
+            ).sized(width: 60),
+            Gap(10),
+            Text('Năm'),
+            WidgetTextField(controller: txtNam, isNumber: true).sized(width: 60),
+          ],
           trailing: [
             TextButton(
-              child: Text('Cập nhật'),
+              child: Text('Thực hiện lưu đầu kỳ'),
               onPressed: () async {
-                final result = await fc.isCapNhat(_stateManager);
+                final result = await fc.isCapNhat(_stateManager, DateTime(int.parse(txtNam.text), thang));
                 if (!result) loadData();
               },
             ),
@@ -78,47 +93,23 @@ class _DauKyBTKViewState extends ConsumerState<DauKyBTKView> {
         onLoaded: (e) => _stateManager = e.stateManager,
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(
-            title: ['Ngày', 'Ngay'],
-            width: 85,
-            columnType: ColumnType.date,
-            renderer: (re) {
-              return mt.InkWell(
-                onTap: () async {
-                  re.stateManager.setKeepFocus(true);
-                  re.stateManager.setCurrentCell(re.cell, re.rowIdx);
-                  final x = Helper.strToDate(re.cell.value);
-                  final date = await mt.showDatePicker(
-                    builder: (context, child) {
-                      return mt.Theme(
-                        data: mt.ThemeData(
-                          colorSchemeSeed: Colors.blue,
-                          datePickerTheme: mt.DatePickerThemeData(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-                          ),
-                        ),
-                        child: child!,
-                      );
-                    },
-                    context: context,
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(3000),
-                    initialDate: x,
-                  );
-                  if (date != null) {
-                    re.row.cells['Ngay']?.value = Helper.dMy(date);
-                    _stateManager.notifyListeners();
-                  }
-                },
-                child: Text(re.cell.value).medium,
-              );
-            },
-          ),
-          DataGridColumn(title: ['Mã TK', 'MaTK'], width: 80, textColor: TextColor.blue),
-          DataGridColumn(title: ['Mô tả tài khoản', 'TenTK'], width: 290, textColor: TextColor.blue),
+          DataGridColumn(title: ['Mã TK', 'MaTK'], width: 80, textStyle: ColumnTextStyle.blue()),
+          DataGridColumn(title: ['Mô tả tài khoản', 'TenTK'], width: 290, textStyle: ColumnTextStyle.blue()),
           DataGridColumn(title: ['TC', 'TinhChat'], width: 50, isEdit: true),
-          DataGridColumn(title: ['Đầu kỳ nợ', 'DKNo'], width: 100, isEdit: true, columnType: ColumnType.num,showFooter: true),
-          DataGridColumn(title: ['Đầu kỳ có', 'DKCo'], width: 100, isEdit: true, columnType: ColumnType.num, showFooter: true),
+          DataGridColumn(
+            title: ['Đầu kỳ nợ', 'DKNo'],
+            width: 100,
+            isEdit: true,
+            columnType: ColumnType.num,
+            showFooter: true,
+          ),
+          DataGridColumn(
+            title: ['Đầu kỳ có', 'DKCo'],
+            width: 100,
+            isEdit: true,
+            columnType: ColumnType.num,
+            showFooter: true,
+          ),
         ],
       ).withPadding(all: 5),
     );

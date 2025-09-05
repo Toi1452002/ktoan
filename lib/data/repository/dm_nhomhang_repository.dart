@@ -6,51 +6,26 @@ class NhomhangRepository {
 
   final _baseData = BaseRepository();
   Future<List<Map<String, dynamic>>> getList() async {
-    final rp = await _baseData.getListMap(name);
-    if(rp.status == ResponseType.success){
-      return rp.data;
-    }else{
-      print(rp.message);
-      return [];
-    }
+    return await _baseData.getListMap(name);
+
   }
 
   Future<int> add(Map<String, dynamic> map) async {
-    final rp = await _baseData.addMap(name, map);
-    if(rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      Exception(rp.message);
-      return 0;
-    }
+    return await _baseData.addMap(name, map);
+
   }
   Future<bool> update(Map<String, dynamic> map) async {
-    final rp = await _baseData.updateMap(name, map,where: "ID = ?",whereArgs: [map["ID"]]);
-    if(rp.status == ResponseType.success){
-      return true;
-    }else{
-      print(rp.message);
-      return false;
-    }
+    return await _baseData.updateMap(name, map,where: "ID = ?",whereArgs: [map["ID"]]);
+
   }
   Future<bool> delete(int id) async {
-    final rp =  await _baseData.delete(name, where: "ID = ?",whereArgs: [id]);
-    if(rp.status == ResponseType.success) {
-      return true;
-    } else {
-      Exception(rp.message);
-      return false;
-    }
+    return await _baseData.delete(name, where: "ID = ?",whereArgs: [id]);
+
   }
 
   Future<List<Map<String, dynamic>>> getNhomHang() async {
-    final rp = await _baseData.getListMap(name, orderBy: 'NhomHang');
-    if(rp.status == ResponseType.success){
-      return rp.data;
-    }else{
-      print(rp.message);
-      return [];
-    }
+    return await _baseData.getListMap(name, orderBy: 'NhomHang');
+
   }
 
 }

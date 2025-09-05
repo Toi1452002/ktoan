@@ -8,33 +8,18 @@ class PhanQuyenRepository {
   final _cnn = BaseRepository();
 
   Future<List<Map<String, dynamic>>> getListMC1(String userName) async {
-    final rp = await _cnn.getListMap(mc1, where: "Username = '$userName' AND ChoPhep == 0", columns: ['MaC1']);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(mc1, where: "Username = '$userName' AND ChoPhep == 0", columns: ['MaC1']);
+
   }
 
   Future<List<Map<String, dynamic>>> getListMC2(String userName) async {
-    final rp = await _cnn.getListMap(mc2, where: "Username = '$userName' AND ChoPhep == 0", columns: ['MaC2']);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(mc2, where: "Username = '$userName' AND ChoPhep == 0", columns: ['MaC2']);
+
   }
 
   Future<List<Map<String, dynamic>>> getListHangMuc(String userName) async {
-    final rp = await _cnn.getListMap(hangMuc, where: "Username = '$userName' AND ChoPhep == 0", columns: ['TenForm']);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(hangMuc, where: "Username = '$userName' AND ChoPhep == 0", columns: ['TenForm']);
+
   }
 
   Future<int> getChoPhep(String userName, int type, String ma) async {
@@ -48,7 +33,7 @@ class PhanQuyenRepository {
   }
 
   Future<bool> updateChoPhep(String userName, int type, String ma, int value) async {
-    ResponseState state;
+    bool state;
     if (type == 0) {
       state = await _cnn.updateMap(mc1, {'ChoPhep': value}, where: "MaC1 = '$ma' AND UserName = '$userName'");
     } else if (type == 1) {
@@ -56,11 +41,6 @@ class PhanQuyenRepository {
     } else {
       state = await _cnn.updateMap(hangMuc, {'ChoPhep': value}, where: "TenForm = '$ma' AND UserName = '$userName'");
     }
-    if (state.status == ResponseType.success) {
-      return true;
-    } else {
-      errorSql(state.message);
-      return false;
-    }
+    return state;
   }
 }

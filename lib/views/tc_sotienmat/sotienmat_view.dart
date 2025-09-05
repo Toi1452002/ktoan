@@ -145,7 +145,7 @@ class _SoTienMatViewState extends ConsumerState<SoTienMatView> {
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
           DataGridColumn(title: ['Ngày', 'Ngay'], width: 90, columnType: ColumnType.date),
-          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 90, textColor: TextColor.red),
+          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 90, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Lý do', 'NoiDung'], width: 250),
           DataGridColumn(title: ['Kiểu', 'Kieu'], width: 100),
           DataGridColumn(title: ['PTTT', 'PTTT'], width: 80),

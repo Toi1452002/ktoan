@@ -5,12 +5,12 @@ import 'package:trina_grid/trina_grid.dart';
 import '../../widgets/widgets.dart';
 import 'sobanhang_function.dart';
 
-
 class SoBanHangView extends ConsumerStatefulWidget {
   static const name = "Sổ bán hàng";
 
   static void show(BuildContext context) =>
       showCustomDialog(context, title: name.toUpperCase(), width: 1000, height: 600, child: SoBanHangView());
+
   const SoBanHangView({super.key});
 
   @override
@@ -29,6 +29,7 @@ class _SoBanHangViewState extends ConsumerState<SoBanHangView> {
   List<Map<String, dynamic>> lstKH = [];
   final txtDKy = TextEditingController();
   final txtCKy = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -41,8 +42,8 @@ class _SoBanHangViewState extends ConsumerState<SoBanHangView> {
     setState(() {});
   }
 
-  void loadNo() async{
-    final data = await fc.getNo(maKhach: selectNC??'',tN: tuNgay, dN: denNgay);
+  void loadNo() async {
+    final data = await fc.getNo(maKhach: selectNC ?? '', tN: tuNgay, dN: denNgay);
     txtDKy.text = data.first;
     txtCKy.text = data.last;
   }
@@ -56,11 +57,14 @@ class _SoBanHangViewState extends ConsumerState<SoBanHangView> {
           leading: [
             WidgetIconButton(type: IconType.print),
             WidgetIconButton(type: IconType.excel),
-            WidgetIconButton(type: IconType.filter,onPressed: (){
-              setState(() {
-                hideFilter = !hideFilter;
-              });
-            },),
+            WidgetIconButton(
+              type: IconType.filter,
+              onPressed: () {
+                setState(() {
+                  hideFilter = !hideFilter;
+                });
+              },
+            ),
             Gap(50),
             Row(
               children: [
@@ -128,29 +132,37 @@ class _SoBanHangViewState extends ConsumerState<SoBanHangView> {
             Gap(5),
             WidgetTextField(controller: txtTenKH, readOnly: true).sized(width: 250),
           ],
-          trailing: [Text('Nợ đầu kỳ').medium, WidgetTextField(controller: txtDKy,textAlign: TextAlign.end,readOnly: true,).sized(width: 150), Gap(20)],
+          trailing: [
+            Text('Nợ đầu kỳ').medium,
+            WidgetTextField(controller: txtDKy, textAlign: TextAlign.end, readOnly: true).sized(width: 150),
+            Gap(20),
+          ],
         ),
       ],
       footers: [
         AppBar(
           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          trailing: [Text('Nợ cuối kỳ').medium, WidgetTextField(controller: txtCKy,textAlign: TextAlign.end,readOnly: true).sized(width: 150), Gap(20)],
+          trailing: [
+            Text('Nợ cuối kỳ').medium,
+            WidgetTextField(controller: txtCKy, textAlign: TextAlign.end, readOnly: true).sized(width: 150),
+            Gap(20),
+          ],
         ),
       ],
       child: DataGrid(
         hideFilter: hideFilter,
         onLoaded: (e) => stateManager = e.stateManager,
-        onRowDoubleTap: (event)=>fc.showInfo(event, ref, context),
+        onRowDoubleTap: (event) => fc.showInfo(event, ref, context),
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
           DataGridColumn(title: ['Ngày', 'Ngay'], width: 90, columnType: ColumnType.date),
-          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 90, textColor: TextColor.red),
+          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 90, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Tên hàng hóa', 'TenHH'], width: 250),
           DataGridColumn(title: ['ĐVT', 'DVT'], width: 80),
-          DataGridColumn(title: ['Số lg', 'SoLg'], width: 80,columnType: ColumnType.num),
-          DataGridColumn(title: ['Đơn giá', 'DonGia'], width: 120,columnType: ColumnType.num),
-          DataGridColumn(title: ['Thành tiền', 'No'], width: 120,columnType: ColumnType.num,showFooter: true),
-          DataGridColumn(title: ['Thanh toán', 'Co'], width: 120,columnType: ColumnType.num,showFooter: true),
+          DataGridColumn(title: ['Số lg', 'SoLg'], width: 80, columnType: ColumnType.num),
+          DataGridColumn(title: ['Đơn giá', 'DonGia'], width: 120, columnType: ColumnType.num),
+          DataGridColumn(title: ['Thành tiền', 'No'], width: 120, columnType: ColumnType.num, showFooter: true),
+          DataGridColumn(title: ['Thanh toán', 'Co'], width: 120, columnType: ColumnType.num, showFooter: true),
         ],
       ).withPadding(all: 5),
     );

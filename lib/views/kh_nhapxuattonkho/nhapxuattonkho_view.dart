@@ -162,7 +162,7 @@ class _NhapXuatTonKhoViewState extends ConsumerState<NhapXuatTonKhoView> {
         ],
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 250, textColor: TextColor.blue),
+          DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 250, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['ĐVT', 'DVT'], width: 50),
           _buildColumn(['SL', 'SoTon'], 70, Colors.green.shade200),
           _buildColumn(['T.Tiền', 'TienDauKy'], 100, Colors.green.shade200),

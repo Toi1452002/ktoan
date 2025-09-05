@@ -26,32 +26,17 @@ class PhieuChiRepository {
   Future<List<Map<String, dynamic>>> getBangKePhieuChi({String? tN, String? dN}) async {
     if (tN == 'null') tN = Helper.yMd(DateTime.now().copyWith(day: 1));
     if (dN == 'null') dN = Helper.sqlDateTimeNow();
-    final rp = await _cnn.getListMap(view, where: "Ngay BETWEEN '$tN' AND '$dN'");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(view, where: "Ngay BETWEEN '$tN' AND '$dN'");
+
   }
   Future<bool> delete(int id) async {
-    final rp = await _cnn.delete(name, where: "ID = $id");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return false;
-    }
+    return await _cnn.delete(name, where: "ID = $id");
+
   }
 
   Future<int> add(Map<String, dynamic> map) async {
-    final rp = await _cnn.addMap(name, map);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      Exception(rp.message);
-      return 0;
-    }
+    return await _cnn.addMap(name, map);
+
   }
 
   Future<void> updateKhoa(int value, int id) async => await _cnn.updateMap(name, {'Khoa': value}, where: "ID = $id");

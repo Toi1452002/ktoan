@@ -30,3 +30,4 @@ export 'ht_thongtindoanhnghiep_repository.dart';
 export 'ht_phanquyen_repository.dart';
 
 export 'tl_bangchamcong_repository.dart';
+export 'tl_bangluong_repository.dart';

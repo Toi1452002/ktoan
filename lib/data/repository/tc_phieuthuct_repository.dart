@@ -6,41 +6,23 @@ class PhieuThuCTRepository {
   final _cnn = BaseRepository();
 
   Future<List<Map<String, dynamic>>> get(int maID) async {
-    final rp = await _cnn.getListMap(name, where: "MaID = ?", whereArgs: [maID]);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return [];
-    }
+    return await _cnn.getListMap(name, where: "MaID = ?", whereArgs: [maID]);
+
   }
 
   Future<bool> deleteRow(int id) async {
-    final rp = await _cnn.delete(name, where: 'ID =  $id');
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return false;
-    }
+    return await _cnn.delete(name, where: 'ID =  $id');
+
   }
 
   Future<int> addNoiDung(String val, int maID) async {
-    final rp = await _cnn.addMap(name, {'MaID': maID, 'DienGiai': val});
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      return 0;
-    }
+    return await _cnn.addMap(name, {'MaID': maID, 'DienGiai': val});
+
   }
 
   Future<int> addSoTien(double val, int maID) async {
-    final rp = await _cnn.addMap(name, {'MaID': maID, 'SoTien': val});
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      return 0;
-    }
+    return await _cnn.addMap(name, {'MaID': maID, 'SoTien': val});
+
   }
 
   Future<void> updateNoiDung(String val, int id) async {

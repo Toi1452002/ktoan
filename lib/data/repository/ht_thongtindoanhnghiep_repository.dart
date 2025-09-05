@@ -5,13 +5,8 @@ class ThongTinDoanhNghiepRepository {
   final _cnn = BaseRepository();
 
   Future<List<Map<String, dynamic>>> getList() async {
-    final rp = await _cnn.getListMap(name);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(name);
+
   }
 
   Future<void> updateCell(dynamic value, int id) async {

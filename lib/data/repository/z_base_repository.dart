@@ -3,7 +3,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../../core/core.dart';
 
 class BaseRepository {
-  Future<ResponseState> getListMap(
+  Future<List<Map<String, dynamic>>> getListMap(
     String name, {
     String? where,
     List<String>? columns,
@@ -13,26 +13,27 @@ class BaseRepository {
     try {
       final cnn = await connectData();
       final data = await cnn!.query(name, columns: columns, where: where, whereArgs: whereArgs, orderBy: orderBy);
-      return ResponseState(status: ResponseType.success, data: data);
+      return data;
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e.toString());
+      errorSql(e);
+      return [];
     }
   }
 
-  Future<ResponseState> getSQL(String sql) async {
+  Future<List<Map<String, dynamic>>> getSQL(String sql) async {
     try {
       final cnn = await connectData();
       final data = await cnn!.rawQuery(sql);
-      return ResponseState(status: ResponseType.success, data: data);
+      return data;
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e);
-    }
+      errorSql(e);
+      return [];    }
   }
 
-  Future<Map<String, dynamic>> getMap(String name, {String? where, List<Object?>? whereArgs, String? orderBy}) async {
+  Future<Map<String, dynamic>> getMap(String name, {String? where, List<Object?>? whereArgs, String? orderBy,List<String>? columns}) async {
     try {
       final cnn = await connectData();
-      final data = await cnn!.query(name, where: where, whereArgs: whereArgs, limit: 1, orderBy: orderBy);
+      final data = await cnn!.query(name, where: where,columns: columns, whereArgs: whereArgs, limit: 1, orderBy: orderBy);
       return data.isEmpty ? {} : data.first;
     } catch (e) {
       errorSql(e);
@@ -40,17 +41,18 @@ class BaseRepository {
     }
   }
 
-  Future<ResponseState> addMap(String name, Map<String, dynamic> map) async {
+  Future<int> addMap(String name, Map<String, dynamic> map) async {
     try {
       final cnn = await connectData();
       final result = await cnn!.insert(name, map);
-      return ResponseState(status: ResponseType.success, data: result);
+      return result;
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e);
+      errorSql(e);
+      return 0;
     }
   }
 
-  Future<ResponseState> updateMap(
+  Future<bool> updateMap(
     String name,
     Map<String, dynamic> map, {
     String? where,
@@ -59,19 +61,21 @@ class BaseRepository {
     try {
       final cnn = await connectData();
       await cnn!.update(name, map, where: where, whereArgs: whereArgs);
-      return ResponseState(status: ResponseType.success);
+      return true;
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e.toString());
+      errorSql(e);
+      return false;
     }
   }
 
-  Future<ResponseState> delete(String name, {String? where, List<Object?>? whereArgs}) async {
+  Future<bool> delete(String name, {String? where, List<Object?>? whereArgs}) async {
     try {
       final cnn = await connectData();
       await cnn!.delete(name, where: where, whereArgs: whereArgs);
-      return ResponseState(status: ResponseType.success, data: true);
+      return true;
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e.toString());
+      errorSql(e);
+      return false;
     }
   }
 
@@ -100,21 +104,18 @@ class BaseRepository {
     }
   }
 
-  Future<ResponseState> updateRows(String name, List<Map<String, dynamic>> data, String fieldWhere) async {
+  Future<bool> updateRows(String name, List<Map<String, dynamic>> data, String fieldWhere) async {
     try {
       final cnn = await connectData();
       final batch = cnn!.batch();
-      // for (var x in data) {
-      //   print("$name-$x-${x[fieldWhere]}");
-      //   await cnn.update(name, x, where: "$fieldWhere = '${x[fieldWhere]}'");
-      // }
       for (var x in data) {
         batch.update(name, x, where: "$fieldWhere = ?", whereArgs: [x[fieldWhere]]);
       }
       await batch.commit(noResult: true);
-      return ResponseState(status: ResponseType.success);
+      return true;
     } catch (e) {
-      return ResponseState(status: ResponseType.error, message: e);
+      errorSql(e);
+      return false;
     }
   }
 }
@@ -147,12 +148,12 @@ errorSql(Object e) {
   }
 }
 
-enum ResponseType { success, error }
-
-class ResponseState {
-  final ResponseType status;
-  final dynamic data;
-  final dynamic message;
-
-  const ResponseState({required this.status, this.message, this.data});
-}
+// enum ResponseType { success, error }
+//
+// class ResponseState {
+//   final ResponseType status;
+//   final dynamic data;
+//   final dynamic message;
+//
+//   const ResponseState({required this.status, this.message, this.data});
+// }

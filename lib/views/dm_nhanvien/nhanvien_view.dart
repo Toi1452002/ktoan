@@ -13,17 +13,24 @@ class NhanVienView extends ConsumerStatefulWidget {
   static void show(BuildContext context) =>
       showCustomDialog(context, title: name.toUpperCase(), width: 1030, height: 600, child: NhanVienView());
 
-  const  NhanVienView({super.key});
+  const NhanVienView({super.key});
 
   @override
   NhanVienViewState createState() => NhanVienViewState();
 }
 
 class NhanVienViewState extends ConsumerState<NhanVienView> {
-
   final fc = NhanVienFunction();
   late TrinaGridStateManager stateManager;
   bool hideFilter = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    ref.read(nhanVienProvider.notifier).get();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(nhanVienProvider, (_, state) {
@@ -32,8 +39,7 @@ class NhanVienViewState extends ConsumerState<NhanVienView> {
         stateManager.appendRows(
           state
               .map(
-                (e) =>
-                TrinaRow(
+                (e) => TrinaRow(
                   cells: {
                     'null': TrinaCell(value: ''),
                     'dl': TrinaCell(value: e.ID),
@@ -46,7 +52,7 @@ class NhanVienViewState extends ConsumerState<NhanVienView> {
                     'ChuyenMon': TrinaCell(value: e.ChuyenMon),
                   },
                 ),
-          )
+              )
               .toList(),
         );
       }
@@ -58,11 +64,14 @@ class NhanVienViewState extends ConsumerState<NhanVienView> {
           padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
           leading: [
             WidgetIconButton(type: IconType.add, onPressed: () => fc.showInfo(context)),
-            WidgetIconButton(type: IconType.filter, onPressed: () {
-              setState(() {
-                hideFilter =  !hideFilter;
-              });
-            }),
+            WidgetIconButton(
+              type: IconType.filter,
+              onPressed: () {
+                setState(() {
+                  hideFilter = !hideFilter;
+                });
+              },
+            ),
           ],
         ),
       ],
@@ -76,11 +85,13 @@ class NhanVienViewState extends ConsumerState<NhanVienView> {
         },
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['', 'dl'],
-              width: 25,
-              render: TypeRender.delete,
-              onTapDelete: (val, event) => fc.deleteNV(ref, val, event!)),
-          DataGridColumn(title: ['Mã NV', 'MaNV'], width: 100, textColor: TextColor.red),
+          DataGridColumn(
+            title: ['', 'dl'],
+            width: 25,
+            render: TypeRender.delete,
+            onTapDelete: (val, event) => fc.deleteNV(ref, val, event!),
+          ),
+          DataGridColumn(title: ['Mã NV', 'MaNV'], width: 100, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Họ tên', 'HoTen'], width: 200),
           DataGridColumn(title: ['Phái', 'Phai'], width: 80),
           DataGridColumn(title: ['Ngày sinh', 'NgaySinh'], width: 110, columnType: ColumnType.date),
@@ -92,4 +103,3 @@ class NhanVienViewState extends ConsumerState<NhanVienView> {
     );
   }
 }
-

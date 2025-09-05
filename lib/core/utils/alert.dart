@@ -24,7 +24,7 @@ class CustomAlert{
               preferMessageBox: true
           )
       ),
-      windowTitle: 'Success',
+      windowTitle: title,
       text: text,
       alertStyle: AlertButtonStyle.ok,
       iconStyle: IconStyle.none,

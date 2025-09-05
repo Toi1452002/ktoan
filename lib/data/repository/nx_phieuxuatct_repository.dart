@@ -8,13 +8,8 @@ class PhieuXuatCTRepository {
   final _baseData = BaseRepository();
 
   Future<List<Map<String, dynamic>>> get(int maID) async {
-    final rp = await _baseData.getListMap(view, where: "MaID = ?", whereArgs: [maID]);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return [];
-    }
+    return await _baseData.getListMap(view, where: "MaID = ?", whereArgs: [maID]);
+
   }
 
   Future<bool> updateMaHang(int ma, int id, {double soLg = 0}) async {
@@ -31,12 +26,7 @@ class PhieuXuatCTRepository {
       where: "ID = ?",
       whereArgs: [id],
     );
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      errorSql(rp.message!);
-      return false;
-    }
+    return rp;
   }
 
   Future<int> addMaHang(int idHH, int maID) async {
@@ -48,12 +38,7 @@ class PhieuXuatCTRepository {
       'DonGia': data['GiaBan'],
       'DVT': data['DVT'],
     });
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message!);
-      return 0;
-    }
+    return rp;
   }
 
   Future<void> updateTenHH(String val, int id) async {
@@ -85,12 +70,7 @@ class PhieuXuatCTRepository {
   }
 
   Future<bool> deleteRow(int id) async {
-    final rp = await _baseData.delete(name, where: 'ID =  $id');
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return false;
-    }
+    return await _baseData.delete(name, where: 'ID =  $id');
+
   }
 }

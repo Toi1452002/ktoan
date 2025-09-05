@@ -11,13 +11,8 @@ class DauKyRepository {
   final _cnn = BaseRepository();
 
   Future<List<Map<String, dynamic>>> getDauKyKhachHang() async {
-    final rp = await _cnn.getListMap(viewDkyKH, orderBy: 'Ngay');
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return [];
-    }
+    return await _cnn.getListMap(viewDkyKH, orderBy: 'Ngay');
+
   }
 
   Future<void> updateDauKyKhachhang(List<Map<String, dynamic>> data) async {
@@ -26,13 +21,8 @@ class DauKyRepository {
   }
 
   Future<List<Map<String, dynamic>>> getDauKyHangHoa() async {
-    final rp = await _cnn.getListMap(viewDkyHH, orderBy: 'Ngay');
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return [];
-    }
+    return await _cnn.getListMap(viewDkyHH, orderBy: 'Ngay');
+
   }
   Future<void> updateDauKyHangHoa(List<Map<String, dynamic>> data) async {
     await _cnn.delete(nameDkyHH);
@@ -41,16 +31,28 @@ class DauKyRepository {
 
 
   Future<List<Map<String, dynamic>>> getDauKyBTK() async {
-    final rp = await _cnn.getListMap(viewDkyBTK);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return [];
-    }
+    return await _cnn.getListMap(viewDkyBTK);
+
   }
   Future<void> updateDauKyBTK(List<Map<String, dynamic>> data) async {
-    await _cnn.delete(nameDkyBTK);
-    await _cnn.addRows(nameDkyBTK, data);
+    try{
+      final cnn = await connectData();
+      final batch = cnn!.batch();
+      // print(data);
+      for(var x in data){
+        final tmp = await _cnn.getMap(nameDkyBTK,where: "Thang = ? AND MaTK = ?",whereArgs: [x['Thang'], x['MaTK']]);
+        if(tmp.isNotEmpty){
+          batch.update(nameDkyBTK, x,where: "Thang = ? AND MaTK = ?",whereArgs: [x['Thang'], x['MaTK']]);
+        }else{
+          batch.insert(nameDkyBTK, x);
+        }
+      }
+      await batch.commit(noResult: true);
+    }catch(e){
+      errorSql(e);
+    }
+    // print(data);
+    // await _cnn.delete(nameDkyBTK);
+    // await _cnn.addRows(nameDkyBTK, data);
   }
 }

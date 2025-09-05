@@ -166,7 +166,7 @@ class _BangKeHoaDonMuaVaoViewState extends ConsumerState<BangKeHoaDonMuaVaoView>
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
           DataGridColumn(title: ['Ký hiệu', 'KyHieu'], width: 85),
-          DataGridColumn(title: ['Số HD', 'SoCT'], width: 80, textColor: TextColor.red),
+          DataGridColumn(title: ['Số HD', 'SoCT'], width: 80, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Ngày HD', 'NgayCT'], width: 100, columnType: ColumnType.date),
           DataGridColumn(title: ['Tên khách hàng', 'TenKH'], width: 300),
           DataGridColumn(title: ['Mã số thuế', 'MST'], width: 120),

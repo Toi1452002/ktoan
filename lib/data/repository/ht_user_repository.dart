@@ -24,47 +24,51 @@ class UserRepository {
   }
 
   Future<List<Map<String, dynamic>>> getList() async {
-    final rp = await _cnn.getListMap(
+    return await _cnn.getListMap(
       name,
       columns: ['ID', 'Username', 'HoTen', 'Email', 'DienThoai'],
       orderBy: 'Username',
     );
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+
   }
 
   Future<List<Map<String, dynamic>>> getUserPQ() async {
-    final rp = await _cnn.getListMap(name, columns: ['ID', 'Username', 'HoTen'], orderBy: 'Username', where: "ID !=1");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(name, columns: ['ID', 'Username', 'HoTen'], orderBy: 'Username', where: "ID !=1");
+
   }
 
   Future<int> addUser(Map<String, dynamic> map) async {
     final rp = await _cnn.addMap(name, map);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return 0;
+    List<String> lstMenu1 = [];
+    List<String> lstMenu1HM = [];
+    mMenu1.forEach((k, v) {
+      if (v.hasChild) {
+        lstMenu1.add(k);
+      } else {
+        lstMenu1HM.add(k);
+      }
+    });
+
+    for (var e in mMenu2.keys) {
+      lstMenu1HM.add(e);
     }
+
+    await _cnn.addRows(
+      PhanQuyenRepository.mc1,
+      mMenu.keys.map((e) => {'MaC1': e, 'UserName': map['Username']}).toList(),
+    );
+    await _cnn.addRows(PhanQuyenRepository.mc2, lstMenu1.map((e) => {'MaC2': e, 'UserName': map['Username']}).toList());
+    await _cnn.addRows(
+      PhanQuyenRepository.hangMuc,
+      lstMenu1HM.map((e) => {'TenForm': e, 'UserName': map['Username']}).toList(),
+    );
+
+    return rp;
   }
 
   Future<bool> updateUser(Map<String, dynamic> map) async {
-    final rp = await _cnn.updateMap(name, map, where: "ID = ?", whereArgs: [map['ID']]);
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      errorSql(rp.message);
-      return false;
-    }
+    return await _cnn.updateMap(name, map, where: "ID = ?", whereArgs: [map['ID']]);
+
   }
 
   Future<Map<String, dynamic>> getUser(int id) async {
@@ -72,14 +76,7 @@ class UserRepository {
   }
 
   Future<bool> deleteUser(int id) async {
-    final rp = await _cnn.delete(name, where: "ID = $id");
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      errorSql(rp.message);
-      return false;
-    }
+    return await _cnn.delete(name, where: "ID = $id");
+
   }
-
-
 }

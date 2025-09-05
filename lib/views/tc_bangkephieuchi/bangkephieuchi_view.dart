@@ -109,7 +109,7 @@ class _BangKePhieuChiViewState extends ConsumerState<BangKePhieuChiView> {
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
           DataGridColumn(title: ['Ngày', 'Ngay'], width: 80,columnType: ColumnType.date),
-          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 70,textColor: TextColor.red),
+          DataGridColumn(title: ['Phiếu', 'Phieu'], width: 70,textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Kiểu chi', 'MaTC'], width: 90),
           DataGridColumn(title: ['Mã KH', 'MaKhach'], width: 80),
           DataGridColumn(title: ['Tên khách', 'TenKhach'], width: 300),

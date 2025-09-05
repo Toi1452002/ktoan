@@ -11,25 +11,15 @@ class KhoHangRepository {
   Future<List<Map<String, dynamic>>> getBKHangNhap({String? tN, String? dN}) async {
     if (tN == 'null') tN = Helper.yMd(DateTime.now().copyWith(day: 1));
     if (dN == 'null') dN = Helper.sqlDateTimeNow();
-    final rp = await _cnn.getListMap(bkHangNhap, where: "Ngay BETWEEN ? AND  ?", whereArgs: [tN, dN]);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(bkHangNhap, where: "Ngay BETWEEN ? AND  ?", whereArgs: [tN, dN]);
+
   }
 
   Future<List<Map<String, dynamic>>> getBKHangXuat({String? tN, String? dN}) async {
     if (tN == 'null') tN = Helper.yMd(DateTime.now().copyWith(day: 1));
     if (dN == 'null') dN = Helper.sqlDateTimeNow();
-    final rp = await _cnn.getListMap(bkHangXuat, where: "Ngay BETWEEN ? AND  ?", whereArgs: [tN, dN]);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(bkHangXuat, where: "Ngay BETWEEN ? AND  ?", whereArgs: [tN, dN]);
+
   }
 
   Future<List<dynamic>> getNhapXuatTonKho({String? tN, String? dN, String kho = ''}) async {
@@ -46,12 +36,12 @@ class KhoHangRepository {
        AND TKkho = '$kho'
       GROUP BY MaHH
     ''');
-    final lst = getTonKho.data.map((e) {
-      final n = getHangNhap.data.firstWhere(
+    final lst = getTonKho.map((e) {
+      final n = getHangNhap.firstWhere(
         (n) => n['MaHH'] == e['MaHH'],
         orElse: () => {'DVT': '', 'SoLgNhap': 0, 'ThanhTienNhap': 0},
       );
-      final x = getHangXuat.data.firstWhere(
+      final x = getHangXuat.firstWhere(
         (x) => x['MaHH'] == e['MaHH'],
         orElse: () => {'SoLgXuat': 0, 'DonGiaXuat': 0, 'ThanhTienXuat': 0},
       );

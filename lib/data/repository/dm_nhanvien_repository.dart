@@ -6,51 +6,38 @@ class NhanVienRepository {
   static const pcGT = "TDM_PCvaGT";
   final _cnn = BaseRepository();
 
-  Future<List<Map<String, dynamic>>> getList() async {
-    final rp = await _cnn.getListMap(name);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+  Future<List<Map<String, dynamic>>> getList({bool? td}) async {
+    return await _cnn.getListMap(name, where: td == null ? null : "TheoDoi = 1");
+  }
+
+  Future<Map<String, dynamic>> getNV(String maNV) async {
+    return await _cnn.getMap(name, where: "MaNV = '$maNV'");
   }
 
   Future<int> add(Map<String, dynamic> map) async {
-    final rp = await _cnn.addMap(name, map);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return 0;
-    }
+    return await _cnn.addMap(name, map);
   }
 
   Future<bool> update(Map<String, dynamic> map) async {
-    final rp = await _cnn.updateMap(name, map, where: "ID  = ?", whereArgs: [map['ID']]);
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      errorSql(rp.message);
-      return false;
-    }
+    return await _cnn.updateMap(name, map, where: "ID  = ?", whereArgs: [map['ID']]);
   }
 
   Future<bool> delete(int id) async {
-    final rp = await _cnn.delete(name, where: "ID  = ?", whereArgs: [id]);
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      errorSql(rp.message);
-      return false;
-    }
+    return await _cnn.delete(name, where: "ID  = ?", whereArgs: [id]);
   }
 
   Future<List<Map<String, dynamic>>> getPCGT({String maNV = ''}) async {
     final data = await _cnn.getSQL('''
         SELECT a.Ma as MaPC, a.MoTa, b.MaNV, b.SoTieuChuan, b.SoThucTe FROM TDM_MoTaPCGTTL a left join TDM_PCvaGT b on a.Ma = b.MaPC and b.MaNV = '$maNV'
       ''');
-    return data.data;
+    return data;
+  }
+
+  Future<List<Map<String, dynamic>>> getPCGTBL({String maNV = '', required String ma}) async {
+    final data = await _cnn.getSQL('''
+        SELECT  a.MoTa, b.SoTieuChuan, b.SoThucTe FROM TDM_MoTaPCGTTL a left join TDM_PCvaGT b on a.Ma = b.MaPC and b.MaNV = '$maNV' WHERE b.MaPC LIKE '$ma%'
+      ''');
+    return data;
   }
 
   Future<void> deletePCGT(String maNV) async {

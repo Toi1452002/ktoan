@@ -16,17 +16,18 @@ import 'package:trina_grid/trina_grid.dart';
 class ThongTinNhanVienView extends ConsumerStatefulWidget {
   static const name = "Thông tin nhân viên";
 
-  static void show(BuildContext context, {NhanVienModel? nv}) => showCustomDialog(
+  static void show(BuildContext context, {NhanVienModel? nv, bool udMa = true}) => showCustomDialog(
     context,
     title: name.toUpperCase(),
     width: 700,
     height: 530,
-    child: ThongTinNhanVienView(nhanVien: nv),
+    child: ThongTinNhanVienView(nhanVien: nv, udMa: udMa),
   );
 
   final NhanVienModel? nhanVien;
+  final bool udMa;
 
-  const ThongTinNhanVienView({super.key, this.nhanVien});
+  const ThongTinNhanVienView({super.key, this.nhanVien, this.udMa = true});
 
   @override
   ConsumerState createState() => _ThongTinNhanVienViewState();
@@ -161,7 +162,7 @@ class _ThongTinNhanVienViewState extends ConsumerState<ThongTinNhanVienView> {
                       columnWidths: {0: 100, 1: 200, 2: 110},
                       items: [
                         Text('Mã nhân viên').medium,
-                        WidgetTextField(controller: _txtMaNV),
+                        WidgetTextField(controller: _txtMaNV, enabled: widget.udMa),
                         Text('Họ và tên').medium.withMargin(left: 20),
                         WidgetTextField(controller: _txtHoTen),
                       ],
@@ -313,7 +314,7 @@ class _ThongTinNhanVienViewState extends ConsumerState<ThongTinNhanVienView> {
                   onChange: (event) => fc.updatePCGT(event, ref),
                   columns: [
                     DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-                    DataGridColumn(title: ['Mô tả', 'MoTa'], textColor: TextColor.blue),
+                    DataGridColumn(title: ['Mô tả', 'MoTa'], textStyle: ColumnTextStyle.blue()),
                     DataGridColumn(
                       title: ['Tiêu chuẩn', 'SoTieuChuan'],
                       showFooter: true,

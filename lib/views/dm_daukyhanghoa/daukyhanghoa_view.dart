@@ -113,8 +113,8 @@ class _DauKyHangHoaViewState extends ConsumerState<DauKyHangHoaView> {
               );
             },
           ),
-          DataGridColumn(title: ['Mã hàng', 'MaHH'], width: 100, textColor: TextColor.blue),
-          DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 290, textColor: TextColor.blue),
+          DataGridColumn(title: ['Mã hàng', 'MaHH'], width: 100, textStyle: ColumnTextStyle.blue()),
+          DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 290, textStyle: ColumnTextStyle.blue()),
           DataGridColumn(title: ['Số lượng', 'SoTon'], width: 90, isEdit: true, columnType: ColumnType.num),
           DataGridColumn(title: ['Giá vốn', 'GiaVon'], width: 100, isEdit: true, columnType: ColumnType.num,showFooter: true),
         ],

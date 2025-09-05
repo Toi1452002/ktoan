@@ -72,7 +72,7 @@ class DanhSachNguoiDungView extends ConsumerWidget {
             render: TypeRender.delete,
             onTapDelete: (val, re) => fc.onTapDelete(val, re!, userInfo!.ID!, ref),
           ),
-          DataGridColumn(title: ['Username', 'Username'], width: 150, textColor: TextColor.red),
+          DataGridColumn(title: ['Username', 'Username'], width: 150, textStyle: ColumnTextStyle.red()),
           DataGridColumn(title: ['Họ và tên', 'HoTen'], width: 200),
           DataGridColumn(title: ['Email', 'Email'], width: 200),
           DataGridColumn(title: ['Điện thoại', 'DienThoai'], width: 200),

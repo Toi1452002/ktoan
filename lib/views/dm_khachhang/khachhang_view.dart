@@ -103,7 +103,7 @@ class KhachHangViewState extends ConsumerState<KhachHangView> {
               render: TypeRender.delete,
               onTapDelete: (val, e) => fc.delete(val, e!, ref),
             ),
-            DataGridColumn(title: ['Mã KH', 'MaKhach'], width: 120, textColor: TextColor.red),
+            DataGridColumn(title: ['Mã KH', 'MaKhach'], width: 120, textStyle: ColumnTextStyle.red()),
             DataGridColumn(title: ['Tên khách hàng', 'TenKH'], width: 300),
             DataGridColumn(title: ['Địa chỉ', 'DiaChi'], width: 250),
             DataGridColumn(title: ['MST', 'MST'], width: 120),

@@ -112,8 +112,8 @@ class DauKyKhachHangViewState extends ConsumerState<DauKyKhachHangView> {
               );
             },
           ),
-          DataGridColumn(title: ['Mã khách hàng', 'MaKhach'], width: 140, textColor: TextColor.blue),
-          DataGridColumn(title: ['Tên khách hàng', 'TenKH'], width: 300, textColor: TextColor.blue),
+          DataGridColumn(title: ['Mã khách hàng', 'MaKhach'], width: 140, textStyle: ColumnTextStyle.blue()),
+          DataGridColumn(title: ['Tên khách hàng', 'TenKH'], width: 300, textStyle: ColumnTextStyle.blue()),
           DataGridColumn(
             title: ['Số đầu kỳ', 'SoDuNo'],
             width: 100,

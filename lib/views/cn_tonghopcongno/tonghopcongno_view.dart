@@ -66,8 +66,8 @@ class _TongHopCongNoViewState extends ConsumerState<TongHopCongNoView> {
         ],
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['Mã KH', 'MaKhach'], width: 100,textColor: TextColor.blue),
-          DataGridColumn(title: ['Tên khách hàng', 'TenKH'], width: 250,textColor: TextColor.blue),
+          DataGridColumn(title: ['Mã KH', 'MaKhach'], width: 100,textStyle: ColumnTextStyle.blue()),
+          DataGridColumn(title: ['Tên khách hàng', 'TenKH'], width: 250,textStyle: ColumnTextStyle.blue()),
           DataGridColumn(title: ['Phải thu', 'PhaiThu'], width: 120, columnType: ColumnType.num,showFooter: true),
           DataGridColumn(title: ['Phải trả', 'PhaiTra'], width: 120, columnType: ColumnType.num,showFooter: true),
         ],

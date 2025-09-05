@@ -14,13 +14,13 @@ class CongNoRepository {
     required String dN,
     required String maKhach,
   }) async {
-    final rp = await _cnn.getListMap(soMuaHang, where: "Ngay BETWEEN '$tN' AND '$dN' AND MaKhach = '$maKhach'");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _cnn.getListMap(soMuaHang, where: "Ngay BETWEEN '$tN' AND '$dN' AND MaKhach = '$maKhach'");
+    // if (rp.status == ResponseType.success) {
+    //   return rp.data;
+    // } else {
+    //   errorSql(rp.message);
+    //   return [];
+    // }
   }
 
   Future<Map<String, dynamic>> getNoSoMuaHang({String? tN, String? dN, String maKhach = ''}) async {
@@ -52,13 +52,13 @@ class CongNoRepository {
     required String dN,
     required String maKhach,
   }) async {
-    final rp = await _cnn.getListMap(soBanHang, where: "Ngay BETWEEN '$tN' AND '$dN' AND MaKhach = '$maKhach'");
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return  await _cnn.getListMap(soBanHang, where: "Ngay BETWEEN '$tN' AND '$dN' AND MaKhach = '$maKhach'");
+    // if (rp.status == ResponseType.success) {
+    //   return rp.data;
+    // } else {
+    //   errorSql(rp.message);
+    //   return [];
+    // }
   }
 
   Future<Map<String, dynamic>> getNoSoBanHang({String? tN, String? dN, String maKhach = ''}) async {
@@ -93,17 +93,17 @@ class CongNoRepository {
       FROM VBC_TongHopCongNo WHERE Ngay <= '$date'
       Group By MaKhach
     ''');
-    if(rp.status == ResponseType.success){
-      List<Map<String, dynamic>> data = rp.data;
+    // if(rp.status == ResponseType.success){
+      List<Map<String, dynamic>> data = rp;
       return data.map((e)=>{
         'MaKhach': e['MaKhach']??'',
         'TenKH': e['TenKH'],
         'PhaiTra': e['PhaiTra']+(['NC','CH'].contains(e['LoaiKH']) ? e['SoDuNo']??0 :0),
         'PhaiThu': e['PhaiThu'] + (e['LoaiKH']=='KH' ? e['SoDuNo']??0 :0)
       }).toList();
-    }else{
-      errorSql(rp.message);
-      return [];
-    }
+    // }else{
+    //   errorSql(rp.message);
+    //   return [];
+    // }
   }
 }

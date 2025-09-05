@@ -93,7 +93,7 @@ class HangHoaView extends ConsumerWidget {
               render: TypeRender.delete,
               onTapDelete: (val, re) => fc.delete(val, re!, ref),
             ),
-            DataGridColumn(title: ['Mã', 'MaHH'], width: 135, textColor: TextColor.red),
+            DataGridColumn(title: ['Mã', 'MaHH'], width: 135, textStyle: ColumnTextStyle.red()),
             DataGridColumn(title: ['Tên vật tư-hàng hóa', 'TenHH'], width: 300),
             DataGridColumn(title: ['Đơn vị tính', 'DVT'], width: 110, columnAlign: ColumnAlign.center),
             DataGridColumn(title: ['Giá mua', 'GiaMua'], width: 140, columnType: ColumnType.num),

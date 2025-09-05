@@ -31,13 +31,8 @@ class PhieuXuatRepository {
   }
 
   Future<int> add(Map<String, dynamic> map) async {
-    final rp = await _baseData.addMap(name, map);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return 0;
-    }
+    return await _baseData.addMap(name, map);
+
   }
 
   Future<void> updateKhoa(int value, int id) async =>
@@ -91,13 +86,8 @@ class PhieuXuatRepository {
       await _baseData.updateMap(name, {'KChiuThue': val}, where: "ID = $id");
 
   Future<bool> delete(int id) async {
-    final rp = await _baseData.delete(name, where: "ID = $id");
-    if (rp.status == ResponseType.success) {
-      return true;
-    } else {
-      CustomAlert.error(rp.message.toString());
-      return false;
-    }
+    return await _baseData.delete(name, where: "ID = $id");
+
   }
 
   Future<List<Map<String, dynamic>>> getBKePhieuXuat({String? thang, int? quy, int nam = 2000}) async {
@@ -115,13 +105,8 @@ class PhieuXuatRepository {
         BETWEEN '${mQuy[quy]?.first}' AND '${mQuy[quy]?.last}'
         ''';
     }
-    final rp = await _baseData.getListMap(bKePhieuXuat, where: where);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _baseData.getListMap(bKePhieuXuat, where: where);
+
   }
   Future<List<Map<String, dynamic>>> getBKeHangBan({String? thang, int? quy, int nam = 2000}) async {
     String? where;
@@ -138,12 +123,7 @@ class PhieuXuatRepository {
         BETWEEN '${mQuy[quy]?.first}' AND '${mQuy[quy]?.last}'
         ''';
     }
-    final rp = await _baseData.getListMap(bKeHangBan, where: where);
-    if (rp.status == ResponseType.success) {
-      return rp.data;
-    } else {
-      errorSql(rp.message);
-      return [];
-    }
+    return await _baseData.getListMap(bKeHangBan, where: where);
+
   }
 }
