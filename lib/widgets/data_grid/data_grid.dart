@@ -21,7 +21,7 @@ class DataGrid extends StatefulWidget {
   final TrinaGridMode mode;
   final List<TrinaColumnGroup>? columnGroups;
   final double? columnHeight;
-
+  final Color? cellReadonlyColor;
   const DataGrid({
     super.key,
     required this.columns,
@@ -33,6 +33,7 @@ class DataGrid extends StatefulWidget {
     this.mode = TrinaGridMode.normal,
     this.columnGroups,
     this.columnHeight,
+    this.cellReadonlyColor
   });
 
   @override
@@ -68,7 +69,7 @@ class _DataGridState extends State<DataGrid> {
         EdgeInsets? cellPadding = e.padding == null ? null : EdgeInsets.all(e.padding!);
         Widget Function(TrinaColumnTitleRendererContext)? titleRenderer;
         if (e.columnType == ColumnType.num) type = TrinaColumnType.number(format: '#,###.#');
-        if (e.columnType == ColumnType.date) type = TrinaColumnType.date(format: 'dd/MM/yyyy');
+        if (e.columnType == ColumnType.date) type = TrinaColumnType.date(format: 'dd/MM/yyyy',popupIcon: null);
 
         if (e.columnAlign == ColumnAlign.right || e.columnType == ColumnType.num) {
           textAlign = TrinaColumnTextAlign.right;
@@ -115,7 +116,9 @@ class _DataGridState extends State<DataGrid> {
         if (e.textStyle != null) {
           renderer = (re) => Text(
             e.columnType == ColumnType.text ? re.cell.value : Helper.numFormat(re.cell.value),
-            textAlign: e.columnType == ColumnType.text ? TextAlign.left : TextAlign.end,
+            textAlign: e.columnAlign == ColumnAlign.center
+                ? TextAlign.center
+                : (e.columnType == ColumnType.text ? TextAlign.left : TextAlign.end ),
             style: e.textStyle,
           );
         }
@@ -191,7 +194,8 @@ class _DataGridState extends State<DataGrid> {
           field: e.title.last,
           type: type,
           width: e.width,
-
+          readOnly: e.readOnly,
+          hide: e.hide,
           footerRenderer: !e.showFooter
               ? null
               : (rendererContext) {
@@ -200,6 +204,11 @@ class _DataGridState extends State<DataGrid> {
                     type: TrinaAggregateColumnType.sum,
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.symmetric(horizontal: 5),
+                    titleSpanBuilder: (text){
+                      return [
+                        TextSpan(text: text,style: e.textStyle)
+                      ];
+                    },
                   );
                 },
           enableColumnDrag: false,
@@ -213,11 +222,13 @@ class _DataGridState extends State<DataGrid> {
           enableEditingMode: e.isEdit,
           cellPadding: cellPadding,
           titleRenderer: titleRenderer,
+
         );
       }).toList(),
       rows: [],
       columnGroups: widget.columnGroups,
       configuration: TrinaGridConfiguration(
+
         tabKeyAction: TrinaGridTabKeyAction.moveToNextOnEdge,
         enterKeyAction: TrinaGridEnterKeyAction.editingAndMoveRight,
         scrollbar: TrinaGridScrollbarConfig(showHorizontal: true, thickness: 5, isAlwaysShown: true),
@@ -231,6 +242,7 @@ class _DataGridState extends State<DataGrid> {
         ),
         style: TrinaGridStyleConfig(
           columnFilterHeight: 25,
+          cellReadonlyColor: widget.cellReadonlyColor,
           defaultColumnFilterPadding: EdgeInsets.all(.2),
           borderColor: context.theme.colorScheme.mutedForeground,
           gridBorderRadius: BorderRadius.circular(2),

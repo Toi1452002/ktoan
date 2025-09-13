@@ -17,6 +17,7 @@ Future<void> showCustomDialog(BuildContext context,
      void Function()? onClose}) async {
   await showDialog(
       context: context,
+
       barrierColor: Colors.black.withValues(alpha: .1),
       barrierDismissible: barrierDismissible,
       builder: (context) {

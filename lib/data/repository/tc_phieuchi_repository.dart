@@ -7,8 +7,8 @@ class PhieuChiRepository {
   static const view = "V_PhieuChi";
   final _cnn = BaseRepository();
 
-  Future<Map<String, dynamic>> get({int? stt}) async {
-    return await _cnn.getMap(view, where: stt==null?null:"STT = $stt", orderBy: "STT DESC");
+  Future<Map<String, dynamic>> get({String? phieu}) async {
+    return await _cnn.getMap(view, where: phieu==null?null:"Phieu = '$phieu'", orderBy: "Phieu DESC");
   }
 
   Future<Map<String, dynamic>> getTheoSTT(int stt) async {

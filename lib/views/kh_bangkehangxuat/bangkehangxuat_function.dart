@@ -28,7 +28,7 @@ class BangKeHangXuatFunction {
   void showInfo(TrinaGridOnRowDoubleTapEvent event, WidgetRef ref, BuildContext context) {
     if (event.cell.column.field == 'Phieu') {
       final stt = event.row.cells['null']?.value;
-      PhieuXuatView.show(context, stt: stt);
+      PhieuXuatView.show(context, phieu: event.cell.value);
     }
   }
 }

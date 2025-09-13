@@ -7,7 +7,6 @@ enum ColumnAlign { left, center, right }
 
 enum TypeRender { numIndex, delete }
 
-
 class DataGridColumn {
   final List<String> title;
   final ColumnType columnType;
@@ -22,6 +21,8 @@ class DataGridColumn {
   final bool showFooter;
   final bool frozen;
   final TextStyle? textStyle;
+  final bool hide;
+  final bool readOnly;
 
   const DataGridColumn({
     required this.title,
@@ -37,12 +38,16 @@ class DataGridColumn {
     this.showFooter = false,
     this.frozen = false,
     this.textStyle,
+    this.hide = false,
+    this.readOnly = false,
   });
 }
 
 class ColumnTextStyle {
-  static TextStyle red() => TextStyle(color: Colors.red.shade700, fontSize: 12, fontWeight: FontWeight.w400);
+  ColumnTextStyle._();
+
+  static TextStyle red() => TextStyle(color: Colors.red.shade700, fontSize: 12, fontWeight: FontWeight.w500);
 
   static TextStyle blue({FontWeight? fontWeight}) =>
-      TextStyle(color: Colors.blue.shade800, fontSize: 12, fontWeight: fontWeight ?? FontWeight.w400);
+      TextStyle(color: Colors.blue.shade800, fontSize: 12, fontWeight: fontWeight ?? FontWeight.w500);
 }

@@ -8,8 +8,8 @@ class PhieuChiNotifier extends StateNotifier<PhieuChiModel?> {
 
   final _rp = PhieuChiRepository();
 
-  Future<int> get({int? stt}) async {
-    final data = await _rp.get(stt: stt);
+  Future<int> get({String? phieu}) async {
+    final data = await _rp.get(phieu: phieu);
     final num = await _rp.getNumRow();
     if (data.isNotEmpty) {
       state = PhieuChiModel.fromMap(data).copyWith(Count: num);

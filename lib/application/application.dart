@@ -11,3 +11,5 @@ export 'phieuthu/phieuthu_provider.dart';
 export 'phieuchi/phieuchi_notifier.dart';
 export 'nhanvien/nhanvien_provider.dart';
 export 'bangluong/bangluong_provider.dart';
+
+export 'ts_tscd/tscd_provider.dart';

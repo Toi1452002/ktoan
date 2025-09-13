@@ -6,6 +6,7 @@ class PhieuChiComponent {
     dynamic value,
     void Function(dynamic)? onChanged,
     bool enabled = true,
+        void Function()? onDoubleTap,
   }) {
     return Combobox(
       menuWidth: 300,
@@ -15,6 +16,7 @@ class PhieuChiComponent {
       noSearch: false,
       items: items.map((e) => ComboboxItem(value: e['MaKhach'], text: [e['MaKhach'], e['TenKH']])).toList(),
       onChanged: onChanged,
+      onDoubleTap: onDoubleTap,
     );
   }
 
@@ -23,6 +25,7 @@ class PhieuChiComponent {
     dynamic value,
     void Function(dynamic)? onChanged,
     bool enabled = true,
+        void Function()? onDoubleTap,
   }) {
     return Combobox(
       menuWidth: 300,
@@ -32,6 +35,7 @@ class PhieuChiComponent {
       noSearch: false,
       items: items.map((e) => ComboboxItem(value: e['MaNV'], text: [e['MaNV'], e['HoTen']])).toList(),
       onChanged: onChanged,
+      onDoubleTap: onDoubleTap,
     );
   }
 

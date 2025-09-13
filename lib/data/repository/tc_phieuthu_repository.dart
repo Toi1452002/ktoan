@@ -7,8 +7,8 @@ class PhieuThuRepository {
 
   final _cnn = BaseRepository();
 
-  Future<Map<String, dynamic>> get({int? stt}) async {
-    return await _cnn.getMap(view,where: stt==null?null:"STT =  $stt", orderBy: "STT DESC");
+  Future<Map<String, dynamic>> get({String? phieu}) async {
+    return await _cnn.getMap(view,where: phieu==null?null:"Phieu =  '$phieu'", orderBy: "Phieu DESC");
   }
 
   Future<List<Map<String, dynamic>>> getBangKePhieuThu({String? tN, String? dN}) async {

@@ -31,3 +31,10 @@ export 'ht_phanquyen_repository.dart';
 
 export 'tl_bangchamcong_repository.dart';
 export 'tl_bangluong_repository.dart';
+
+export 'ts_tscd_repository.dart';
+export 'ts_ccdc_repository.dart';
+
+
+export 'kt_bctc_bangcdps_repository.dart';
+export 'kt_nky_sonkchung_repository.dart';

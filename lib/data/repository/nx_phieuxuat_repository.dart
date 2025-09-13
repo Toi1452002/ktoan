@@ -9,8 +9,8 @@ class PhieuXuatRepository {
 
   final _baseData = BaseRepository();
 
-  Future<Map<String, dynamic>> get({int? stt}) async {
-    return await _baseData.getMap(view, where: stt == null ? null : "STT = $stt", orderBy: "STT DESC");
+  Future<Map<String, dynamic>> get({String? phieu}) async {
+    return await _baseData.getMap(view, where: phieu == null ? null : "Phieu = '$phieu'", orderBy: "Phieu DESC");
   }
 
   Future<dynamic> getNumRow() async {

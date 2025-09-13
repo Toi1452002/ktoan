@@ -12,8 +12,8 @@ class BangKeHoaDonBanRaFunction {
 
   void onShowInfo(TrinaGridOnRowDoubleTapEvent event, BuildContext context,WidgetRef ref){
     if(event.cell.column.field == 'SoHD'){
-      final stt  =  event.row.cells['null']?.value;
-      PhieuXuatView.show(context,stt: stt);
+      final phieu  =  event.row.cells['null']?.value;
+      PhieuXuatView.show(context,phieu: phieu);
     }
   }
 }

@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/application/application.dart';
 import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/data/data.dart';
+import 'package:pm_ketoan/views/dm_khachhang/thong_tin_kh_view.dart';
 import 'package:string_validator/string_validator.dart';
 
 class PhieuThuFunction {
@@ -45,7 +47,8 @@ class PhieuThuFunction {
   }
 
   Future<void> updateMaKhach(WidgetRef ref, String ma, String ten, String diaChi) async {
-    ref.read(phieuThuProvider.notifier).updateMaKhach(ma, ten, diaChi);
+    final khach = await KhachHangRepository().getKhach(ma);
+    ref.read(phieuThuProvider.notifier).updateMaKhach(ma, khach['TenKH'], khach['DiaChi']);
   }
 
   Future<void> updateTenKhach(WidgetRef ref, String val) async {
@@ -91,5 +94,11 @@ class PhieuThuFunction {
   void onMovePage(int stt, int type, WidgetRef ref) async {
     final result = await ref.read(phieuThuProvider.notifier).movePage(stt, type);
     ref.read(phieuThuCTProvider.notifier).get(result);
+  }
+
+  void showKhachHang(String maKH, BuildContext context)async{
+    final x = await KhachHangRepository().getKhach(maKH);
+    final k = KhachHangModel.fromMap(x);
+    ThongTinKHView.show(context,khach: k,isUpdate: false);
   }
 }

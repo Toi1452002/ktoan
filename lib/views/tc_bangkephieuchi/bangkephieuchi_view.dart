@@ -36,7 +36,7 @@ class _BangKePhieuChiViewState extends ConsumerState<BangKePhieuChiView> {
     stateManager.removeAllRows();
     stateManager.appendRows(data.map((e){
       return TrinaRow(cells: {
-        'null':  TrinaCell(value: e['STT']),
+        'null':  TrinaCell(value: e['Phieu']),
         'Ngay':  TrinaCell(value: e['Ngay']),
         'Phieu':  TrinaCell(value: e['Phieu']??''),
         'MaTC':  TrinaCell(value: e['MaTC']??''),

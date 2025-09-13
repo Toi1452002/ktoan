@@ -10,8 +10,8 @@ class NhanVienRepository {
     return await _cnn.getListMap(name, where: td == null ? null : "TheoDoi = 1");
   }
 
-  Future<Map<String, dynamic>> getNV(String maNV) async {
-    return await _cnn.getMap(name, where: "MaNV = '$maNV'");
+  Future<Map<String, dynamic>> getNV(String maNV,{List<String>? columns}) async {
+    return await _cnn.getMap(name, where: "MaNV = '$maNV'",columns: columns);
   }
 
   Future<int> add(Map<String, dynamic> map) async {

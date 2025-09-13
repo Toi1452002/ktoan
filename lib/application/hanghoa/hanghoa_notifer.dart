@@ -9,7 +9,10 @@ class HangHoaNotifier extends StateNotifier<List<Map<String, dynamic>>> {
   final _rp = HangHoaRepository();
 
   Future<void> getListHangHoa({int td = 1}) async {
-    state = await _rp.getData(td: td);
+    final x = await _rp.getData(td: td);
+    if(mounted){
+      state = x;
+    }
   }
 
   Future<bool> addHangHoa(HangHoaModel hangHoa) async {

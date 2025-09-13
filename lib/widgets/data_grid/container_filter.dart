@@ -7,11 +7,11 @@ import 'package:string_validator/string_validator.dart';
 import '../../core/core.dart';
 
 class ContainerFilter extends ConsumerStatefulWidget {
-  final OverlayEntry? overlayEntry;
+  // final OverlayEntry? overlayEntry;
   final Map<String, bool> items;
   final void Function(Map<String, bool>)? onChanged;
 
-  const ContainerFilter({super.key, this.overlayEntry, required this.items, this.onChanged});
+  const ContainerFilter({super.key, required this.items, this.onChanged});
 
   @override
   ConsumerState createState() => _ContainerFilterState();
@@ -52,7 +52,8 @@ class _ContainerFilterState extends ConsumerState<ContainerFilter> {
                 child: Text('Ok'),
                 onPressed: () {
                   widget.onChanged?.call(checkValue);
-                  widget.overlayEntry?.remove();
+                  Navigator.pop(context);
+                  // widget.overlayEntry?.remove();
                 },
               ),
             ),
@@ -61,7 +62,8 @@ class _ContainerFilterState extends ConsumerState<ContainerFilter> {
               child: OutlineButton(
                 child: Text('Cancel'),
                 onPressed: () {
-                  widget.overlayEntry?.remove();
+                  Navigator.pop(context);
+                  // widget.overlayEntry?.remove();
                   // Navigator.pop(context);
                 },
               ),

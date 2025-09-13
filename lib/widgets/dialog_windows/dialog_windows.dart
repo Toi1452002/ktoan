@@ -54,6 +54,7 @@ class _DialogWindowsState extends State<DialogWindows> {
             width: widget.width,
             child: Dialog(
               shadowColor: Colors.black,
+
               elevation: 15,
               insetPadding: EdgeInsets.zero,
               child: ClipRRect(

@@ -32,13 +32,18 @@ class DauKyRepository {
 
   Future<List<Map<String, dynamic>>> getDauKyBTK() async {
     return await _cnn.getListMap(viewDkyBTK);
-
   }
+
+
+  Future<List<Map<String, dynamic>>> getCDPS_BTK(String thang) async {
+    return await _cnn.getListMap(nameDkyBTK,where: 'Thang = ?',whereArgs: [thang]);
+  }
+
+
   Future<void> updateDauKyBTK(List<Map<String, dynamic>> data) async {
     try{
       final cnn = await connectData();
       final batch = cnn!.batch();
-      // print(data);
       for(var x in data){
         final tmp = await _cnn.getMap(nameDkyBTK,where: "Thang = ? AND MaTK = ?",whereArgs: [x['Thang'], x['MaTK']]);
         if(tmp.isNotEmpty){
@@ -51,8 +56,5 @@ class DauKyRepository {
     }catch(e){
       errorSql(e);
     }
-    // print(data);
-    // await _cnn.delete(nameDkyBTK);
-    // await _cnn.addRows(nameDkyBTK, data);
   }
 }

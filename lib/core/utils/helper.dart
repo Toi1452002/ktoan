@@ -38,15 +38,18 @@ class Helper {
   }
 
   static String dMy(dynamic date) {
+    if(date==null) return '';
     if (date.runtimeType == DateTime) {
       return DateFormat('dd/MM/yyyy').format(date);
+    } else if (date.runtimeType == String) {
+      return DateFormat('dd/MM/yyyy').format(toDate(date)!);
     }
+
     return date.toString();
   }
 
   static String yMd(dynamic date) {
     if (date.runtimeType == DateTime) {
-
       return DateFormat('yyyy-MM-dd').format(date);
     }
     if (date.runtimeType == String) {
@@ -65,6 +68,7 @@ class Helper {
       return null;
     }
   }
+
   static int getQuarterNow() {
     int month = DateTime.now().month;
     int quarter = ((month - 1) ~/ 3) + 1;

@@ -12,8 +12,8 @@ class PhieuNhapNotifier extends StateNotifier<PhieuNhapModel?> {
 
   final _rp = PhieuNhapRepository();
 
-  Future<int> getPhieuNhap({int?  stt}) async {
-    final data = await _rp.get(stt: stt);
+  Future<int> getPhieuNhap({String? phieu}) async {
+    final data = await _rp.get(phieu: phieu);
     final num = await _rp.getNumRow();
     if (data.isNotEmpty) {
       state = PhieuNhapModel.fromMap(data).copyWith(countRow: num.toString());

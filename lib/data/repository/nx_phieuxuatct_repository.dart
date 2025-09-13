@@ -21,6 +21,7 @@ class PhieuXuatCTRepository {
         'TenHH': data['TenHH'],
         'DonGia': data['GiaBan'],
         'DVT': data['DVT'],
+        'GiaVon': data['GiaMua'],
         'ThanhTien': data['GiaBan'] * soLg,
       },
       where: "ID = ?",
@@ -36,6 +37,7 @@ class PhieuXuatCTRepository {
       'MaID': maID,
       'TenHH': data['TenHH'],
       'DonGia': data['GiaBan'],
+      'GiaVon': data['GiaMua'],
       'DVT': data['DVT'],
     });
     return rp;

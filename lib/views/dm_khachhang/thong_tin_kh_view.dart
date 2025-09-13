@@ -108,7 +108,7 @@ class _ThongTinKHViewState extends ConsumerState<ThongTinKHView> {
                   columnWidths: {0: 120, 2: 120},
                   items: [
                     Text('Mã khách hàng').medium,
-                    WidgetTextField(controller: maKH),
+                    WidgetTextField(controller: maKH,enabled: widget.isUpdate,),
 
                     Row(children: [Gap(20), Text('Loại khách').medium]),
                     Combobox(
@@ -192,7 +192,7 @@ class _ThongTinKHViewState extends ConsumerState<ThongTinKHView> {
             ).gap(10),
           ),
           Gap(10),
-          Button.primary(onPressed: onSubmit,enabled: widget.isUpdate, child: Text(widget.khachHangModel == null ? 'Thêm mới' : 'Cập nhật')),
+          Button.primary(onPressed: onSubmit, child: Text(widget.khachHangModel == null ? 'Thêm mới' : 'Cập nhật')),
         ],
       ).withPadding(all: 10),
     );

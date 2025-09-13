@@ -11,18 +11,18 @@ import 'component/phieunhap_table.dart';
 import 'function/phieunhap_function.dart';
 
 class PhieuNhapView extends ConsumerStatefulWidget {
-  final int? stt;
-  const PhieuNhapView({super.key,this.stt});
+  final String? phieu;
+  const PhieuNhapView({super.key,this.phieu});
 
   static const name = "Mua hàng";
   static const title = "Nhập mua hàng hóa";
 
-  static void show(BuildContext context, {int? stt}) => showCustomDialog(
+  static void show(BuildContext context, {String? phieu}) => showCustomDialog(
     context,
     title: title.toUpperCase(),
     width: 1150,
     height: 700,
-    child: PhieuNhapView(stt: stt,),
+    child: PhieuNhapView(phieu: phieu,),
     onClose: () {},
   );
 
@@ -41,7 +41,7 @@ class PhieuNhapViewState extends ConsumerState<PhieuNhapView> {
   @override
   void initState() {
     loadCBB();
-    ref.read(phieuNhapProvider.notifier).getPhieuNhap(stt: widget.stt);
+    ref.read(phieuNhapProvider.notifier).getPhieuNhap(phieu: widget.phieu);
     super.initState();
   }
 

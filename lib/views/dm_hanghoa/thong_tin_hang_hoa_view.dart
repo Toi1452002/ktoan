@@ -8,17 +8,18 @@ import 'function/thongtinhanghoa_function.dart';
 
 class ThongTinHangHoaView extends ConsumerStatefulWidget {
   final HangHoaModel? hangHoaModel;
-  const ThongTinHangHoaView({super.key, this.hangHoaModel});
+  final  bool noUD;
+  const ThongTinHangHoaView({super.key, this.hangHoaModel, this.noUD = false});
 
   static const name = "Thông tin hàng hóa";
 
-  static void show(BuildContext context, {HangHoaModel? hangHoa}) {
+  static void show(BuildContext context, {HangHoaModel? hangHoa, bool noUD = false}) {
     showCustomDialog(
       context,
       title: name.toUpperCase(),
       width: 600,
       height: 390,
-      child: ThongTinHangHoaView(hangHoaModel: hangHoa,),
+      child: ThongTinHangHoaView(hangHoaModel: hangHoa,noUD: noUD,),
       onClose: () {},
     );
   }
@@ -143,7 +144,7 @@ class ThongTinHangHoaViewState extends ConsumerState<ThongTinHangHoaView> {
               columnWidths: {0: 80, 1: 180, 3: 180},
               items: [
                 Text('Mã hàng').medium,
-                WidgetTextField(controller: txtMaHang, isUpperCase: true),
+                WidgetTextField(controller: txtMaHang, isUpperCase: true,enabled: !widget.noUD,),
                 Row(children: [Gap(10), Text('Loại hàng').medium]),
 
                 Combobox(

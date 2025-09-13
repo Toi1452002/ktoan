@@ -164,7 +164,11 @@ class _ThongTinNhanVienViewState extends ConsumerState<ThongTinNhanVienView> {
                         Text('Mã nhân viên').medium,
                         WidgetTextField(controller: _txtMaNV, enabled: widget.udMa),
                         Text('Họ và tên').medium.withMargin(left: 20),
-                        WidgetTextField(controller: _txtHoTen),
+                        WidgetTextField(controller: _txtHoTen,hasFocus: (b){
+                          if(!b){
+                            _txtHoTen.text = capitalizeFirstLetter(_txtHoTen.text);
+                          }
+                        },),
                       ],
                     ),
                     WidgetCustomRow(
@@ -179,7 +183,7 @@ class _ThongTinNhanVienViewState extends ConsumerState<ThongTinNhanVienView> {
                           },
                           initialDate: _ngaySinh,
                         ),
-                        Text('Giới tínhn').medium.withMargin(left: 20),
+                        Text('Giới tính').medium.withMargin(left: 20),
                         Checkbox(
                           state: _gioiTinh ? CheckboxState.checked : CheckboxState.unchecked,
                           onChanged: (val) {
@@ -335,4 +339,11 @@ class _ThongTinNhanVienViewState extends ConsumerState<ThongTinNhanVienView> {
       ).withPadding(all: 10),
     );
   }
+}
+
+String capitalizeFirstLetter(String input) {
+  if (input.isEmpty) return input; // Kiểm tra chuỗi rỗng
+  final x = input.split(' ').map((e)=>e[0].toUpperCase()+e.substring(1));
+
+  return x.join(' ');
 }

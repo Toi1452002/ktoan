@@ -13,8 +13,8 @@ class BangKePhieuChiFunction{
 
   void onShowInfo(TrinaGridOnRowDoubleTapEvent event, BuildContext context,WidgetRef ref){
     if(event.cell.column.field == 'Phieu'){
-      final stt  =  event.row.cells['null']?.value;
-      PhieuChiView.show(context,stt: stt);
+      final phieu  =  event.row.cells['null']?.value;
+      PhieuChiView.show(context,phieu: phieu);
     }
   }
 }

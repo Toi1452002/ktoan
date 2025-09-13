@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/application/application.dart';
 import 'package:pm_ketoan/core/core.dart';
 import 'package:pm_ketoan/data/data.dart';
+import 'package:pm_ketoan/views/dm_hanghoa/thong_tin_hang_hoa_view.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:trina_grid/trina_grid.dart';
 
@@ -99,6 +101,12 @@ class PhieuNhapCTFunction {
     }
   }
 
+
+  void showHangHoa(String maHH,BuildContext context) async{
+    final hh = await HangHoaRepository().getHangHoa(maHH);
+    final x = HangHoaModel.fromMap(hh);
+    ThongTinHangHoaView.show(context,hangHoa: x,noUD: true);
+  }
 
   dynamic  tongThanhTien(TrinaGridStateManager state){
     double tongTien = 0;

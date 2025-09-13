@@ -11,13 +11,13 @@ import 'component/phieuthu_table.dart';
 import 'function/phieuthu_function.dart';
 
 class PhieuThuView extends ConsumerStatefulWidget {
-  final int? stt;
-  const PhieuThuView({super.key, this.stt});
+  final String? phieu;
+  const PhieuThuView({super.key, this.phieu});
 
   static const name = "Phiếu thu";
 
-  static void show(BuildContext context,{int? stt}) {
-    showCustomDialog(context, title: name.toUpperCase(), width: 500, height: 650, child: PhieuThuView(stt: stt,));
+  static void show(BuildContext context,{String? phieu}) {
+    showCustomDialog(context, title: name.toUpperCase(), width: 500, height: 650, child: PhieuThuView(phieu: phieu,));
   }
 
   @override
@@ -33,7 +33,7 @@ class _PhieuThuViewState extends ConsumerState<PhieuThuView> {
 
   @override
   void initState() {
-    ref.read(phieuThuProvider.notifier).get(stt: widget.stt);
+    ref.read(phieuThuProvider.notifier).get(phieu: widget.phieu);
     onLoadCBB();
     super.initState();
   }
@@ -121,6 +121,9 @@ class _PhieuThuViewState extends ConsumerState<PhieuThuView> {
                               final x = lstKhach.firstWhere((e) => e['MaKhach'] == val);
                               fc.updateMaKhach(ref, val, x['TenKH']??'', x['DiaChi']??'');
                             },
+                            onDoubleTap: (){
+                              fc.showKhachHang(state.MaKhach!, context);
+                            }
                           ),
                         ],
                       ),

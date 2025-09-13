@@ -1,18 +1,29 @@
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../../core/core.dart';
 
 class BaseRepository {
+  final String dataTmp = "";
+
   Future<List<Map<String, dynamic>>> getListMap(
     String name, {
     String? where,
     List<String>? columns,
     List<Object?>? whereArgs,
     String? orderBy,
+    String? groupBy,
   }) async {
     try {
       final cnn = await connectData();
-      final data = await cnn!.query(name, columns: columns, where: where, whereArgs: whereArgs, orderBy: orderBy);
+      final data = await cnn!.query(
+        name,
+        columns: columns,
+        where: where,
+        whereArgs: whereArgs,
+        orderBy: orderBy,
+        groupBy: groupBy,
+      );
       return data;
     } catch (e) {
       errorSql(e);
@@ -27,13 +38,27 @@ class BaseRepository {
       return data;
     } catch (e) {
       errorSql(e);
-      return [];    }
+      return [];
+    }
   }
 
-  Future<Map<String, dynamic>> getMap(String name, {String? where, List<Object?>? whereArgs, String? orderBy,List<String>? columns}) async {
+  Future<Map<String, dynamic>> getMap(
+    String name, {
+    String? where,
+    List<Object?>? whereArgs,
+    String? orderBy,
+    List<String>? columns,
+  }) async {
     try {
       final cnn = await connectData();
-      final data = await cnn!.query(name, where: where,columns: columns, whereArgs: whereArgs, limit: 1, orderBy: orderBy);
+      final data = await cnn!.query(
+        name,
+        where: where,
+        columns: columns,
+        whereArgs: whereArgs,
+        limit: 1,
+        orderBy: orderBy,
+      );
       return data.isEmpty ? {} : data.first;
     } catch (e) {
       errorSql(e);
@@ -52,12 +77,7 @@ class BaseRepository {
     }
   }
 
-  Future<bool> updateMap(
-    String name,
-    Map<String, dynamic> map, {
-    String? where,
-    List<Object?>? whereArgs,
-  }) async {
+  Future<bool> updateMap(String name, Map<String, dynamic> map, {String? where, List<Object?>? whereArgs}) async {
     try {
       final cnn = await connectData();
       await cnn!.update(name, map, where: where, whereArgs: whereArgs);
@@ -120,9 +140,9 @@ class BaseRepository {
   }
 }
 
-Future<Database?> connectData() async {
+Future<Database?> connectData({String? pathData}) async {
   try {
-    final cnn = await databaseFactory.openDatabase(GetStorage().read(GetKey.pathData));
+    final cnn = await databaseFactory.openDatabase(pathData ?? GetStorage().read(GetKey.pathData));
     await cnn.execute('PRAGMA foreign_keys = ON');
     return cnn;
   } catch (e) {

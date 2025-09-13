@@ -113,14 +113,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  data_table_2:
-    dependency: "direct main"
-    description:
-      name: data_table_2
-      sha256: b8dd157e4efe5f2beef092c9952a254b2192cf76a26ad1c6aa8b06c8b9d665da
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.0"
   data_widget:
     dependency: transitive
     description:
@@ -478,7 +470,7 @@ packages:
     source: hosted
     version: "1.16.0"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "75cca69d1490965be98c73ceaea117e8a04dd21217b37b292c9ddbec0d955bc5"
@@ -494,7 +486,7 @@ packages:
     source: hosted
     version: "1.1.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
@@ -862,10 +854,10 @@ packages:
     dependency: "direct main"
     description:
       name: trina_grid
-      sha256: "8b4f4cdc86467fb5d7ff637b2c6f43d6a6ea3eee48c4bd45548497deb8c2975e"
+      sha256: d75b835f61feb90dbda2a0bc40773b2601fa2b84ec595e2422824ea06d8f8efc
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.10"
+    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:

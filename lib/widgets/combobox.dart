@@ -95,6 +95,7 @@ class _ComboboxState extends mt.State<Combobox> {
                 child: Text(
                   selectString,
                   style: TextStyle(
+                    fontSize: widget.noBorder ? 13 : null,
                     color: !widget.enabled
                         ? Colors.gray.shade400
                         : widget.onDoubleTap == null

@@ -8,8 +8,8 @@ class PhieuNhapRepository {
 
   final _baseData = BaseRepository();
 
-  Future<Map<String, dynamic>> get({int? stt}) async {
-    return await _baseData.getMap(view, orderBy: "STT DESC",where: stt==null?null:"STT = $stt");
+  Future<Map<String, dynamic>> get({String? phieu}) async {
+    return await _baseData.getMap(view, orderBy: "Phieu DESC",where: phieu==null?null:"Phieu = '$phieu'");
   }
 
   Future<Map<String, dynamic>> getTheoSTT(int stt) async {

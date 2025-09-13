@@ -44,7 +44,7 @@ class _BanKeHoaDonBanRaViewState extends ConsumerState<BangKeHoaDonBanRaView> {
       data.map((e) {
         return TrinaRow(
           cells: {
-            'null': TrinaCell(value: e['STT']),
+            'null': TrinaCell(value: e['Phieu']),
             'KyHieu': TrinaCell(value: e['KyHieu'] ?? ''),
             'SoHD': TrinaCell(value: e['SoHD'] ?? ''),
             'NgayCT': TrinaCell(value: e['NgayCT'] ?? ''),

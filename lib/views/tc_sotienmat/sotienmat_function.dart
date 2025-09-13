@@ -20,13 +20,13 @@ class SoTienMatFunction {
       final type = event.cell.value[0];
       final stt = event.row.cells['null']?.value;
       if (type == 'T') {
-        PhieuThuView.show(context, stt: stt);
+        PhieuThuView.show(context, phieu: event.cell.value);
       } else if (type == 'C') {
-        PhieuChiView.show(context, stt: stt);
+        PhieuChiView.show(context, phieu: event.cell.value);
       } else if (type == 'N') {
-        PhieuNhapView.show(context, stt: stt);
+        PhieuNhapView.show(context, phieu: event.cell.value);
       } else if (type == 'X') {
-        PhieuXuatView.show(context, stt: stt);
+        PhieuXuatView.show(context, phieu: event.cell.value);
       }
     }
   }

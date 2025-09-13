@@ -120,6 +120,9 @@ class _PhieuXuatTableState extends ConsumerState<PhieuXuatTable> {
                 re.cell.value = lstHangHoa.firstWhere((e) => e['MaHH'] == val)['ID'];
                 fc.onChangedMaHang(ref, re, widget.maID);
               },
+              onDoubleTap: (){
+                fc.showHangHoa(lstHangHoa.firstWhere((e) => e['ID'] == re.cell.value, orElse: () => {'MaHH': null})['MaHH'], context);
+              },
             );
           },
         ),

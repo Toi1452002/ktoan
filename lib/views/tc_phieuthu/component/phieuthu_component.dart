@@ -1,10 +1,10 @@
 import 'package:pm_ketoan/widgets/combobox.dart';
 
 class PhieuThuComponent {
-  Combobox cbbMaKhach(
-    List<Map<String, dynamic>> items, {
+  Combobox cbbMaKhach(List<Map<String, dynamic>> items, {
     dynamic value,
     void Function(dynamic)? onChanged,
+    void Function()? onDoubleTap,
     bool enabled = true,
   }) {
     return Combobox(
@@ -15,11 +15,12 @@ class PhieuThuComponent {
       noSearch: false,
       items: items.map((e) => ComboboxItem(value: e['MaKhach'], text: [e['MaKhach'], e['TenKH']])).toList(),
       onChanged: onChanged,
+      onDoubleTap:onDoubleTap,
+
     );
   }
 
-  Combobox cbbBTK(
-    List<Map<String, dynamic>> items, {
+  Combobox cbbBTK(List<Map<String, dynamic>> items, {
     dynamic value,
     void Function(dynamic)? onChanged,
     bool enabled = true,

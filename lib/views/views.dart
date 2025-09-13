@@ -38,3 +38,8 @@ export 'ht_danhsachnguoidung/danhsachnguoidung_view.dart';
 export 'ht_thongtindoanhnghiep/thongtindoanhnghiep_view.dart';
 export 'ht_tuychon/tuychon_view.dart';
 export 'ht_phanquyennguoidung/phanquyennguoidung_view.dart';
+
+export 'ts/tscd_view.dart';
+export 'ts/ccdc_view.dart';
+
+export 'kt_bctc_bangcdps/bangcdps_view.dart';

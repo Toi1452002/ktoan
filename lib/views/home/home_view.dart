@@ -71,6 +71,11 @@ class HomeView extends ConsumerWidget {
                     if (node.data == ThongTinDoanhNghiepView.name) ThongTinDoanhNghiepView.show(context);
                     if (node.data == PhanQuyenNguoiDungView.name) PhanQuyenNguoiDungView.show(context);
                     if (node.data == TuyChonView.name) TuyChonView.show(context);
+
+                    if (node.data == TSCDView.name) TSCDView.show(context);
+                    if (node.data == CCDCView.name) CCDCView.show(context);
+
+                    if (node.data == BangCDPSView.name) BangCDPSView.show(context);
                   },
                   child: Text(node.data),
                 );

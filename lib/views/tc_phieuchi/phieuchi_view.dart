@@ -11,14 +11,20 @@ import 'component/phieuchi_table.dart';
 import 'function/phieuchi_function.dart';
 
 class PhieuChiView extends ConsumerStatefulWidget {
-  final int? stt;
+  final String? phieu;
 
-  const PhieuChiView({super.key, this.stt});
+  const PhieuChiView({super.key, this.phieu});
 
   static const name = 'Phiếu chi';
 
-  static void show(BuildContext context, {int? stt}) {
-    showCustomDialog(context, title: name.toUpperCase(), width: 500, height: 650, child: PhieuChiView(stt: stt,));
+  static void show(BuildContext context, {String? phieu}) {
+    showCustomDialog(
+      context,
+      title: name.toUpperCase(),
+      width: 500,
+      height: 650,
+      child: PhieuChiView(phieu: phieu),
+    );
   }
 
   @override
@@ -36,7 +42,7 @@ class _PhieuChiViewState extends ConsumerState<PhieuChiView> {
 
   @override
   void initState() {
-    ref.read(phieuChiProvider.notifier).get(stt: widget.stt);
+    ref.read(phieuChiProvider.notifier).get(phieu: widget.phieu);
     loadCBB();
     super.initState();
   }
@@ -134,17 +140,23 @@ class _PhieuChiViewState extends ConsumerState<PhieuChiView> {
                                         value: state.MaNV,
                                         enabled: !state.Khoa,
                                         onChanged: (val) {
-                                          final x = lstNV.firstWhere((e) => e['MaNV'] == val);
-                                          fc.updateMaNV(ref, val, x['HoTen'] ?? '', x['DiaChi'] ?? '');
+                                          // final x = lstNV.firstWhere((e) => e['MaNV'] == val);
+                                          fc.updateMaNV(ref, val);
                                         },
+                            onDoubleTap: () {
+                              fc.showNhanVien(state.MaNV!, context);
+                            },
                                       )
                                     : cpn.cbbMaKhach(
                                         lstKhach,
                                         value: state.MaKhach,
                                         enabled: !state.Khoa,
                                         onChanged: (val) {
-                                          final x = lstKhach.firstWhere((e) => e['MaKhach'] == val);
-                                          fc.updateMaKhach(ref, val, x['TenKH'] ?? '', x['DiaChi'] ?? '');
+                                          // final x = lstKhach.firstWhere((e) => e['MaKhach'] == val);
+                                          fc.updateMaKhach(ref, val);
+                                        },
+                                        onDoubleTap: () {
+                                          fc.showKhachHang(state.MaKhach!, context);
                                         },
                                       )),
                         ],

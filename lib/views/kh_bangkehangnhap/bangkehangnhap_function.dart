@@ -27,8 +27,8 @@ class BangKeHangNhapFunction {
 
   void showInfo(TrinaGridOnRowDoubleTapEvent event, WidgetRef ref, BuildContext context) {
     if (event.cell.column.field == 'Phieu') {
-      final stt = event.row.cells['null']?.value;
-      PhieuNhapView.show(context, stt: stt);
+      final phieu = event.row.cells['null']?.value;
+      PhieuNhapView.show(context, phieu: event.cell.value);
     }
   }
 

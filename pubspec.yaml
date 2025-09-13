@@ -36,8 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   enum_to_string: ^2.2.1
   flutter_riverpod: ^2.6.1
-  trina_grid: ^1.6.10
-  shadcn_flutter: ^0.0.39
+  trina_grid: ^2.0.2
+  shadcn_flutter: 0.0.39
   phosphor_flutter: ^2.1.0
   pdf: ^3.11.3
   excel: ^4.0.6
@@ -53,7 +53,9 @@ dependencies:
   easy_debounce: ^2.0.3
   dropdown_button2: ^2.3.9
   string_validator: ^1.2.0
-  data_table_2: ^2.6.0
+#  data_table_2: ^2.6.0
+  path: ^1.9.1
+  path_provider: ^2.1.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -83,6 +85,7 @@ flutter:
     - assets/fonts/Roboto-Light.ttf
     - assets/fonts/Roboto-Medium.ttf
     - assets/fonts/Roboto-Regular.ttf
+    - assets/data/tmp.db
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

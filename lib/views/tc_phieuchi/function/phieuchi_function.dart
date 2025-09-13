@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pm_ketoan/application/application.dart';
 import 'package:pm_ketoan/application/phieuchi/phieuchi_provider.dart';
+import 'package:pm_ketoan/views/dm_nhanvien/thongtinnhanvien_view.dart';
 import 'package:string_validator/string_validator.dart';
 
 import '../../../core/core.dart';
 import '../../../data/data.dart';
+import '../../dm_khachhang/thong_tin_kh_view.dart';
 
 class PhieuChiFunction {
   Future<List<Map<String, dynamic>>> loadKChi() async => await MaNghiepVuRepository().getKChi();
@@ -46,12 +49,14 @@ class PhieuChiFunction {
   Future<void> updateKChi(WidgetRef ref, String val) async {
     ref.read(phieuChiProvider.notifier).updatedKChi(val);
   }
-  Future<void> updateMaKhach(WidgetRef ref, String ma, String ten, String diaChi) async {
-    ref.read(phieuChiProvider.notifier).updateMaKhach(ma, ten, diaChi);
+  Future<void> updateMaKhach(WidgetRef ref, String ma) async {
+    final k = await KhachHangRepository().getKhach(ma);
+    ref.read(phieuChiProvider.notifier).updateMaKhach(ma, k['TenKH']??'', k['DiaChi']??'');
   }
 
-  Future<void> updateMaNV(WidgetRef ref, String ma, String ten, String diaChi) async {
-    ref.read(phieuChiProvider.notifier).updateMaNV(ma, ten, diaChi);
+  Future<void> updateMaNV(WidgetRef ref, String ma) async {
+    final nv = await NhanVienRepository().getNV(ma,columns: ['HoTen','DiaChi']);
+    ref.read(phieuChiProvider.notifier).updateMaNV(ma, nv['HoTen']??'', nv['DiaChi']??'');
   }
   Future<void> updateTenKhach(WidgetRef ref, String val) async {
     ref.read(phieuChiProvider.notifier).updatedTenKhach(val);
@@ -95,5 +100,16 @@ class PhieuChiFunction {
   void onMovePage(int stt, int type, WidgetRef ref) async {
     final result = await ref.read(phieuChiProvider.notifier).movePage(stt, type);
     ref.read(phieuChiCTProvider.notifier).get(result);
+  }
+
+  void showKhachHang(String maKH, BuildContext context)async{
+    final x = await KhachHangRepository().getKhach(maKH);
+    final k = KhachHangModel.fromMap(x);
+    ThongTinKHView.show(context,khach: k,isUpdate: false);
+  }
+  void showNhanVien(String maNV, BuildContext context)async{
+    final x = await NhanVienRepository().getNV(maNV);
+    final nv = NhanVienModel.fromMap(x);
+    ThongTinNhanVienView.show(context,nv: nv,udMa: false);
   }
 }
