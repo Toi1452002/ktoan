@@ -93,7 +93,8 @@ class _BangKePhieuThuViewState extends ConsumerState<BangKePhieuThuView> {
                     showClear: false,
                   ).expanded()
                 ],).sized(width: 160),
-                TextButton(child: Text('Thực hiện'),onPressed: (){
+                Gap(10),
+                OutlineButton(size: ButtonSize.small,child: Text('Thực hiện'),onPressed: (){
                   onLoadData(tN: tuNgay,dN: denNgay);
                 },)
               ],

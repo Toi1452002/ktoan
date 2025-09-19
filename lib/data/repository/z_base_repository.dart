@@ -80,8 +80,9 @@ class BaseRepository {
   Future<bool> updateMap(String name, Map<String, dynamic> map, {String? where, List<Object?>? whereArgs}) async {
     try {
       final cnn = await connectData();
-      await cnn!.update(name, map, where: where, whereArgs: whereArgs);
-      return true;
+      final result = await cnn!.update(name, map, where: where, whereArgs: whereArgs);
+
+      return result > 0 ? true : false;
     } catch (e) {
       errorSql(e);
       return false;
@@ -136,6 +137,21 @@ class BaseRepository {
     } catch (e) {
       errorSql(e);
       return false;
+    }
+  }
+
+  Future<dynamic> countRows(String name, String field, {String? where}) async {
+    try {
+      final cnn = await connectData();
+      final data = await cnn!.query(name, columns: ["COUNT($field) count"], where: where);
+      if (data.isNotEmpty) {
+        return data.first['count'] ?? 0;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      errorSql(e);
+      return 0;
     }
   }
 }

@@ -127,7 +127,7 @@ class _BangCDPSViewState extends ConsumerState<BangCDPSView> {
               },
             ),
             Text('Năm'),
-            WidgetTextField(controller: txtNam, textAlign: TextAlign.center).sized(width: 60),
+            WidgetTextField(controller: txtNam,isNumber: true, textAlign: TextAlign.center).sized(width: 60),
             OutlineButton(
               onPressed: () async {
                 await fc.onThucHien(selectedType, txtNam.text, thang: selectedThang, quy: selectedQuy).whenComplete(() {

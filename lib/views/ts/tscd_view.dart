@@ -106,7 +106,7 @@ class _TSCDViewState extends ConsumerState<TSCDView> {
                 });
               },
             ).sized(width: 100),
-            PrimaryButton(
+            OutlineButton(
               size: ButtonSize.small,
               child: Text('Thực hiện'),
               onPressed: () => ref.read(tscdProvider.notifier).onThucHien(dN),

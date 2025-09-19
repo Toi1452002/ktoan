@@ -97,8 +97,10 @@ class _SoBanHangViewState extends ConsumerState<SoBanHangView> {
                     ).expanded(),
                   ],
                 ).sized(width: 160),
-                TextButton(
+                Gap(10),
+                OutlineButton(
                   child: Text('Thực hiện'),
+                  size: ButtonSize.small,
                   onPressed: () async {
                     fc.loadData(stateManager, tuNgay, denNgay, selectNC ?? '');
                     loadNo();

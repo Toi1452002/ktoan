@@ -43,11 +43,13 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         colorScheme: ColorSchemes.lightBlue,
         typography: Typography.geist(
+          small: TextStyle(fontSize: 13),
           base: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Arial'),
           medium: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
         ),
         radius: .2,
         platform: TargetPlatform.windows,
+
       ),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

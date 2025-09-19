@@ -98,8 +98,9 @@ class _BangLuongViewState extends ConsumerState<BangLuongView> {
             Text('Năm').medium,
             WidgetTextField(controller: txtNam).sized(width: 60),
             Gap(10),
-            TextButton(
+            OutlineButton(
               child: Text('Thực hiện'),
+              size: ButtonSize.small,
               onPressed: () {
                 ref.read(bangLuongProvider.notifier).getData(thang: selectThang.toString(), nam: txtNam.text);
               },

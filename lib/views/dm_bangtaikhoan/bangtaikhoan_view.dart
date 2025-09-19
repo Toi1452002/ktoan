@@ -60,25 +60,27 @@ class _BangTaiKhoanViewState extends ConsumerState<BangTaiKhoanView> {
       }
     });
 
-    return DataGrid(
-      onLoaded: (e) => _stateManager = e.stateManager,
-      rowColorCallback: (re){
-        if(re.row.cells['MAXL']?.value == 1){
-          return Colors.gray.shade200;
-        }else{
-          return Colors.transparent;
-        }
-      },
-      onChange: (re)=>fc.onChange(re, ref, _stateManager),
-      columns: [
-        DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-        DataGridColumn(title: ['', 'dl'], width: 25, render: TypeRender.delete,onTapDelete: (val, re)=>fc.onTapDelete(ref, val, re!)),
-        DataGridColumn(title: ['Mã TK', 'MaTK'], width: 100, isEdit: true),
-        DataGridColumn(title: ['Mô tả', 'TenTK'], width: 350, isEdit: true),
-        DataGridColumn(title: ['TC', 'TinhChat'], width: 70, isEdit: true,columnAlign: ColumnAlign.center),
-        DataGridColumn(title: ['Ghi chú', 'GhiChu'], width: 250, isEdit: true),
-        DataGridColumn(title: ['Nhóm', 'MAXL'], width: 100, isEdit: true,columnAlign: ColumnAlign.center),
-      ],
+    return Scaffold(
+      child: DataGrid(
+        onLoaded: (e) => _stateManager = e.stateManager,
+        rowColorCallback: (re){
+          if(re.row.cells['MAXL']?.value == 1){
+            return Colors.gray.shade200;
+          }else{
+            return Colors.transparent;
+          }
+        },
+        onChange: (re)=>fc.onChange(re, ref, _stateManager),
+        columns: [
+          DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
+          DataGridColumn(title: ['', 'dl'], width: 25, render: TypeRender.delete,onTapDelete: (val, re)=>fc.onTapDelete(ref, val, re!)),
+          DataGridColumn(title: ['Mã TK', 'MaTK'], width: 100, isEdit: true),
+          DataGridColumn(title: ['Mô tả', 'TenTK'], width: 350, isEdit: true),
+          DataGridColumn(title: ['TC', 'TinhChat'], width: 70, isEdit: true,columnAlign: ColumnAlign.center),
+          DataGridColumn(title: ['Ghi chú', 'GhiChu'], width: 250, isEdit: true),
+          DataGridColumn(title: ['Nhóm', 'MAXL'], width: 100, isEdit: true,columnAlign: ColumnAlign.center),
+        ],
+      ).withPadding(all: 5),
     );
   }
 }

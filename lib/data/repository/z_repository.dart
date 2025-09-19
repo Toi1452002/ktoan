@@ -37,4 +37,5 @@ export 'ts_ccdc_repository.dart';
 
 
 export 'kt_bctc_bangcdps_repository.dart';
-export 'kt_nky_sonkchung_repository.dart';
+export 'kt_nky_repository.dart';
+export 'kt_bctc_repository.dart';

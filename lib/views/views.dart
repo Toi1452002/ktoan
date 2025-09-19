@@ -43,3 +43,10 @@ export 'ts/tscd_view.dart';
 export 'ts/ccdc_view.dart';
 
 export 'kt_bctc_bangcdps/bangcdps_view.dart';
+export 'kt_nhatky/sonhatkychung_view.dart';
+export 'kt_nhatky/socaitk_view.dart';
+export 'kt_nhatky/sochitiettk_view.dart';
+export 'kt_bctc_bangcdkt/bangcdkt_view.dart';
+export 'kt_bctc_bangkqkd/bangkqkd_view.dart';
+export 'kt_bctc_banglctt/banglctt_view.dart';
+export 'kt_bctc_bangtmct/bangtmtc_view.dart';

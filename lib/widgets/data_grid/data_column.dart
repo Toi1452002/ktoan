@@ -49,5 +49,5 @@ class ColumnTextStyle {
   static TextStyle red() => TextStyle(color: Colors.red.shade700, fontSize: 12, fontWeight: FontWeight.w500);
 
   static TextStyle blue({FontWeight? fontWeight}) =>
-      TextStyle(color: Colors.blue.shade800, fontSize: 12, fontWeight: fontWeight ?? FontWeight.w500);
+      TextStyle(color: Colors.blue.shade900, fontSize: 12, fontWeight: fontWeight ?? FontWeight.w500,);
 }

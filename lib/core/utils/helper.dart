@@ -38,7 +38,7 @@ class Helper {
   }
 
   static String dMy(dynamic date) {
-    if(date==null) return '';
+    if (date == null) return '';
     if (date.runtimeType == DateTime) {
       return DateFormat('dd/MM/yyyy').format(date);
     } else if (date.runtimeType == String) {
@@ -46,6 +46,10 @@ class Helper {
     }
 
     return date.toString();
+  }
+
+  static String yM(dynamic date) {
+    return DateFormat('yyyy-MM').format(date);
   }
 
   static String yMd(dynamic date) {
@@ -73,5 +77,14 @@ class Helper {
     int month = DateTime.now().month;
     int quarter = ((month - 1) ~/ 3) + 1;
     return quarter;
+  }
+
+  static String strLast(String value) {
+    return value[value.length - 1];
+  }
+
+  static int strCount(String value, String char) {
+    final lst = value.split(char).length;
+    return lst == 0 ? 0 : lst - 1;
   }
 }

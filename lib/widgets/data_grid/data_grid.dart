@@ -115,6 +115,7 @@ class _DataGridState extends State<DataGrid> {
         }
         if (e.textStyle != null) {
           renderer = (re) => Text(
+            softWrap: false,
             e.columnType == ColumnType.text ? re.cell.value : Helper.numFormat(re.cell.value),
             textAlign: e.columnAlign == ColumnAlign.center
                 ? TextAlign.center

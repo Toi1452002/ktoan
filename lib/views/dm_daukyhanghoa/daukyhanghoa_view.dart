@@ -63,7 +63,7 @@ class _DauKyHangHoaViewState extends ConsumerState<DauKyHangHoaView> {
         AppBar(
           padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
           trailing: [
-            TextButton(
+            OutlineButton(
               child: Text('Cập nhật'),
               onPressed: () async {
                 final result = await fc.isCapNhat(_stateManager);

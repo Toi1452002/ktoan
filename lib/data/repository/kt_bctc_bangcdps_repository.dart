@@ -19,7 +19,7 @@ class BangCDPSRepository {
 
   Future<List<Map<String, dynamic>>> getPsNo(String tN, String dN) async {
     return await _cnn.getListMap(
-      'VKT_SoNKyChung',
+      'VKT_SoNKChung',
       columns: ['TKNo', 'SUM(SoPS) SoPS'],
       orderBy: 'TKNo',
       where: "Ngay BETWEEN ? AND ?",
@@ -30,7 +30,7 @@ class BangCDPSRepository {
 
   Future<List<Map<String, dynamic>>> getPsCo(String tN, String dN) async {
     return await _cnn.getListMap(
-      'VKT_SoNKyChung',
+      'VKT_SoNKChung',
       columns: ['TKCo', 'SUM(SoPS) SoPS'],
       orderBy: 'TKCo',
       where: "Ngay BETWEEN ? AND ?",

@@ -109,7 +109,8 @@ class _NhapXuatTonKhoViewState extends ConsumerState<NhapXuatTonKhoView> {
                     ).expanded(),
                   ],
                 ).sized(width: 160),
-                TextButton(onPressed: loadData, child: Text('Thực hiện')),
+                Gap(10),
+                OutlineButton(onPressed: loadData, child: Text('Thực hiện'),size: ButtonSize.small,),
               ],
             ),
           ],
@@ -162,7 +163,7 @@ class _NhapXuatTonKhoViewState extends ConsumerState<NhapXuatTonKhoView> {
         ],
         columns: [
           DataGridColumn(title: ['', 'null'], width: 25, render: TypeRender.numIndex),
-          DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 250, textStyle: ColumnTextStyle.red()),
+          DataGridColumn(title: ['Tên hàng', 'TenHH'], width: 250, textStyle: ColumnTextStyle.blue()),
           DataGridColumn(title: ['ĐVT', 'DVT'], width: 50),
           _buildColumn(['SL', 'SoTon'], 70, Colors.green.shade200),
           _buildColumn(['T.Tiền', 'TienDauKy'], 100, Colors.green.shade200),

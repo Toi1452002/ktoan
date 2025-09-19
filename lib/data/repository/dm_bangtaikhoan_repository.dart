@@ -7,7 +7,33 @@ class BangTaiKhoanRepository {
   final _baseData = BaseRepository();
 
   Future<List<Map<String, dynamic>>> getList({List<String>? columns}) async {
-    return await _baseData.getListMap(name, columns: columns);
+    return await _baseData.getListMap(name, columns: columns, orderBy: 'MaTK');
+  }
+
+  Future<String> getTC(String maTK) async{
+    return await _baseData.getCell(name, field: 'TinhChat',condition: "MaTK = '$maTK'");
+  }
+
+  Future<List<Map<String, dynamic>>> getTKSoCai() async {
+    return await _baseData.getSQL('''
+      SELECT MaTK, TenTK
+      FROM $name
+      WHERE MaTK != '421' AND LENGTH(MaTK) = 3
+      UNION
+      SELECT MaTK, TenTK
+      FROM $name
+      WHERE MaTK = '4211' OR MaTK = '4212'
+      ORDER BY MaTK
+    ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getTKSoCTTK() async {
+    return await _baseData.getSQL('''
+      SELECT MaTK, TenTK
+      FROM $name
+      WHERE MAXL = 0 AND LENGTH(MaTK)>2
+      ORDER BY MaTK
+    ''');
   }
 
   Future<bool> delete(int id) async {

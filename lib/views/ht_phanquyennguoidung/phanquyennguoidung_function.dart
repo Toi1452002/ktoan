@@ -53,10 +53,15 @@ class PhanQuyenNguoiDungFunction {
       return MapEntry(m.first.key, 0);
     }
     if (m1.isNotEmpty) {
-      return MapEntry(m1.first.key, 2);
+      if(m1.first.value.hasChild){
+        return MapEntry(m1.first.key, 1);
+      }else{
+        return MapEntry(m1.first.key, 2);
+      }
+
     }
     if (m2.isNotEmpty) {
-      return MapEntry(m2.first.key, 1);
+      return MapEntry(m2.first.key, 2);
     }
 
     return null;

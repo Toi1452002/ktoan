@@ -48,9 +48,9 @@ class _TongHopCongNoViewState extends ConsumerState<TongHopCongNoView> {
                 ngay = val!;
               });
             },).sized(width: 120),
-            TextButton(onPressed: (){
+            OutlineButton(onPressed: (){
               load(ngay);
-            },child: Text('Thực hiện'),)
+            },child: Text('Thực hiện'),size: ButtonSize.small,)
           ],
         )
       ],
@@ -60,7 +60,7 @@ class _TongHopCongNoViewState extends ConsumerState<TongHopCongNoView> {
           // TrinaColumnGroup(title: 'Khách hàng', backgroundColor: Colors.blue.shade300, fields: ['MaKhach', 'TenKH']),
           TrinaColumnGroup(
             title: 'Số dư cuối kỳ',
-            backgroundColor: Colors.blue.shade300,
+            backgroundColor: Colors.blue.shade200,
             fields: ['PhaiThu', 'PhaiTra'],
           ),
         ],

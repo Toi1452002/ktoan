@@ -62,8 +62,9 @@ class DauKyKhachHangViewState extends ConsumerState<DauKyKhachHangView> {
         AppBar(
           padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
           trailing: [
-            TextButton(
+            OutlineButton(
               child: Text('Cập nhật'),
+              size: ButtonSize.normal,
               onPressed: () async {
                 final result = await fc.isCapNhat(_stateManager);
                 if (!result) loadData();

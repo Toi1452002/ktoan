@@ -78,6 +78,7 @@ class _BangKeHangBanViewState extends ConsumerState<BangKeHangBanView> {
             Row(
               children: [
                 Text('Chọn').medium,
+                Gap(5),
                 Combobox(
                   value: selectChon,
                   items: [
@@ -130,7 +131,9 @@ class _BangKeHangBanViewState extends ConsumerState<BangKeHangBanView> {
                 Gap(10),
                 Text('Năm').medium,
                 WidgetTextField(controller: txtNam).sized(width: 50),
-                TextButton(
+                Gap(10),
+                OutlineButton(
+                  size: ButtonSize.small,
                   child: Text('Thực hiện'),
                   onPressed: () {
                     try {

@@ -85,6 +85,7 @@ class _BangKeHoaDonMuaVaoViewState extends ConsumerState<BangKeHoaDonMuaVaoView>
             Row(
               children: [
                 Text('Chọn').medium,
+                Gap(5),
                 Combobox(
                   value: selectChon,
                   items: [
@@ -137,8 +138,10 @@ class _BangKeHoaDonMuaVaoViewState extends ConsumerState<BangKeHoaDonMuaVaoView>
                 Gap(10),
                 Text('Năm').medium,
                 WidgetTextField(controller: txtNam).sized(width: 50),
-                TextButton(
+                Gap(10),
+                OutlineButton(
                   child: Text('Thực hiện'),
+                  size: ButtonSize.small,
                   onPressed: () {
                     try {
                       if (selectChon == 0) {

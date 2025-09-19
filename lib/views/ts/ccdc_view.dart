@@ -105,7 +105,7 @@ class _CCDCViewState extends ConsumerState<CCDCView> {
                 });
               },
             ).sized(width: 100),
-            PrimaryButton(
+            OutlineButton(
               size: ButtonSize.small,
               child: Text('Thực hiện'),
               onPressed: () => ref.read(ccdcProvider.notifier).onThucHien(dN),

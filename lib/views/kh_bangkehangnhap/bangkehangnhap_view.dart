@@ -86,7 +86,9 @@ class _BangKeHangNhapViewState extends ConsumerState<BangKeHangNhapView> {
                     ).expanded(),
                   ],
                 ).sized(width: 160),
-                TextButton(
+                Gap(10),
+                OutlineButton(
+                  size: ButtonSize.small,
                   onPressed: loadData,
                   child: Text('Thực hiện'),
                 ),

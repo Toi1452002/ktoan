@@ -93,7 +93,9 @@ class _SoMuaHangViewState extends ConsumerState<SoMuaHangView> {
                     ).expanded(),
                   ],
                 ).sized(width: 160),
-                TextButton(
+                Gap(10),
+                OutlineButton(
+                  size: ButtonSize.small,
                   child: Text('Thực hiện'),
                   onPressed: () async {
                     fc.loadData(stateManager, tuNgay, denNgay, selectNC ?? '');

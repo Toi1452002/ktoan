@@ -77,7 +77,7 @@ class PhieuXuatViewState extends ConsumerState<PhieuXuatView> {
               readOnly: true,
               controller: TextEditingController(text: state?.CreatedBy ?? ''),
             ).sized(width: 150),
-            TextButton(
+            OutlineButton(
               enabled: state != null,
               child: Text(state != null && !state.Khoa! ? 'Khóa' : 'Sửa'),
               onPressed: () => fc.onChangedKhoa(!state!.Khoa!, ref),

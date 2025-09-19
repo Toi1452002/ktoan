@@ -90,8 +90,9 @@ class _BangChamCongViewState extends ConsumerState<BangChamCongView> {
             Text('Năm').medium,
             WidgetTextField(controller: txtNam).sized(width: 60),
             Gap(10),
-            TextButton(
+            OutlineButton(
               child: Text('Thực hiện'),
+              size: ButtonSize.small,
               onPressed: () {
                 ref.read(bangChamCongProvider.notifier).get(selectThang, txtNam.text);
 

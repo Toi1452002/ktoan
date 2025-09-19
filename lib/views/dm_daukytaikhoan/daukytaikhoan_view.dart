@@ -79,7 +79,7 @@ class _DauKyBTKViewState extends ConsumerState<DauKyBTKView> {
             WidgetTextField(controller: txtNam, isNumber: true).sized(width: 60),
           ],
           trailing: [
-            TextButton(
+            OutlineButton(
               child: Text('Thực hiện lưu đầu kỳ'),
               onPressed: () async {
                 final result = await fc.isCapNhat(_stateManager, DateTime(int.parse(txtNam.text), thang));

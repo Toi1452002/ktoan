@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:get_storage/get_storage.dart';
 import 'package:pm_ketoan/core/app_contraint/app_contraint.dart';
 import 'package:pm_ketoan/views/home/funtion/login_function.dart';
+import 'package:pm_ketoan/widgets/widget_custom_row.dart';
 import 'package:pm_ketoan/widgets/widget_textfield.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,13 +69,24 @@ class LoginViewState extends ConsumerState<LoginView> {
                   spacing: 15,
 
                   children: [
-                    WidgetTextField( controller: txtTaiKhoan, autofocus: true, hintText: 'Username',),
-                    WidgetTextField(
-                      obscureText: true,
-                      hintText: 'Password',
-                      spacing: 48,
-                      controller: txtMatKhau,
-                      onSubmitted: (val) => fc.login(txtTaiKhoan.text, txtMatKhau.text, ref),
+                    WidgetCustomRow(
+                      columnWidths: {0: 70},
+                      items: [
+                        Text('Tài khoản').medium,
+                        WidgetTextField(controller: txtTaiKhoan, autofocus: true),
+                      ],
+                    ),
+                    WidgetCustomRow(
+                      columnWidths: {0: 70},
+                      items: [
+                        Text('Mật khẩu').medium,
+                        WidgetTextField(
+                          obscureText: true,
+                          spacing: 48,
+                          controller: txtMatKhau,
+                          onSubmitted: (val) => fc.login(txtTaiKhoan.text, txtMatKhau.text, ref),
+                        ),
+                      ],
                     ),
                     Gap(5),
                     Row(
